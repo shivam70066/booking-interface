@@ -1,0 +1,14 @@
+@if(!showBookButton){
+  <button (click)="toggleBookingInterface()" >Book Now</button>
+}
+@else {
+  <div id="booking-interface-main">
+    <div id="close-btn-div">
+      <span id="close-btn" (click)="toggleBookingInterface()">X</span>
+    </div>
+    <div id="booking-content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+}
+

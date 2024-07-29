@@ -1,0 +1,42 @@
+#properties-content{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+  margin: 80px;
+  #properties-row{
+    display: flex;
+    .properties-col{
+      position: relative;
+      margin: 50px;
+      &:hover{
+        cursor: pointer;
+        img{
+          scale: 1.05;
+          transform: scale(1.03);
+          transition: transform 0.1s ease-in-out;
+        }
+      }
+      img{
+        transition: transform 0.1s ease-in-out;
+      }
+      .properties-img{
+        width: 100%;
+        overflow: hidden;
+      }
+    }
+    .property-main-heading{
+      position: absolute;
+      left: 10px;
+      bottom: 30px;
+      font-size: 26px;
+      font-weight: 600;
+    }
+    .property-sub-heading{
+      position: absolute;
+      left: 10px;
+      bottom: 5px;
+      font-size: 20px;
+    }
+  }
+}

@@ -1,0 +1,13 @@
+<div id="properties-content">
+  <div id="properties-row">
+    @for (property of properties; track $index) {
+      <div class="properties-col">
+        <div class="properties-img">
+          <img src="../../../assets/properties/{{property.img}}" alt="">
+        </div>
+        <span class="property-main-heading">{{property.main_heading}}</span>
+        <span class="property-sub-heading">{{property.sub_heading}}</span>
+      </div>
+    }
+</div>
+
