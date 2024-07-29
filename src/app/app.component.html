@@ -1,14 +1,14 @@
-@if(!showBookButton){
-  <button (click)="toggleBookingInterface()" >Book Now</button>
-}
-@else {
-  <div id="booking-interface-main">
-    <div id="close-btn-div">
-      <span id="close-btn" (click)="toggleBookingInterface()">X</span>
-    </div>
-    <div id="booking-content">
-      <router-outlet></router-outlet>
-    </div>
-  </div>
-}
+<button (click)="isOpen = !isOpen" type="button" cdkOverlayOrigin #trigger="cdkOverlayOrigin" [class.hidden]="isOpen">
+  {{isOpen ? "Close" : "Open"}}
+</button>
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="isOpen"
+>
+<div id="booking-interface-main">
+  <span (click)="isOpen = !isOpen" id="close-btn">X</span>
+  <app-display-properties></app-display-properties>
+</div>
+</ng-template>
 

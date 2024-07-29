@@ -1,19 +1,22 @@
 #booking-interface-main{
-  overflow: hidden;
+  display: relative;
+  width: 100vw;
   height: 100vh;
-  width: 100wh;
   background-color: grey;
-  #close-btn-div{
-    position: absolute;
+  #close-btn{
     color: white;
-    right: 1%;
-    top: 2%;
-    #close-btn{
-      font-size: 28px;
-      cursor: pointer;
-      &:hover{
-        color: rgb(189, 189, 189);
-      }
+    cursor: pointer;
+    position: absolute;
+    right: 30px;
+    top: 19px;
+    font-size: 25px;
+    font-weight: 600;
+    &:hover{
+      color: rgb(194, 194, 194);
     }
   }
+}
+
+.hidden{
+  display: none;
 }
