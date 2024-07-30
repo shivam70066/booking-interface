@@ -21,12 +21,16 @@ export class AppComponent {
 
   openOverlay(){
     this.isOpen = !this.isOpen;
-    this.router.navigate(['/properties']);
+    this.router.navigate(['/properties'], {
+      skipLocationChange: true,
+    });
   }
 
   closeOverlay(){
     this.isOpen = false;
-    this.router.navigate(['/']);
+    this.router.navigate(['/'],{
+      skipLocationChange: true,
+    });
   }
 }
 

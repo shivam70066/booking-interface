@@ -41,8 +41,9 @@ export class DisplayPropertiesComponent {
     }
   ]
   goToCalendar(id:number){
-    console.log(id);
-    this.router.navigate(['/calendar']);
+    this.router.navigate(['/calendar'],{
+      skipLocationChange: true,
+    });
 
   }
 }
