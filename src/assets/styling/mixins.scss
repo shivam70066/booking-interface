@@ -1,0 +1,229 @@
+/*mixin*/
+@mixin screenmin2500 {
+  @media (min-width: 2500px) {
+    @content;
+  }
+}
+@mixin screenmin1920 {
+  @media (min-width: 1920px) {
+    @content;
+  }
+}
+@mixin screenmin1800 {
+  @media (min-width: 1800px) {
+    @content;
+  }
+}
+@mixin screenmin1600 {
+  @media (min-width: 1600px) {
+    @content;
+  }
+}
+@mixin screen1600 {
+  @media (max-width: 1600px) {
+    @content;
+  }
+}
+@mixin screenmin1400 {
+  @media (min-width: 1450px) {
+    @content;
+  }
+}
+@mixin screen1400 {
+  @media (max-width: 1400px) {
+    @content;
+  }
+}
+@mixin screen1350 {
+  @media (max-width: 1350px) {
+    @content;
+  }
+}
+@mixin screen1300 {
+  @media (max-width: 1300px) {
+    @content;
+  }
+}
+@mixin screenmin1250 {
+  @media (min-width: 1250px) {
+    @content;
+  }
+}
+@mixin screen1300 {
+  @media (max-width: 1300px) {
+    @content;
+  }
+}
+@mixin screen1200 {
+  @media (max-width: 1280px) {
+    @content;
+  }
+}
+@mixin screen1080 {
+  @media (max-width: 1080px) {
+    @content;
+  }
+}
+@mixin screen991 {
+  @media (max-width: 991px) {
+    @content;
+  }
+}
+@mixin screenmin767max1030 {
+  @media (min-width: 767px) and (max-width: 1030px){
+    @content;
+  }
+}
+@mixin screen768 {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+@mixin screen760 {
+  @media (max-width: 760px) {
+    @content;
+  }
+}
+@mixin screen640 {
+  @media (max-width: 579px) {
+    @content;
+  }
+}
+@mixin screen480 {
+  @media (max-width: 480px) {
+    @content;
+  }
+}
+@mixin screen425{
+  @media (max-width: 425px){
+    @content;
+  }
+}
+@mixin screen380 {
+  @media (max-width: 400px) {
+    @content;
+  }
+}
+@mixin screen360 {
+  @media (max-width: 360px) {
+    @content;
+  }
+}
+@mixin screen340 {
+  @media (max-width: 340px) {
+    @content;
+  }
+}
+
+@mixin heightless480 {
+  @media (max-height: 480px) {
+    @content;
+  }
+}
+@mixin iphoneless5 {
+  @media screen and (device-aspect-ratio: 2/3) {
+    @content;
+  }
+}
+@mixin iphone5 {
+  @media screen and (device-aspect-ratio: 40/71) {
+    @content;
+  }
+}
+@mixin iphone6 {
+  @media screen and (device-aspect-ratio: 375/667) {
+   @content;
+    }
+}
+
+@mixin iphone6plus {
+  @media screen and (device-aspect-ratio: 16/9){
+   @content;
+  }
+}
+@mixin ipad {
+  @media screen and (device-aspect-ratio: 3/4){
+   @content;
+  }
+}
+/*m
+/*mixin end*/
+.blue-bg{
+  background-image: linear-gradient(90deg, #a2d9d1 0%, #5fc3b5 100%);
+  background-image: -moz-linear-gradient(90deg, #a2d9d1 0%, #5fc3b5 100%);
+  background-image: -webkit-linear-gradient(90deg, #a2d9d1 0%, #5fc3b5 100%);
+  background-image: -o-linear-gradient(90deg, #a2d9d1 0%, #5fc3b5 100%);
+}
+.blue-txt{
+  background-image: linear-gradient(90deg, #a2d9d1 0%, #5fc3b5 100%);
+  background-image: -moz-linear-gradient(90deg, #a2d9d1 0%, #5fc3b5 100%);
+  background-image: -webkit-linear-gradient(90deg, #a2d9d1 0%, #5fc3b5 100%);
+  background-image: -o-linear-gradient(90deg, #a2d9d1 0%, #5fc3b5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.blue-border {
+  /*border: 10px solid;
+  border-image-slice: 1;
+  border-width: 3px;
+  border-image-source: linear-gradient(90deg, #2fedd6 0%, #2bc3e0 100%); */
+  position: relative;
+  background-clip: padding-box;
+  border-radius: 5px;
+
+  &::after {
+      position: absolute;
+      top: -3px; bottom: -3px;
+      left: -3px; right: -3px;
+      background: linear-gradient(90deg, #a2d9d1 0%, #5fc3b5 100%);
+      content: '';
+      z-index: -1;
+  }
+}
+
+
+.gradient-pink{
+  background: #ff98d2;
+  /*background-image: linear-gradient(0deg, #ff004e 0%, #ff00ba 99%);
+  background: -moz-linear-gradient(0deg, #ff004e 0%, #ff00ba 99%);
+  background: -webkit-linear-gradient(0deg, #ff004e 0%, #ff00ba 99%);
+  background: linear-gradient(0deg, #ff004e 0%, #ff00ba 99%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff004e', endColorstr='#ff00ba',GradientType=1 );*/
+}
+.gradient-blue{
+  background: -moz-linear-gradient(0deg, #34f0ff 0%, #2db2ee 100%);
+  background: -webkit-linear-gradient(0deg, #34f0ff 0%, #2db2ee 100%);
+  background: linear-gradient(0deg, #34f0ff 0%, #2db2ee 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#34f0ff', endColorstr='#2db2ee',GradientType=1 );
+}
+.clip-blue-txt{
+  background:  linear-gradient(to right, #47f1ad 15%, #1dc3f3 85%);
+  /*background: -moz-linear-gradient(#1dc3f3, #47f1ad);
+  background: -o-linear-gradient(#1dc3f3, #47f1ad);
+  background: -ms-linear-gradient(#1dc3f3, #47f1ad);*/
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.clip-pink-txt{
+  background:  linear-gradient(to bottom, #ff00ba 0%, #ff004e 100%);
+  /*background: -moz-linear-gradient(#1dc3f3, #47f1ad);
+  background: -o-linear-gradient(#1dc3f3, #47f1ad);
+  background: -ms-linear-gradient(#1dc3f3, #47f1ad);*/
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.gradient-border-blue{
+   border: 1px solid;
+    border-image: linear-gradient(to right, #47f1ad 15%, #1dc3f3 85%);
+    border-image-slice: 1;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
