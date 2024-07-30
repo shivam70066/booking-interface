@@ -1,14 +1,14 @@
 import { Component , ViewEncapsulation} from '@angular/core';
 import { RouterOutlet,RouterLink, Router } from '@angular/router';
 import {OverlayModule} from '@angular/cdk/overlay';
-import { DisplayPropertiesComponent } from "./components/display-properties/display-properties.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, OverlayModule, DisplayPropertiesComponent],
+  imports: [RouterOutlet, RouterLink, OverlayModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
+  encapsulation: ViewEncapsulation.ShadowDom
 })
 export class AppComponent {
   title = 'booking-interface';
@@ -16,21 +16,10 @@ export class AppComponent {
   isOpen = false;
 
   constructor(private router: Router){
-
+    this.router.navigate(['hotels-properties'], {
+      skipLocationChange: true
+    })
   }
 
-  openOverlay(){
-    this.isOpen = !this.isOpen;
-    this.router.navigate(['/properties'], {
-      skipLocationChange: true,
-    });
-  }
-
-  closeOverlay(){
-    this.isOpen = false;
-    this.router.navigate(['/'],{
-      skipLocationChange: true,
-    });
-  }
 }
 

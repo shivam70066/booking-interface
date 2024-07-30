@@ -1,22 +1,10 @@
 #booking-interface-main{
-  display: relative;
+  background: url('https://png.pngtree.com/png-vector/20220608/ourmid/pngtree-world-map-grey-color-on-white-background-png-image_4895333.png');
+  position: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   width: 100vw;
   height: 100vh;
-  background-color: grey;
-  #close-btn{
-    color: white;
-    cursor: pointer;
-    position: absolute;
-    right: 30px;
-    top: 19px;
-    font-size: 25px;
-    font-weight: 600;
-    &:hover{
-      color: rgb(194, 194, 194);
-    }
-  }
-}
-
-.hidden{
-  display: none;
+  background-color: #e9e9e9;
 }

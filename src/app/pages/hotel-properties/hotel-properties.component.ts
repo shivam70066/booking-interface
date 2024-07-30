@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { Route, Router } from '@angular/router';
-
-
+import { Router } from '@angular/router';
 interface Properties {
   img: String
   main_heading : String
@@ -10,13 +8,13 @@ interface Properties {
 }
 
 @Component({
-  selector: 'app-display-properties',
+  selector: 'app-hotel-properties',
   standalone: true,
   imports: [],
-  templateUrl: './display-properties.component.html',
-  styleUrl: './display-properties.component.scss'
+  templateUrl: './hotel-properties.component.html',
+  styleUrl: './hotel-properties.component.scss'
 })
-export class DisplayPropertiesComponent {
+export class HotelPropertiesComponent {
   constructor(public router : Router){
   }
 
@@ -41,7 +39,7 @@ export class DisplayPropertiesComponent {
     }
   ]
   goToCalendar(id:number){
-    this.router.navigate(['/calendar'],{
+    this.router.navigate(['/search-availability'],{
       skipLocationChange: true,
     });
 
