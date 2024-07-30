@@ -19,13 +19,14 @@ export class AppComponent {
 
   }
 
-  toggleBookingInterface(){
-    this.showBookButton = !this.showBookButton;
-    if (!this.showBookButton) {
-      this.router.navigate(['/properties']);
-      return;
-    }
-    this.router.navigate(['']);
+  openOverlay(){
+    this.isOpen = !this.isOpen;
+    this.router.navigate(['/properties']);
+  }
+
+  closeOverlay(){
+    this.isOpen = false;
+    this.router.navigate(['/']);
   }
 }
 

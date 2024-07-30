@@ -1,4 +1,4 @@
-<button (click)="isOpen = !isOpen" type="button" cdkOverlayOrigin #trigger="cdkOverlayOrigin" [class.hidden]="isOpen">
+<button (click)="openOverlay()" type="button" cdkOverlayOrigin #trigger="cdkOverlayOrigin" [class.hidden]="isOpen">
   {{isOpen ? "Close" : "Open"}}
 </button>
 <ng-template
@@ -7,8 +7,8 @@
   [cdkConnectedOverlayOpen]="isOpen"
 >
 <div id="booking-interface-main">
-  <span (click)="isOpen = !isOpen" id="close-btn">X</span>
-  <app-display-properties></app-display-properties>
+  <span (click)="closeOverlay()" id="close-btn">X</span>
+  <router-outlet></router-outlet>
 </div>
 </ng-template>
 
