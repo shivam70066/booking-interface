@@ -1,0 +1,32 @@
+/* datepicker-range.component.css */
+
+/* Set the background color of the date cells to white */
+ngb-datepicker .ngb-dp-day,
+ngb-datepicker .ngb-dp-weekday,
+ngb-datepicker .ngb-dp-month {
+  background-color: white;
+  border: 1px solid #ddd; /* Optional: Add a border to define cell boundaries */
+}
+
+.custom-day {
+  text-align: center;
+  padding: 0.185rem 0.25rem;
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+  background-color: white; /* Ensure custom day span has a white background */
+}
+
+.custom-day.focused {
+  background-color: #e6e6e6;
+}
+
+.custom-day.range, .custom-day:hover {
+  background-color: #0275d8;
+  color: white;
+}
+
+.custom-day.faded {
+  background-color: rgba(2, 117, 216, 0.5);
+  color: white;
+}

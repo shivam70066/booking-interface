@@ -1,0 +1,36 @@
+<ngb-datepicker id="full_calendar_datepicker" #dp (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden" />
+
+<ng-template #t let-date let-focused="focused">
+	<span
+		class="custom-day"
+		[class.focused]="focused"
+		[class.range]="isRange(date)"
+		[class.faded]="isHovered(date) || isInside(date)"
+		(mouseenter)="hoveredDate = date"
+		(mouseleave)="hoveredDate = null"
+	>
+		{{ date.day }}
+	</span>
+</ng-template>
+
+<!-- <pre>From: {{ fromDate | json }} </pre>
+<pre>To: {{ toDate | json }} </pre> -->
+
+<mat-form-field >
+  <mat-label>Adults</mat-label>
+  <mat-select [formControl]="Adults">
+    @for (data of adultsData; track $index) {
+      <mat-option [value]=data.value>{{data.text}}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field >
+  <mat-label>Kids</mat-label>
+  <mat-select [formControl]="Kids">
+    @for (data of kidsData; track $index) {
+      <mat-option [value]=data.value>{{data.text}}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>
+<button (click)="getRooms()" >Search</button>
