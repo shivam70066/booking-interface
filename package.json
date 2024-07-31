@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "npm run swagger && ng serve",
-    "swagger": "ts-node ./src/console/openapi-script.ts",
+    "swagger": "npx ts-node ./src/console/openapi-script.ts",
     "build": " npm run swagger && ng build --single-bundle",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
