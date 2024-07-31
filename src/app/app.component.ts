@@ -1,4 +1,4 @@
-import { Component , ViewEncapsulation} from '@angular/core';
+import { Component , ElementRef, ViewEncapsulation} from '@angular/core';
 import { RouterOutlet,RouterLink, Router } from '@angular/router';
 import {OverlayModule} from '@angular/cdk/overlay';
 
@@ -15,7 +15,12 @@ export class AppComponent {
   showBookButton : boolean = true;
   isOpen = false;
 
-  constructor(private router: Router){
+  constructor(
+    private el: ElementRef,
+    private router: Router
+  ){
+    console.log(this.el.nativeElement.getAttribute("privateKey") )
+
     this.router.navigate(['hotels-properties'], {
       skipLocationChange: true
     })

@@ -80,7 +80,7 @@ export class CalendarComponent {
       "adults": this.Adults.value?.toString(),
       "child": this.Kids.value?.toString()
     }
-    let path = `/show-room/${data.sub_hotel_id}/${data.room_stay_from}/${data.room_stay_to}/${data.adults}/${data.child}/${data.child}`;
+    let path = `/search-room/${data.sub_hotel_id}/${data.room_stay_from}/${data.room_stay_to}/${data.adults}/${data.child}/${data.child}`;
     this.router.navigate([path], {
       skipLocationChange: true,
     });

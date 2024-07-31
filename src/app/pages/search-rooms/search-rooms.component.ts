@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HotelService } from '../../services/hotelServices/hotel-services.service';
+import { ApiService } from '../../../swagger/api/services';
 
 @Component({
   selector: 'app-search-rooms',
@@ -9,9 +10,12 @@ import { HotelService } from '../../services/hotelServices/hotel-services.servic
   templateUrl: './search-rooms.component.html',
   styleUrl: './search-rooms.component.scss'
 })
-export class SearchRoomsComponent implements OnInit{
-  constructor(private route: ActivatedRoute, private hotelService : HotelService){
-  }
+export class SearchRoomsComponent implements OnInit {
+  constructor(
+    private route: ActivatedRoute, 
+    private hotelService: HotelService,
+    private apiService: ApiService
+  ) {}
 
   ngOnInit(): void {
     // Subscribe to route parameters
@@ -28,7 +32,7 @@ export class SearchRoomsComponent implements OnInit{
       }
     });
     this.hotelService.getRooms(data).subscribe({
-      next:(resp:any)=>{
+      next: (resp: any) => {
         console.log(resp);
       }
     });

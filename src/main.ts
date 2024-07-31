@@ -12,6 +12,6 @@ import { createCustomElement } from '@angular/elements';
       injector: (await app).injector
     });
   
-    customElements.define('app-root', PopupElement);
+    customElements.define('bedy-popup', PopupElement);
   
   })();
