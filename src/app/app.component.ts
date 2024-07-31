@@ -3,7 +3,7 @@ import { RouterOutlet,RouterLink, Router } from '@angular/router';
 import {OverlayModule} from '@angular/cdk/overlay';
 
 @Component({
-  selector: 'app-root',
+  selector: 'bedy-root',
   standalone: true,
   imports: [RouterOutlet, RouterLink, OverlayModule],
   templateUrl: './app.component.html',
