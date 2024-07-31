@@ -1,26 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-
 @use '@angular/material' as mat;
 @include mat.core();
 $booking-interface-primary: mat.define-palette(mat.$indigo-palette);
 $booking-interface-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
 $booking-interface-warn: mat.define-palette(mat.$red-palette);
 $booking-interface-theme: mat.define-light-theme((
-  color: (
+color: (
     primary: $booking-interface-primary,
     accent: $booking-interface-accent,
     warn: $booking-interface-warn,
-  ),
-  typography: mat.define-typography-config(),
-  density: 0
-));
-@include mat.all-component-themes($booking-interface-theme);
-html, body { height: 100%; margin: 0; padding: 0;}
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-/* Importing Bootstrap SCSS file. */
-@import 'bootstrap/scss/bootstrap';
-
+    ),
+    typography: mat.define-typography-config(),
+    density: 0
+    ));
+    @include mat.all-component-themes($booking-interface-theme);
+    html, body { height: 100%; margin: 0; padding: 0;}
+    body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+        
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';

@@ -17,7 +17,7 @@ interface Properties {
   templateUrl: './hotel-properties.component.html',
   styleUrl: './hotel-properties.component.scss'
 })
-export class DisplayPropertiesComponent {
+export class HotelPropertiesComponent {
   constructor(public router : Router, private commonService: CommonService){
   }
 
@@ -41,6 +41,7 @@ export class DisplayPropertiesComponent {
       id: 125
     }
   ]
+  
   goToCalendar(id:number){
     this.commonService.setHotelId(id);
     this.router.navigate(['/calendar'],{
