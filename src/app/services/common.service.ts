@@ -9,12 +9,19 @@ export class CommonService {
 
   constructor() { }
 
-  private hotelIdSubject = new BehaviorSubject<number | null>(null);
+  private hotelIdSubject = new BehaviorSubject<number>(0);
+  private showInterface = new  BehaviorSubject<boolean>(false);
+
 
   hotelId$ = this.hotelIdSubject.asObservable();
+  showInterface$ = this.showInterface.asObservable();
 
   setHotelId(id: number): void {
     this.hotelIdSubject.next(id);
+  }
+
+  setInterfaceStatus(state: boolean){
+    this.showInterface.next(state);
   }
 
   formatNgbDate(date: NgbDate): string {

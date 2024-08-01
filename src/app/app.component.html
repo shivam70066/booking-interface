@@ -1,4 +1,10 @@
-<div class="mat-typography" id="booking-interface-main">
-  <router-outlet></router-outlet>
-</div>
+@if (!showPopUp) {
+  <app-global-button></app-global-button>
+}
+@else {
+  <div class="mat-typography" id="booking-interface-main">
+    <span class="global-close-btn" (click)="toggleInterface(false);">X</span>
+    <router-outlet></router-outlet>
+  </div>
+}
 
