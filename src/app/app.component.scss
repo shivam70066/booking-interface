@@ -1,39 +1,10 @@
 @import '../styles.scss';
 
-#global-div{
-  background-color: #0F4C81;
-  display: flex;
-  justify-content:space-between ;
-  align-items: center;
-  margin: auto;
-  width: 50%;
-  padding: 20px 40px;
-  h1{
-    width: 70%;
-    color: #fff;
-  }
-  .btn-div{
-    width: 30%;
-    .btn{
-      background: #D97442;
-      font-size: 20px;
-      font-weight: 500;
-      color: #fff;
-      font-weight: 600;
-      border: 1px solid #D97442;
-      border-radius: 1px;
-      text-transform: uppercase;
-      padding: 16px 20px;
-      &:hover{
-        color: rgb(224, 224, 224);
-      }
-    }
-  }
-}
-
 #booking-interface-main {
   background: url('https://png.pngtree.com/png-vector/20220608/ourmid/pngtree-world-map-grey-color-on-white-background-png-image_4895333.png');
   position: fixed;
+  top: 0;
+  left: 0;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

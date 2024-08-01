@@ -1,7 +1,5 @@
-@if (!showPopUp) {
-  <app-global-button></app-global-button>
-}
-@else {
+<app-global-button></app-global-button>
+@if (showPopUp) {
   <div class="mat-typography" id="booking-interface-main">
     <span class="global-close-btn" (click)="toggleInterface(false);">X</span>
     <router-outlet></router-outlet>
