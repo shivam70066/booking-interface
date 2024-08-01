@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HotelService } from '../../services/hotelServices/hotel-services.service';
+import { HotelService } from '../../services/hotel-services.service';
 import { ApiService } from '../../../swagger/api/services';
 
 @Component({
@@ -12,7 +12,7 @@ import { ApiService } from '../../../swagger/api/services';
 })
 export class SearchRoomsComponent implements OnInit {
   constructor(
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     private hotelService: HotelService,
     private apiService: ApiService
   ) {}

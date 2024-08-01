@@ -14,24 +14,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                promo:
-                  type: string
-                room_stay_from:
-                  type: string
-                  format: date
-                room_stay_to:
-                  type: string
-                  format: date
-                sub_hotel_id:
-                  type: string
-                type:
-                  type: string
-                adults:
-                  type: string
-                child:
-                  type: string
+              $ref: '#/components/schemas/testtype'
       responses:
         '200':
           description: Successful response
@@ -787,4 +770,24 @@ paths:
                         type: string
                   message:
                     type: string
- 
+components:
+  schemas:
+    testtype:
+      type: object
+      properties:
+        promo:
+          type: string
+        room_stay_from:
+          type: string
+          format: date
+        room_stay_to:
+          type: string
+          format: date
+        sub_hotel_id:
+          type: string
+        type:
+          type: string
+        adults:
+          type: string
+        child:
+          type: string

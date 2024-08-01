@@ -7,8 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { Subscription } from 'rxjs';
-import { CommonService } from '../../services/common/common.service';
-import { HotelService } from '../../services/hotelServices/hotel-services.service';
+import { CommonService } from '../../services/common.service';
+import { HotelService } from '../../services/hotel-services.service';
 import { Router } from '@angular/router';
 import {constVariables} from '../../constants/constants'
 @Component({

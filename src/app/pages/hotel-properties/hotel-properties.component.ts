@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Route, Router } from '@angular/router';
-import { CommonService } from '../../services/common/common.service';
+import { CommonService } from '../../services/common.service';
 
 
 interface Properties {
@@ -41,7 +41,7 @@ export class HotelPropertiesComponent {
       id: 125
     }
   ]
-  
+
   goToCalendar(id:number){
     this.commonService.setHotelId(id);
     this.router.navigate(['/calendar'],{
