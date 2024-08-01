@@ -9,10 +9,6 @@ export class HotelService {
   constructor() { }
 
   getRooms(data:any) {
-
-    const headers = new HttpHeaders({
-      'current_version': '9'
-    });
-    return this.http.post('https://www.plazabeachresorts.com/ls-api/frontend/Searchresults/get_search_results_sj', data, { headers });
+    return this.http.post('https://www.plazabeachresorts.com/ls-api/frontend/Searchresults/get_search_results_sj', data);
   }
 }
