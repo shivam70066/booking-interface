@@ -1,44 +1,72 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HotelService } from '../../services/hotel-services.service';
-import { GetPriceModuleSelectedDatesV2Service } from '../../../swagger/api/services';
 import { CommonService } from '../../services/common.service';
+import { GetSearchResultSjService } from '../../../swagger/api/services';
+import { GetSearchResultRequest, GetSearchResultResponse } from '../../../swagger/api/models';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-search-rooms',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './search-rooms.component.html',
   styleUrl: './search-rooms.component.scss'
 })
 export class SearchRoomsComponent implements OnInit {
+  adultCount: string = "2";
+  childCount: string = "0";
+  sub_hotel_id: number = 123;
+  room_stay_from: string = "";
+  room_stay_to: string = "";
+  subHotelsMinimumPrice:any = [];
+  responseStatus:string = "success";
+  loading:boolean = true;
+
   constructor(
     private route: ActivatedRoute,
-    private hotelService: HotelService,
     private commonService: CommonService,
-    private apiService: GetPriceModuleSelectedDatesV2Service
+    private searchresult: GetSearchResultSjService
   ) {
     this.commonService.setPagetitle("Results");
   }
 
   ngOnInit(): void {
-    // Subscribe to route parameters
-    var data = {};
     this.route.paramMap.subscribe(params => {
-      data = {
-        "promo": "",
-        "room_stay_from": params.get('room_stay_from'),
-        "room_stay_to": params.get('room_stay_to'),
-        "sub_hotel_id": params.get('hotel'),
-        "type": "room",
-        "adults": params.get('adults'),
-        "child": params.get('child')
-      }
+      this.sub_hotel_id = parseInt(params.get("hotel") || "123") ;
+      this.room_stay_from = params.get("room_stay_from") || "";
+      this.room_stay_to = params.get('room_stay_to') || "";
+      this.adultCount = params.get('adults') || "2";
+      this.childCount = params.get('child') || "0";
     });
-    this.hotelService.getRooms(data).subscribe({
-      next: (resp: any) => {
+    this.searchRooms()
+  }
+
+  updateHotelFilter(id: number  ){
+    this.sub_hotel_id = id;
+    this.searchRooms();
+  }
+
+  searchRooms() {
+    this.loading = true;
+    const data: GetSearchResultRequest = {
+      promo: "",
+      room_stay_from: this.room_stay_from,
+      room_stay_to: this.room_stay_to,
+      sub_hotel_id: this.sub_hotel_id.toString(),
+      type: "room",
+      adults: this.adultCount,
+      child: this.childCount
+    }
+    this.searchresult.frontendSearchresultsGetSearchResultsSjPost({ body: data }).subscribe({
+      next: (resp: GetSearchResultResponse) => {
+        this.subHotelsMinimumPrice = resp.data?.subHotelMinimumPrice;
+        console.log(this.subHotelsMinimumPrice)
+        this.loading=false;
         console.log(resp);
+      },
+      error: (error) => {
+        console.log(error);
       }
-    });
+    })
   }
 }
