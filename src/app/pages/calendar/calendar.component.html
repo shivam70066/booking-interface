@@ -13,21 +13,21 @@
     </div>
     <div class="calender-body">
       <ngb-datepicker #dp (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
-        outsideDays="hidden" [minDate]="minDate"/>
+        outsideDays="hidden" [minDate]="minDate" (navigate)="onNavigate($event)" />
 
       <ng-template #t let-date let-focused="focused">
-        <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)" [class.disabled]="isDisabled(date)"
-          [class.stopsell]="isStopsell(date)"
+        <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+          [class.disabled]="isDisabled(date)" [class.stopsell]="isStopsell(date)"
           [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
           (mouseleave)="hoveredDate = null">
-          {{ date.day }}
+          <div style="margin-bottom:15px;">{{ date.day }}</div>
+          <div *ngIf="date?.year && date?.month && date?.day && !isDisabled(date)"
+            style="background-color: rgb(72, 72, 255);">
+            <span >{{ (priceModuleData[date.year + '-' + ('0' + date.month).slice(-2) + '-' + ('0' +
+              date.day).slice(-2)]) | currency:'$' }}</span>
+          </div>
         </span>
       </ng-template>
-
-      <hr />
-
-      <pre>From: {{ fromDate | json }} </pre>
-      <pre>To: {{ toDate | json }} </pre>
     </div>
   </div>
   <div class="book-direct-container">
@@ -35,34 +35,34 @@
       <h3>Book Direct & Save!</h3>
     </div>
     @if (bestPriceLoading) {
-      <section class="dots-container">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-      </section>
+    <section class="dots-container">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </section>
     }
     @else {
-      <div class="book-direct-content">
-        <div class="best-price-text">
-          <span>Best Price Available</span>
-        </div>
-        <div class="best-price-value">
-          <span>{{bestPriceData?.data?.price_data?.direct?.amount | currency}} </span>
-        </div>
+    <div class="book-direct-content">
+      <div class="best-price-text">
+        <span>Best Price Available</span>
       </div>
-      @for (item of bestPriceData?.data?.price_data?.other|keyvalue; track $index) {
-        <div class="channels-price-list">
-          <div class="channel-name">
-            <span>{{item.value?.channelName}}</span>
-          </div>
-          <div class="channel-price">
-            <span>{{item.value?.amount | currency}}</span>
-          </div>
-        </div>
-        <hr>
-      }
+      <div class="best-price-value">
+        <span>{{bestPriceData?.data?.price_data?.direct?.amount | currency}} </span>
+      </div>
+    </div>
+    @for (item of bestPriceData?.data?.price_data?.other|keyvalue; track $index) {
+    <div class="channels-price-list">
+      <div class="channel-name">
+        <span>{{item.value?.channelName}}</span>
+      </div>
+      <div class="channel-price">
+        <span>{{item.value?.amount | currency}}</span>
+      </div>
+    </div>
+    <hr>
+    }
     }
 
     <div class="adult-child-info">

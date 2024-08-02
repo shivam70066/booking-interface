@@ -38,5 +38,15 @@ export class CommonService {
     }
     return '';
   }
+  getNextMonth(date: NgbDate): NgbDate {
+    let year = date.year;
+    let month = date.month + 1;
+    if (month > 12) {
+      month = 1;
+      year += 1;
+    }
+    return new NgbDate(year, month, 1);
+  }
+
 }
 

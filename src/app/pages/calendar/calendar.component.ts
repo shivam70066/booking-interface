@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { NgbCalendar, NgbDate, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { NgbCalendar, NgbDate, NgbDatepickerModule, NgbDatepickerNavigateEvent } from '@ng-bootstrap/ng-bootstrap';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -10,8 +10,8 @@ import { CommonService } from '../../services/common.service';
 import { Router } from '@angular/router';
 import { constVariables } from '../../constants/constants';
 import { CommonModule } from '@angular/common';
-import { GetPriceModuleSelectedDatesV2Service } from '../../../swagger/api/services';
-import { GetPriceModuleSelectedDatesResponse } from '../../../swagger/api/models';
+import { GetPriceModuleSelectedDatesV2Service, GetPriceMlsStopSellService } from '../../../swagger/api/services';
+import { GetPriceMlsStopSellRequest, GetPriceModuleSelectedDatesResponse } from '../../../swagger/api/models';
 
 @Component({
   selector: 'app-calendar',
@@ -35,15 +35,18 @@ export class CalendarComponent {
   adultCount: number = 2;
   childCount: number = 0;
 
-  bestPriceLoading : boolean = true;
+  bestPriceLoading: boolean = true;
   bestPriceData: GetPriceModuleSelectedDatesResponse | null = null;
+  priceModuleData: any = {};
 
   minDate: NgbDate = this.calendar.getToday();
 
   constructor(
     private commonService: CommonService,
     private router: Router,
-    private apiService: GetPriceModuleSelectedDatesV2Service
+    private priceModule: GetPriceModuleSelectedDatesV2Service,
+    private priceMLSStopSellService: GetPriceMlsStopSellService
+
   ) {
     this.getBestPrice(this.minDate, this.minDate = this.calendar.getNext(this.minDate, 'd', 1));
     this.commonService.setPagetitle("Check Availability");
@@ -101,6 +104,34 @@ export class CalendarComponent {
     );
   }
 
+  onNavigate(event: NgbDatepickerNavigateEvent) {
+
+    var fromDate = `${event.next.year}-${event.next.month}-01`;
+    const nextMonthDate = new Date(event.next.year, event.next.month+1, 0);
+    console.log(nextMonthDate);
+
+    const lastDate = nextMonthDate.getDate();
+    const toDate = `${nextMonthDate.getFullYear()}-${nextMonthDate.getMonth()+1}-${lastDate}`;
+    this.getPriceMlsStopSells(fromDate,toDate);
+
+  }
+
+  getPriceMlsStopSells(fromDate: string, toDate: string) {
+    console.log(fromDate, toDate)
+    this.priceModuleData = {};
+    this.priceMLSStopSellService.frontendSearchresultsGetPriceMlsStopSellPost({
+      body: {
+        "first": fromDate,
+        "last": toDate,
+        "promo": "",
+        "sub_hotel_id": 123,
+        "fromSuitesPage": false
+      }
+    }).subscribe((resp => {
+      this.priceModuleData = resp.amount;
+    }))
+  }
+
   getBestPrice(startDate: NgbDate, endDate: NgbDate) {
     this.bestPriceLoading = true;
     var data = {
@@ -114,18 +145,18 @@ export class CalendarComponent {
       sub_hotel_id: this.hotelId
     }
 
-    this.apiService.frontendSearchresultsGetPriceModuleSelectedDatesV2Post({ body: data }).subscribe({
-      next: (response:GetPriceModuleSelectedDatesResponse) => {
+    this.priceModule.frontendSearchresultsGetPriceModuleSelectedDatesV2Post({ body: data }).subscribe({
+      next: (response: GetPriceModuleSelectedDatesResponse) => {
         this.bestPriceData = response;
         this.bestPriceLoading = false;
-       },
+      },
       error: (error) => {
         console.log(error);
       },
     })
   }
 
-  searchRooms(){
+  searchRooms() {
     let data = {
       "promo": "",
       "room_stay_from": this.commonService.formatNgbDate(this.fromDate),
