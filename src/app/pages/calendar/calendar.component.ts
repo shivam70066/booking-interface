@@ -24,7 +24,7 @@ export class CalendarComponent {
   adultsData = constVariables.AdultsData;
   kidsData = constVariables.KidsData;
 
-  hotelId: number | undefined = undefined;
+  hotelId: number | undefined = 123;
   private hotelIDSubscription?: Subscription;
 
   calendar = inject(NgbCalendar);
@@ -46,6 +46,7 @@ export class CalendarComponent {
     private apiService: GetPriceModuleSelectedDatesV2Service
   ) {
     this.getBestPrice(this.minDate, this.minDate = this.calendar.getNext(this.minDate, 'd', 1));
+    this.commonService.setPagetitle("Check Availability");
   }
 
   ngOnInit(): void {
@@ -57,16 +58,6 @@ export class CalendarComponent {
   changeHotel(hotelId: number) {
     this.commonService.setHotelId(hotelId)
   }
-
-  items = [
-    { name: 'Agoda', price: "167.00" },
-    { name: 'Booking.com', price: "177.00" },
-    { name: 'Expedia', price: "161.00" },
-    { name: 'Getaroom', price: "149.00" },
-    { name: 'Hopper', price: "154.00" },
-    { name: 'PriceLine', price: "145.00" },
-    { name: 'Hotels.com', price: "170.00" },
-  ]
 
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
@@ -110,23 +101,6 @@ export class CalendarComponent {
     );
   }
 
-  Adults = new FormControl(2);
-  Kids = new FormControl(0);
-  getRooms() {
-    let data = {
-      "promo": "",
-      "room_stay_from": this.commonService.formatNgbDate(this.fromDate),
-      "room_stay_to": this.commonService.formatNgbDate(this.toDate || this.calendar.getNext(this.fromDate, 'd', 1)),
-      "sub_hotel_id": this.hotelId?.toString(),
-      "adults": this.Adults.value?.toString(),
-      "child": this.Kids.value?.toString()
-    }
-    let path = `/search-room/${data.sub_hotel_id}/${data.room_stay_from}/${data.room_stay_to}/${data.adults}/${data.child}/${data.child}`;
-    this.router.navigate([path], {
-      skipLocationChange: true,
-    });
-  }
-
   getBestPrice(startDate: NgbDate, endDate: NgbDate) {
     this.bestPriceLoading = true;
     var data = {
@@ -145,8 +119,25 @@ export class CalendarComponent {
         this.bestPriceData = response;
         this.bestPriceLoading = false;
        },
-      error: (error) => { },
+      error: (error) => {
+        console.log(error);
+      },
     })
+  }
+
+  searchRooms(){
+    let data = {
+      "promo": "",
+      "room_stay_from": this.commonService.formatNgbDate(this.fromDate),
+      "room_stay_to": this.commonService.formatNgbDate(this.toDate || this.calendar.getNext(this.fromDate, 'd', 1)),
+      "sub_hotel_id": this.hotelId?.toString(),
+      "adults": this.adultCount.toString(),
+      "child": this.childCount.toString()
+    }
+    let path = `/search-room/${data.sub_hotel_id}/${data.room_stay_from}/${data.room_stay_to}/${data.adults}/${data.child}/${data.child}`;
+    this.router.navigate([path], {
+      skipLocationChange: true,
+    });
   }
 
 

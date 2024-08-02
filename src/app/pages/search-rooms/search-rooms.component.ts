@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HotelService } from '../../services/hotel-services.service';
 import { GetPriceModuleSelectedDatesV2Service } from '../../../swagger/api/services';
+import { CommonService } from '../../services/common.service';
 
 @Component({
   selector: 'app-search-rooms',
@@ -14,8 +15,11 @@ export class SearchRoomsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private hotelService: HotelService,
+    private commonService: CommonService,
     private apiService: GetPriceModuleSelectedDatesV2Service
-  ) {}
+  ) {
+    this.commonService.setPagetitle("Results");
+  }
 
   ngOnInit(): void {
     // Subscribe to route parameters

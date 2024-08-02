@@ -19,6 +19,7 @@ interface Properties {
 })
 export class HotelPropertiesComponent {
   constructor(public router : Router, private commonService: CommonService){
+    this.commonService.setPagetitle("Properties");
   }
 
   properties : Properties[] = [
@@ -44,7 +45,6 @@ export class HotelPropertiesComponent {
 
   goToCalendar(id:number){
     this.commonService.setHotelId(id);
-    this.commonService.setPagetitle("Check Availability");
     this.router.navigate(['/calendar'],{
       skipLocationChange: true,
     });

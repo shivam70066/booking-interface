@@ -16,7 +16,6 @@ export class GlobalButtonComponent {
 
   toggleInterface(){
     this.commonService.setInterfaceStatus(true);
-    this.commonService.setPagetitle("Properties");
     this.router.navigate(['hotels-properties'],{
       skipLocationChange: true
     });
