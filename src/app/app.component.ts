@@ -4,11 +4,12 @@ import { Subscription } from 'rxjs';
 import { CommonService } from './services/common.service';
 import { GlobalButtonComponent } from "./common/global-button/global-button.component";
 import { NavbarComponent } from "./common/navbar/navbar.component";
+import { AssetBaseUrlDirective } from './directives/asset-base-url.directive';
 
 @Component({
   selector: 'bedy-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, GlobalButtonComponent, NavbarComponent],
+  imports: [RouterOutlet, RouterLink, GlobalButtonComponent, NavbarComponent, AssetBaseUrlDirective],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   encapsulation: ViewEncapsulation.ShadowDom
