@@ -44,6 +44,7 @@ export class HotelPropertiesComponent {
 
   goToCalendar(id:number){
     this.commonService.setHotelId(id);
+    this.commonService.setPagetitle("Check Availability");
     this.router.navigate(['/calendar'],{
       skipLocationChange: true,
     });

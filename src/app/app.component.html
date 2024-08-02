@@ -1,8 +1,11 @@
 <app-global-button></app-global-button>
 @if (showPopUp) {
-  <div class="mat-typography" id="booking-interface-main">
-    <span class="global-close-btn" (click)="toggleInterface(false);">X</span>
-    <router-outlet></router-outlet>
+  <div class="mat-typography">
+    <app-navbar></app-navbar>
+    <div id="booking-interface-main">
+      <router-outlet></router-outlet>
+    </div>
+    <!-- <span class="global-close-btn" (click)="toggleInterface(false);">X</span> -->
   </div>
 }
 

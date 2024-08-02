@@ -1,14 +1,14 @@
 import { Component , ElementRef, ViewEncapsulation} from '@angular/core';
 import { RouterOutlet,RouterLink, Router } from '@angular/router';
-import {OverlayModule} from '@angular/cdk/overlay';
 import { Subscription } from 'rxjs';
 import { CommonService } from './services/common.service';
-import { GlobalButtonComponent } from "./global/global-button/global-button.component";
+import { GlobalButtonComponent } from "./common/global-button/global-button.component";
+import { NavbarComponent } from "./common/navbar/navbar.component";
 
 @Component({
   selector: 'bedy-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, OverlayModule, GlobalButtonComponent],
+  imports: [RouterOutlet, RouterLink, GlobalButtonComponent, NavbarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   encapsulation: ViewEncapsulation.ShadowDom
@@ -28,10 +28,6 @@ export class AppComponent {
       this.showPopUp = popUpState;
     })
 
-  }
-
-  toggleInterface(state: boolean){
-    this.commonService.setInterfaceStatus(state);
   }
 
   ngOnDestroy(): void {

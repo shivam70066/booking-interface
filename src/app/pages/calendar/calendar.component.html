@@ -1,36 +1,84 @@
-<ngb-datepicker id="full_calendar_datepicker" #dp (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden" />
+<div class="calender-page">
+  <div class="calendar-container">
+    <div class="hotel-container">
+      <div class="hotel-logos" [ngClass]="{'active':hotelId==123}" (click)="changeHotel(123)">
+        <img src="/assets/img/sub_hotel_logos/PBS.png" alt="">
+      </div>
+      <div class="hotel-logos" [ngClass]="{'active':hotelId==124}" (click)="changeHotel(124)">
+        <img src="/assets/img/sub_hotel_logos/BVP.png" alt="">
+      </div>
+      <div class="hotel-logos" [ngClass]="{'active':hotelId==125}" (click)="changeHotel(125)">
+        <img src="/assets/img/sub_hotel_logos/BPW.png" alt="">
+      </div>
+    </div>
+    <div class="calender-body">
+      <ngb-datepicker #dp (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
+        outsideDays="hidden" [minDate]="minDate"/>
 
-<ng-template #t let-date let-focused="focused">
-	<span
-		class="custom-day"
-		[class.focused]="focused"
-		[class.range]="isRange(date)"
-		[class.faded]="isHovered(date) || isInside(date)"
-		(mouseenter)="hoveredDate = date"
-		(mouseleave)="hoveredDate = null"
-	>
-		{{ date.day }}
-	</span>
-</ng-template>
+      <ng-template #t let-date let-focused="focused">
+        <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)" [class.disabled]="isDisabled(date)"
+          [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+          (mouseleave)="hoveredDate = null">
+          {{ date.day }}
+        </span>
+      </ng-template>
 
-<!-- <pre>From: {{ fromDate | json }} </pre>
-<pre>To: {{ toDate | json }} </pre> -->
+      <hr />
 
-<mat-form-field >
-  <mat-label>Adults</mat-label>
-  <mat-select [formControl]="Adults">
-    @for (data of adultsData; track $index) {
-      <mat-option [value]=data.value>{{data.text}}</mat-option>
+      <pre>From: {{ fromDate | json }} </pre>
+      <pre>To: {{ toDate | json }} </pre>
+    </div>
+  </div>
+  <div class="book-direct-container">
+    <div class="book-direct-head">
+      <h3>Book Direct & Save!</h3>
+    </div>
+    <div class="book-direct-content">
+      <div class="best-price-text">
+        <span>Best Price Available</span>
+      </div>
+      <div class="best-price-value">
+        <span>$105.00</span>
+      </div>
+    </div>
+    @for (item of items; track $index) {
+    <div class="channels-price-list">
+      <div class="channel-name">
+        <span>{{item.name}}</span>
+      </div>
+      <div class="channel-price">
+        <span>${{item.price}}</span>
+      </div>
+    </div>
+    <hr>
     }
-  </mat-select>
-</mat-form-field>
 
-<mat-form-field >
-  <mat-label>Kids</mat-label>
-  <mat-select [formControl]="Kids">
-    @for (data of kidsData; track $index) {
-      <mat-option [value]=data.value>{{data.text}}</mat-option>
-    }
-  </mat-select>
-</mat-form-field>
-<button (click)="getRooms()" >Search</button>
+    <div class="adult-child-info">
+      <div class="info">
+        <div class="info-left">
+          <span class="heading">Adults</span>
+          <br>
+          <span class="sub-heading">Ages 13 or above</span>
+        </div>
+        <div class="info-right">
+          <button [disabled]="adultCount<=1" (click)="adultCount = adultCount-1;">-</button>
+          <span>{{adultCount}}</span>
+          <button [disabled]="adultCount>=6" (click)="adultCount = adultCount+1;">+</button>
+        </div>
+      </div>
+      <div class="info">
+        <div class="info-left">
+          <span class="heading">Kids</span>
+          <br>
+          <span class="sub-heading">Ages 2-12</span>
+        </div>
+        <div class="info-right">
+          <button [disabled]="childCount<=0" (click)="childCount = childCount-1;">-</button>
+          <span>{{childCount}}</span>
+          <button [disabled]="childCount>=4" (click)="childCount = childCount+1;">+</button>
+        </div>
+      </div>
+      <button class="search-btn">Search</button>
+    </div>
+  </div>
+</div>

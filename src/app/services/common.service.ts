@@ -11,13 +11,19 @@ export class CommonService {
 
   private hotelIdSubject = new BehaviorSubject<number>(0);
   private showInterface = new  BehaviorSubject<boolean>(false);
+  private pageTitle = new  BehaviorSubject<string>("");
 
 
   hotelId$ = this.hotelIdSubject.asObservable();
   showInterface$ = this.showInterface.asObservable();
+  pageTitle$ = this.pageTitle.asObservable();
 
   setHotelId(id: number): void {
     this.hotelIdSubject.next(id);
+  }
+
+  setPagetitle(title: string){
+    this.pageTitle.next(title);
   }
 
   setInterfaceStatus(state: boolean){
