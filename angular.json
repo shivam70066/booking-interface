@@ -17,8 +17,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "deployUrl": "http://localhost/Bedy/booking-interface/dist/bedy-ibe/",
-            "baseHref": "/",
             "outputPath": "dist/bedy-ibe",
             "index": "src/index.html",
             "browser": "src/main.ts",
