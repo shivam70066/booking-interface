@@ -1,18 +1,18 @@
 import { Component, inject } from '@angular/core';
 import { NgbCalendar, NgbDate, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
-import {
-  FormControl, FormsModule, ReactiveFormsModule,
-} from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { JsonPipe } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { Subscription } from 'rxjs';
 import { CommonService } from '../../services/common.service';
-import { HotelService } from '../../services/hotel-services.service';
 import { Router } from '@angular/router';
 import { constVariables } from '../../constants/constants';
 import { CommonModule } from '@angular/common';
+import { GetPriceModuleSelectedDatesV2Service } from '../../../swagger/api/services';
+import { GetPriceModuleSelectedDatesResponse } from '../../../swagger/api/models';
+
 @Component({
   selector: 'app-calendar',
   standalone: true,
@@ -23,17 +23,29 @@ import { CommonModule } from '@angular/common';
 export class CalendarComponent {
   adultsData = constVariables.AdultsData;
   kidsData = constVariables.KidsData;
-  hotelId: number | null = null;
+
+  hotelId: number | undefined = undefined;
   private hotelIDSubscription?: Subscription;
+
   calendar = inject(NgbCalendar);
   hoveredDate: NgbDate | null = null;
+
   fromDate: NgbDate = this.calendar.getToday();
   toDate: NgbDate | null = this.calendar.getNext(this.fromDate, 'd', 1);
   adultCount: number = 2;
   childCount: number = 0;
-  minDate : NgbDate = this.calendar.getToday();
 
-  constructor(private commonService: CommonService, private hotelService: HotelService, private router: Router) {
+  bestPriceLoading : boolean = true;
+  bestPriceData: GetPriceModuleSelectedDatesResponse | null = null;
+
+  minDate: NgbDate = this.calendar.getToday();
+
+  constructor(
+    private commonService: CommonService,
+    private router: Router,
+    private apiService: GetPriceModuleSelectedDatesV2Service
+  ) {
+    this.getBestPrice(this.minDate, this.minDate = this.calendar.getNext(this.minDate, 'd', 1));
   }
 
   ngOnInit(): void {
@@ -57,39 +69,46 @@ export class CalendarComponent {
   ]
 
   onDateSelection(date: NgbDate) {
-		if (!this.fromDate && !this.toDate) {
-			this.fromDate = date;
-		} else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
-			this.toDate = date;
-		} else {
-			this.toDate = null;
-			this.fromDate = date;
-		}
-	}
-
-	isHovered(date: NgbDate) {
-		return (
-			this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate)
-		);
-	}
-
-  isDisabled(date: NgbDate){
-
-    return (this.minDate.day>date.day && this.minDate.month>=date.month && this.minDate.year>=date.year);
+    if (!this.fromDate && !this.toDate) {
+      this.fromDate = date;
+    } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
+      this.toDate = date;
+    } else {
+      this.toDate = null;
+      this.fromDate = date;
+    }
+    if (this.toDate != null && this.fromDate != null) {
+      this.getBestPrice(this.fromDate, this.toDate);
+    }
   }
 
-	isInside(date: NgbDate) {
-		return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
-	}
+  isHovered(date: NgbDate) {
+    return (
+      this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate)
+    );
+  }
 
-	isRange(date: NgbDate) {
-		return (
-			date.equals(this.fromDate) ||
-			(this.toDate && date.equals(this.toDate)) ||
-			this.isInside(date) ||
-			this.isHovered(date)
-		);
-	}
+  isDisabled(date: NgbDate) {
+
+    return ((this.minDate.day - 1) > date.day && this.minDate.month >= date.month && this.minDate.year >= date.year);
+  }
+
+  isStopsell(date: NgbDate) {
+    return false;
+  }
+
+  isInside(date: NgbDate) {
+    return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
+  }
+
+  isRange(date: NgbDate) {
+    return (
+      date.equals(this.fromDate) ||
+      (this.toDate && date.equals(this.toDate)) ||
+      this.isInside(date) ||
+      this.isHovered(date)
+    );
+  }
 
   Adults = new FormControl(2);
   Kids = new FormControl(0);
@@ -106,8 +125,30 @@ export class CalendarComponent {
     this.router.navigate([path], {
       skipLocationChange: true,
     });
-
   }
+
+  getBestPrice(startDate: NgbDate, endDate: NgbDate) {
+    this.bestPriceLoading = true;
+    var data = {
+      calledFrom: "header",
+      calledOn: "dateSelection",
+      end: endDate,
+      start: startDate,
+      fromSuitesPage: false,
+      promo: "",
+      roomTypeId: 0,
+      sub_hotel_id: this.hotelId
+    }
+
+    this.apiService.frontendSearchresultsGetPriceModuleSelectedDatesV2Post({ body: data }).subscribe({
+      next: (response:GetPriceModuleSelectedDatesResponse) => {
+        this.bestPriceData = response;
+        this.bestPriceLoading = false;
+       },
+      error: (error) => { },
+    })
+  }
+
 
   ngOnDestroy(): void {
     this.hotelIDSubscription?.unsubscribe();

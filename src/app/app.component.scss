@@ -1,17 +1,17 @@
 @import '../styles.scss';
 
-#booking-interface-main {
-  // padding: 20px;
+.booking-interface-main {
   position: fixed;
   top: 0;
   left: 0;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  padding: 1rem;
   width: 100vw;
   height: 100vh;
   background-color: #ffffff;
-
+    .booking-interface-page{
+      padding: 1rem;
+    }
 }
 

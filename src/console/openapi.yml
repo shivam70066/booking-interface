@@ -8,771 +8,118 @@ servers:
 paths:
   /frontend/Searchresults/get_search_results_sj:
     post:
+      tags:
+        - GetSearchResultSj
       summary: Get search results for available rooms
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/testtype'
+              $ref: "#/components/schemas/GetSearchResultRequest"
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      rooms_avail:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            available_rooms:
-                              type: array
-                              items:
-                                type: object
-                                properties:
-                                  product_id:
-                                    type: string
-                                  product_name:
-                                    type: string
-                                  image:
-                                    type: string
-                                  cover_photo:
-                                    type: string
-                                  product_sort_order:
-                                    type: string
-                                  product_is_clean:
-                                    type: string
-                                  max_occupancy:
-                                    type: string
-                                  bed_code_name:
-                                    type: string
-                                  room_view_code_name:
-                                    type: string
-                                    nullable: true
-                                  type_id:
-                                    type: string
-                                  sub_hotel_id:
-                                    type: string
-                                  srp_card_color:
-                                    type: string
-                                  srp_card_color_sec:
-                                    type: string
-                                  room_display_name:
-                                    type: string
-                                  room_type_description:
-                                    type: string
-                                  inside_view_longitude:
-                                    type: string
-                                  inside_view_latitude:
-                                    type: string
-                                  inside_view_height:
-                                    type: string
-                                  inside_view_pano_id:
-                                    type: string
-                                  accessible_ind:
-                                    type: string
-                                  is_bundle:
-                                    type: string
-                                  product_room_number:
-                                    type: string
-                                  normal_occupancy:
-                                    type: string
-                                  boat_length:
-                                    type: string
-                                  product_type:
-                                    type: string
-                                  m3_names:
-                                    type: string
-                                    nullable: true
-                                  additional_products:
-                                    type: array
-                                    items:
-                                      type: object
-                                      properties:
-                                        icon:
-                                          type: string
-                                        product:
-                                          type: string
-                                  mls_days:
-                                    type: integer
-                                  rooms_available:
-                                    type: integer
-                                  rooms_available_ids:
-                                    type: array
-                                    items:
-                                      type: object
-                                      properties:
-                                        product_id:
-                                          type: string
-                                        product_name:
-                                          type: string
-                                  rateNameDesc:
-                                    type: object
-                                    properties:
-                                      key:
-                                        type: object
-                                        properties:
-                                          key:
-                                            type: object
-                                            properties:
-                                              ratePlanName:
-                                                type: string
-                                              ratePlanDesc:
-                                                type: string
-                                  rates:
-                                    type: object
-                                    properties:
-                                      key:
-                                        type: object
-                                        properties:
-                                          key:
-                                            type: array
-                                            items:
-                                              type: string
-                                  dates:
-                                    type: object
-                                    properties:
-                                      key:
-                                        type: object
-                                        properties:
-                                          key:
-                                            type: array
-                                            items:
-                                              type: string
-                                  nightlyRate:
-                                    type: object
-                                    properties:
-                                      key:
-                                        type: object
-                                        properties:
-                                          key:
-                                            type: string
-                                  ratePlanIds:
-                                    type: object
-                                    properties:
-                                      key:
-                                        type: object
-                                        properties:
-                                          key:
-                                            type: array
-                                            items:
-                                              type: string
-                                  nightlySum:
-                                    type: object
-                                    properties:
-                                      key:
-                                        type: object
-                                        properties:
-                                          key:
-                                            type: string
-                                  totalRate:
-                                    type: object
-                                    properties:
-                                      key:
-                                        type: object
-                                        properties:
-                                          key:
-                                            type: string
-                                  surcharge:
-                                    type: integer
-                                  resort_fee:
-                                    type: integer
-                                  cancelBefore:
-                                    type: object
-                                    properties:
-                                      key:
-                                        type: object
-                                        properties:
-                                          key:
-                                            type: string
-                                          another_key:
-                                            type: string
-                                  policyText:
-                                    type: object
-                                    properties:
-                                      key:
-                                        type: object
-                                        properties:
-                                          key:
-                                            type: string
-                                          another_key:
-                                            type: string
-                                  highestAvgRate:
-                                    type: object
-                                    properties:
-                                      key:
-                                        type: string
-                                      another_key:
-                                        type: string
-                                  rate_plan_description_sorted:
-                                    type: array
-                                    items:
-                                      type: object
-                                      properties:
-                                        policy_id:
-                                          type: integer
-                                        rate_plan_name:
-                                          type: string
-                                  policy_name:
-                                    type: object
-                                    properties:
-                                      key:
-                                        type: string
-                                  uniqueIndex:
-                                    type: string
-                                  amenitiesdata:
-                                    type: object
-                                    properties:
-                                      Television:
-                                        type: object
-                                        properties:
-                                          key:
-                                            type: object
-                                            properties:
-                                              name:
-                                                type: string
-                                              icon:
-                                                type: string
-                                              selected:
-                                                type: string
-                                              hotel_amenity_id:
-                                                type: string
-                                          another_key:
-                                            type: object
-                                            properties:
-                                              name:
-                                                type: string
-                                              icon:
-                                                type: string
-                                              selected:
-                                                type: string
-                                              hotel_amenity_id:
-                                                type: string
-                                          parent_icon:
-                                            type: string
-                                      Room_features:
-                                        type: object
-                                        properties:
-                                          key:
-                                            type: object
-                                            properties:
-                                              name:
-                                                type: string
-                                              icon:
-                                                type: string
-                                              selected:
-                                                type: string
-                                              hotel_amenity_id:
-                                                type: string
-                                          parent_icon:
-                                            type: string
-                                      Bathroom:
-                                        type: object
-                                        properties:
-                                          key:
-                                            type: object
-                                            properties:
-                                              name:
-                                                type: string
-                                              icon:
-                                                type: string
-                                              selected:
-                                                type: string
-                                              hotel_amenity_id:
-                                                type: string
-                                          parent_icon:
-                                            type: string
-                                      Services:
-                                        type: object
-                                        properties:
-                                          key:
-                                            type: object
-                                            properties:
-                                              name:
-                                                type: string
-                                              icon:
-                                                type: string
-                                              selected:
-                                                type: string
-                                              hotel_amenity_id:
-                                                type: string
-                                          another_key:
-                                            type: object
-                                            properties:
-                                              name:
-                                                type: string
-                                              icon:
-                                                type: string
-                                              selected:
-                                                type: string
-                                              hotel_amenity_id:
-                                                type: string
-                                          parent_icon:
-                                            type: string
-                                      Food_and_Drink:
-                                        type: object
-                                        properties:
-                                          key:
-                                            type: object
-                                            properties:
-                                              name:
-                                                type: string
-                                              icon:
-                                                type: string
-                                              selected:
-                                                type: string
-                                              hotel_amenity_id:
-                                                type: string
-                                          parent_icon:
-                                            type: string
-                                  roomImages:
-                                    type: array
-                                    items:
-                                      type: object
-                                      properties:
-                                        catalog_product_media_id:
-                                          type: string
-                                        type_id:
-                                          type: string
-                                        product_type:
-                                          type: string
-                                        media:
-                                          type: string
-                                        cover_photo:
-                                          type: string
-                                        is_featured:
-                                          type: string
-                                        sort_order:
-                                          type: string
-                                        filename:
-                                          type: string
-                                        url:
-                                          type: string
-                                  room_type_name:
-                                    type: string
-                                  tax_id:
-                                    type: string
-                                  taxes:
-                                    type: array
-                                    items:
-                                      type: object
-                                      properties:
-                                        tax_name:
-                                          type: string
-                                        tax_common_name:
-                                          type: string
-                                        tax_value:
-                                          type: string
-                                        tax_id:
-                                          type: string
-                                        applied_on_field:
-                                          type: string
-                                        default_tax:
-                                          type: string
-                                  totalDiscount:
-                                    type: object
-                                    properties:
-                                      key:
-                                        type: object
-                                        properties:
-                                          key:
-                                            type: integer
-                                  toolTipData:
-                                    type: object
-                                    properties:
-                                      key:
-                                        type: object
-                                        properties:
-                                          key:
-                                            type: object
-                                            properties:
-                                              nightlyAvg:
-                                                type: string
-                                              nights:
-                                                type: integer
-                                              subTotal:
-                                                type: string
-                                              discount:
-                                                type: string
-                                              resortFee:
-                                                type: integer
-                                              surcharge:
-                                                type: integer
-                                              taxes:
-                                                type: string
-                                              grandTotal:
-                                                type: string
-                                  minimum_price_value:
-                                    type: string
-                                  minimum_price_plan:
-                                    type: string
-                                  minimum_price_policy:
-                                    type: integer
-                                  price_for_sorting:
-                                    type: string
-                      room_move:
-                        type: boolean
-                      type_ids:
-                        type: array
-                        items:
-                          type: integer
-                      amenities_filters:
-                        type: array
-                        items:
-                          type: string
-                      viewType_for_filters:
-                        type: array
-                        items:
-                          type: string
-                      bedType_for_filters:
-                        type: array
-                        items:
-                          type: string
-                      ratePlan:
-                        type: string
-                      lowestPriceRoom:
-                        type: object
-                        properties:
-                          productId:
-                            type: string
-                          roomTypeId:
-                            type: string
-                      minimumnPrice:
-                        type: integer
-                      maximumPrice:
-                        type: number
-                      roomSubHotelId:
-                        type: string
-                      singleRoomSearched:
-                        type: boolean
-                      selectedHotelPolicy:
-                        type: integer
-                      subHotelMinimumPrice:
-                        type: object
-                        properties:
-                          key:
-                            type: integer
-                          another_key:
-                            type: integer
-                      errorMsgForHotel:
-                        type: string
-                  status:
-                    type: string
-                  message:
-                    type: string
-        '400':
+                $ref: "#/components/schemas/GetSearchResultResponse"
+        "400":
           description: Bad request
-        '500':
+        "500":
           description: Internal server error
   /frontend/Home/get_dynamic_search_dates/0:
     get:
+      tags:
+        - GetDynamicDates0
       summary: Get dynamic search dates
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  min_date:
-                    type: object
-                    properties:
-                      day:
-                        type: string
-                      month:
-                        type: string
-                      year:
-                        type: string
-                  room_stay_from:
-                    type: object
-                    properties:
-                      day:
-                        type: string
-                      month:
-                        type: string
-                      year:
-                        type: string
-                  room_stay_to:
-                    type: object
-                    properties:
-                      day:
-                        type: string
-                      month:
-                        type: string
-                      year:
-                        type: string
-        '400':
+                $ref: "#/components/schemas/GetDynamicDates"
+        "400":
           description: Bad request
-        '500':
+        "500":
           description: Internal server error
+  /frontend/booking/get_gift_card:
+    get:
+      tags:
+        - GetGiftCards
+      summary: Get gift card details
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetGiftCards"
+        "400":
+          description: Bad request
+        "500":
+          description: Internal server error
+  /frontend/Searchresults/getPriceMlsStopSell:
+    post:
+      tags:
+        - GetPriceMlsStopSell
+      summary: Retrieve price, minimum stay, stop sell, CTA, CTD, and availability information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GetPriceMlsStopSellRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetPriceMlsStopSellResponse"
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
   /frontend/Searchresults/getPriceModuleSelectedDatesV2:
     post:
+      tags:
+        - GetPriceModuleSelectedDatesV2
       summary: Get price module for selected dates
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                start:
-                  type: object
-                  properties:
-                    year:
-                      type: integer
-                    month:
-                      type: integer
-                    day:
-                      type: integer
-                end:
-                  type: object
-                  properties:
-                    year:
-                      type: integer
-                    month:
-                      type: integer
-                    day:
-                      type: integer
-                calledFrom:
-                  type: string
-                calledOn:
-                  type: string
-                sub_hotel_id:
-                  type: integer
-                roomTypeId:
-                  type: integer
+              $ref: "#/components/schemas/GetPriceModuleSelectedDatesRequest"
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      price_data:
-                        type: object
-                        properties:
-                          direct:
-                            type: object
-                            properties:
-                              amount:
-                                type: integer
-                              best_available_price:
-                                type: integer
-                              channelName:
-                                type: string
-                              subHotelId:
-                                type: integer
-                          other:
-                            type: object
-                            properties:
-                              AGO:
-                                type: object
-                                properties:
-                                  amount:
-                                    type: string
-                                  best_available_price:
-                                    type: integer
-                                  channelName:
-                                    type: string
-                                  subHotelId:
-                                    type: integer
-                              BDC:
-                                type: object
-                                properties:
-                                  amount:
-                                    type: string
-                                  best_available_price:
-                                    type: integer
-                                  channelName:
-                                    type: string
-                                  subHotelId:
-                                    type: integer
-                                  imageName:
-                                    type: string
-                              EXP:
-                                type: object
-                                properties:
-                                  amount:
-                                    type: string
-                                  best_available_price:
-                                    type: integer
-                                  channelName:
-                                    type: string
-                                  subHotelId:
-                                    type: integer
-                                  imageName:
-                                    type: string
-                              PCL:
-                                type: object
-                                properties:
-                                  amount:
-                                    type: string
-                                  best_available_price:
-                                    type: integer
-                                  channelName:
-                                    type: string
-                                  subHotelId:
-                                    type: integer
-                                  imageName:
-                                    type: string
-                              GAM:
-                                type: object
-                                properties:
-                                  amount:
-                                    type: string
-                                  best_available_price:
-                                    type: integer
-                                  channelName:
-                                    type: string
-                                  subHotelId:
-                                    type: integer
-                                  imageName:
-                                    type: string
-                              HOP:
-                                type: object
-                                properties:
-                                  amount:
-                                    type: string
-                                  best_available_price:
-                                    type: integer
-                                  channelName:
-                                    type: string
-                                  subHotelId:
-                                    type: integer
-                              HOTELS:
-                                type: object
-                                properties:
-                                  amount:
-                                    type: string
-                                  best_available_price:
-                                    type: integer
-                                  channelName:
-                                    type: string
-                                  subHotelId:
-                                    type: integer
-                                  imageName:
-                                    type: string
-                      additional_products:
-                        type: array
-                        items:
-                          type: string
-                      showDates:
-                        type: integer
-                      showInterstitial:
-                        type: integer
-                  status:
-                    type: string
-                  message:
-                    type: string
-        '400':
+                $ref: "#/components/schemas/GetPriceModuleSelectedDatesResponse"
+        "400":
           description: Bad request
-        '500':
+        "500":
           description: Internal server error
   /Home/get_hotel_rooms:
     get:
+      tags:
+        - GetHotelRooms
       summary: Get hotel rooms
       description: Retrieve the list of hotel rooms and their details.
       responses:
-        '200':
+        "200":
           description: Successful response
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        room_type_id:
-                          type: string
-                        hotel_id:
-                          type: string
-                        sub_hotel_id:
-                          type: string
-                        boat_length:
-                          type: string
-                        boat_width:
-                          type: string
-                        bedroom_room_type:
-                          type: string
-                        room_type_name:
-                          type: string
-                        occupancy:
-                          type: string
-                        description:
-                          type: string
-                        bundleRoom:
-                          type: string
-                        room_type_code:
-                          type: string
-                        bed:
-                          type: string
-                        view:
-                          type: string
-                          nullable: true
-                        room_display_name:
-                          type: string
-                        img:
-                          type: string
-                        tab_img:
-                          type: string
-                        thumbnailImage:
-                          type: string
-                        img_name:
-                          type: string
-                        room_type:
-                          type: string
-                        additional_products:
-                          type: string
-                        images:
-                          type: array
-                          items:
-                            type: string
-                        amenities:
-                          type: array
-                          items:
-                            type: object
-                            properties:
-                              room_amenity_type_name:
-                                type: string
-                              parent:
-                                type: string
-                              parent_icon:
-                                type: string
-                              room_amenity_type_icon:
-                                type: string
-                              hotel_amenity_id:
-                                type: string
-                              selected:
-                                type: string
-                        show_dimension:
-                          type: boolean
-                  imgThumb:
-                    type: object
-                    additionalProperties:
-                      type: array
-                      items:
-                        type: string
-                  message:
-                    type: string
+                $ref: "#/components/schemas/GetHotelRooms"
 components:
   schemas:
-    testtype:
+    GetSearchResultRequest:
       type: object
       properties:
         promo:
@@ -790,4 +137,826 @@ components:
         adults:
           type: string
         child:
+          type: string
+    GetSearchResultResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            rooms_avail:
+              type: array
+              items:
+                type: object
+                properties:
+                  available_rooms:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        product_id:
+                          type: string
+                        product_name:
+                          type: string
+                        image:
+                          type: string
+                        cover_photo:
+                          type: string
+                        product_sort_order:
+                          type: string
+                        product_is_clean:
+                          type: string
+                        max_occupancy:
+                          type: string
+                        bed_code_name:
+                          type: string
+                        room_view_code_name:
+                          type: string
+                          nullable: true
+                        type_id:
+                          type: string
+                        sub_hotel_id:
+                          type: string
+                        srp_card_color:
+                          type: string
+                        srp_card_color_sec:
+                          type: string
+                        room_display_name:
+                          type: string
+                        room_type_description:
+                          type: string
+                        inside_view_longitude:
+                          type: string
+                        inside_view_latitude:
+                          type: string
+                        inside_view_height:
+                          type: string
+                        inside_view_pano_id:
+                          type: string
+                        accessible_ind:
+                          type: string
+                        is_bundle:
+                          type: string
+                        product_room_number:
+                          type: string
+                        normal_occupancy:
+                          type: string
+                        boat_length:
+                          type: string
+                        product_type:
+                          type: string
+                        m3_names:
+                          type: string
+                          nullable: true
+                        additional_products:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              icon:
+                                type: string
+                              product:
+                                type: string
+                        mls_days:
+                          type: integer
+                        rooms_available:
+                          type: integer
+                        rooms_available_ids:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              product_id:
+                                type: string
+                              product_name:
+                                type: string
+                        rateNameDesc:
+                          type: object
+                          properties:
+                            key:
+                              type: object
+                              properties:
+                                key:
+                                  type: object
+                                  properties:
+                                    ratePlanName:
+                                      type: string
+                                    ratePlanDesc:
+                                      type: string
+                        rates:
+                          type: object
+                          properties:
+                            key:
+                              type: object
+                              properties:
+                                key:
+                                  type: array
+                                  items:
+                                    type: string
+                        dates:
+                          type: object
+                          properties:
+                            key:
+                              type: object
+                              properties:
+                                key:
+                                  type: array
+                                  items:
+                                    type: string
+                        nightlyRate:
+                          type: object
+                          properties:
+                            key:
+                              type: object
+                              properties:
+                                key:
+                                  type: string
+                        ratePlanIds:
+                          type: object
+                          properties:
+                            key:
+                              type: object
+                              properties:
+                                key:
+                                  type: array
+                                  items:
+                                    type: string
+                        nightlySum:
+                          type: object
+                          properties:
+                            key:
+                              type: object
+                              properties:
+                                key:
+                                  type: string
+                        totalRate:
+                          type: object
+                          properties:
+                            key:
+                              type: object
+                              properties:
+                                key:
+                                  type: string
+                        surcharge:
+                          type: integer
+                        resort_fee:
+                          type: integer
+                        cancelBefore:
+                          type: object
+                          properties:
+                            key:
+                              type: object
+                              properties:
+                                key:
+                                  type: string
+                                another_key:
+                                  type: string
+                        policyText:
+                          type: object
+                          properties:
+                            key:
+                              type: object
+                              properties:
+                                key:
+                                  type: string
+                                another_key:
+                                  type: string
+                        highestAvgRate:
+                          type: object
+                          properties:
+                            key:
+                              type: string
+                            another_key:
+                              type: string
+                        rate_plan_description_sorted:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              policy_id:
+                                type: integer
+                              rate_plan_name:
+                                type: string
+                        policy_name:
+                          type: object
+                          properties:
+                            key:
+                              type: string
+                        uniqueIndex:
+                          type: string
+                        amenitiesdata:
+                          type: object
+                          properties:
+                            Television:
+                              type: object
+                              properties:
+                                key:
+                                  type: object
+                                  properties:
+                                    name:
+                                      type: string
+                                    icon:
+                                      type: string
+                                    selected:
+                                      type: string
+                                    hotel_amenity_id:
+                                      type: string
+                                another_key:
+                                  type: object
+                                  properties:
+                                    name:
+                                      type: string
+                                    icon:
+                                      type: string
+                                    selected:
+                                      type: string
+                                    hotel_amenity_id:
+                                      type: string
+                                parent_icon:
+                                  type: string
+                            Room_features:
+                              type: object
+                              properties:
+                                key:
+                                  type: object
+                                  properties:
+                                    name:
+                                      type: string
+                                    icon:
+                                      type: string
+                                    selected:
+                                      type: string
+                                    hotel_amenity_id:
+                                      type: string
+                                parent_icon:
+                                  type: string
+                            Bathroom:
+                              type: object
+                              properties:
+                                key:
+                                  type: object
+                                  properties:
+                                    name:
+                                      type: string
+                                    icon:
+                                      type: string
+                                    selected:
+                                      type: string
+                                    hotel_amenity_id:
+                                      type: string
+                                parent_icon:
+                                  type: string
+                            Services:
+                              type: object
+                              properties:
+                                key:
+                                  type: object
+                                  properties:
+                                    name:
+                                      type: string
+                                    icon:
+                                      type: string
+                                    selected:
+                                      type: string
+                                    hotel_amenity_id:
+                                      type: string
+                                another_key:
+                                  type: object
+                                  properties:
+                                    name:
+                                      type: string
+                                    icon:
+                                      type: string
+                                    selected:
+                                      type: string
+                                    hotel_amenity_id:
+                                      type: string
+                                parent_icon:
+                                  type: string
+                            Food_and_Drink:
+                              type: object
+                              properties:
+                                key:
+                                  type: object
+                                  properties:
+                                    name:
+                                      type: string
+                                    icon:
+                                      type: string
+                                    selected:
+                                      type: string
+                                    hotel_amenity_id:
+                                      type: string
+                                parent_icon:
+                                  type: string
+                        roomImages:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              catalog_product_media_id:
+                                type: string
+                              type_id:
+                                type: string
+                              product_type:
+                                type: string
+                              media:
+                                type: string
+                              cover_photo:
+                                type: string
+                              is_featured:
+                                type: string
+                              sort_order:
+                                type: string
+                              filename:
+                                type: string
+                              url:
+                                type: string
+                        room_type_name:
+                          type: string
+                        tax_id:
+                          type: string
+                        taxes:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              tax_name:
+                                type: string
+                              tax_common_name:
+                                type: string
+                              tax_value:
+                                type: string
+                              tax_id:
+                                type: string
+                              applied_on_field:
+                                type: string
+                              default_tax:
+                                type: string
+                        totalDiscount:
+                          type: object
+                          properties:
+                            key:
+                              type: object
+                              properties:
+                                key:
+                                  type: integer
+                        toolTipData:
+                          type: object
+                          properties:
+                            key:
+                              type: object
+                              properties:
+                                key:
+                                  type: object
+                                  properties:
+                                    nightlyAvg:
+                                      type: string
+                                    nights:
+                                      type: integer
+                                    subTotal:
+                                      type: string
+                                    discount:
+                                      type: string
+                                    resortFee:
+                                      type: integer
+                                    surcharge:
+                                      type: integer
+                                    taxes:
+                                      type: string
+                                    grandTotal:
+                                      type: string
+                        minimum_price_value:
+                          type: string
+                        minimum_price_plan:
+                          type: string
+                        minimum_price_policy:
+                          type: integer
+                        price_for_sorting:
+                          type: string
+            room_move:
+              type: boolean
+            type_ids:
+              type: array
+              items:
+                type: integer
+            amenities_filters:
+              type: array
+              items:
+                type: string
+            viewType_for_filters:
+              type: array
+              items:
+                type: string
+            bedType_for_filters:
+              type: array
+              items:
+                type: string
+            ratePlan:
+              type: string
+            lowestPriceRoom:
+              type: object
+              properties:
+                productId:
+                  type: string
+                roomTypeId:
+                  type: string
+            minimumnPrice:
+              type: integer
+            maximumPrice:
+              type: number
+            roomSubHotelId:
+              type: string
+            singleRoomSearched:
+              type: boolean
+            selectedHotelPolicy:
+              type: integer
+            subHotelMinimumPrice:
+              type: object
+              properties:
+                key:
+                  type: integer
+                another_key:
+                  type: integer
+            errorMsgForHotel:
+              type: string
+        status:
+          type: string
+        message:
+          type: string
+    GetPriceMlsStopSellRequest:
+      type: object
+      properties:
+        first:
+          type: string
+          format: date
+          example: "2024-08-01"
+        last:
+          type: string
+          format: date
+          example: "2024-09-30"
+        promo:
+          type: string
+          example: ""
+        sub_hotel_id:
+          type: integer
+          example: 123
+        fromSuitesPage:
+          type: boolean
+          example: false
+      required:
+        - first
+        - last
+        - sub_hotel_id
+        - fromSuitesPage
+
+    GetPriceMlsStopSellResponse:
+      type: object
+      properties:
+        amount:
+          type: object
+          additionalProperties:
+            type: string
+            format: float
+        minStay:
+          type: object
+          additionalProperties:
+            type: integer
+        stopSell:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                example: "8/1/2024"
+              value:
+                type: integer
+                example: 0
+        cta:
+          type: object
+          additionalProperties:
+            type: integer
+        ctd:
+          type: object
+          additionalProperties:
+            type: integer
+        availability:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                example: "8/1/2024"
+              value:
+                type: integer
+                example: 1
+    GetDynamicDates:
+      type: object
+      properties:
+        min_date:
+          type: object
+          properties:
+            day:
+              type: string
+            month:
+              type: string
+            year:
+              type: string
+        room_stay_from:
+          type: object
+          properties:
+            day:
+              type: string
+            month:
+              type: string
+            year:
+              type: string
+        room_stay_to:
+          type: object
+          properties:
+            day:
+              type: string
+            month:
+              type: string
+            year:
+              type: string
+    GetGiftCards:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            product_id:
+              type: string
+              description: The ID of the product
+            product_name:
+              type: string
+              description: The name of the product
+            p_gc_price_opt:
+              type: string
+              description: The price options for the gift card
+            p_gc_open_price:
+              type: string
+              description: The open price status for the gift card
+            p_gc_open_price_min:
+              type: string
+              description: The minimum open price for the gift card
+            p_gc_open_price_max:
+              type: string
+              description: The maximum open price for the gift card
+            media:
+              type: string
+              description: The URL of the gift card image
+            tax_id:
+              type: string
+              nullable: true
+              description: The tax ID associated with the gift card
+            tax_name:
+              type: string
+              nullable: true
+              description: The tax name associated with the gift card
+            tax_value:
+              type: string
+              nullable: true
+              description: The tax value associated with the gift card
+        status:
+          type: string
+          description: The status of the response
+        message:
+          type: string
+          description: The message associated with the response
+    GetPriceModuleSelectedDatesRequest:
+      type: object
+      properties:
+        start:
+          type: object
+          properties:
+            year:
+              type: integer
+            month:
+              type: integer
+            day:
+              type: integer
+        end:
+          type: object
+          properties:
+            year:
+              type: integer
+            month:
+              type: integer
+            day:
+              type: integer
+        calledFrom:
+          type: string
+        calledOn:
+          type: string
+        sub_hotel_id:
+          type: integer
+        roomTypeId:
+          type: integer
+    GetPriceModuleSelectedDatesResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            price_data:
+              type: object
+              properties:
+                direct:
+                  type: object
+                  properties:
+                    amount:
+                      type: integer
+                    best_available_price:
+                      type: integer
+                    channelName:
+                      type: string
+                    subHotelId:
+                      type: integer
+                other:
+                  type: object
+                  properties:
+                    AGO:
+                      type: object
+                      properties:
+                        amount:
+                          type: string
+                        best_available_price:
+                          type: integer
+                        channelName:
+                          type: string
+                        subHotelId:
+                          type: integer
+                    BDC:
+                      type: object
+                      properties:
+                        amount:
+                          type: string
+                        best_available_price:
+                          type: integer
+                        channelName:
+                          type: string
+                        subHotelId:
+                          type: integer
+                        imageName:
+                          type: string
+                    EXP:
+                      type: object
+                      properties:
+                        amount:
+                          type: string
+                        best_available_price:
+                          type: integer
+                        channelName:
+                          type: string
+                        subHotelId:
+                          type: integer
+                        imageName:
+                          type: string
+                    PCL:
+                      type: object
+                      properties:
+                        amount:
+                          type: string
+                        best_available_price:
+                          type: integer
+                        channelName:
+                          type: string
+                        subHotelId:
+                          type: integer
+                        imageName:
+                          type: string
+                    GAM:
+                      type: object
+                      properties:
+                        amount:
+                          type: string
+                        best_available_price:
+                          type: integer
+                        channelName:
+                          type: string
+                        subHotelId:
+                          type: integer
+                        imageName:
+                          type: string
+                    HOP:
+                      type: object
+                      properties:
+                        amount:
+                          type: string
+                        best_available_price:
+                          type: integer
+                        channelName:
+                          type: string
+                        subHotelId:
+                          type: integer
+                    HOTELS:
+                      type: object
+                      properties:
+                        amount:
+                          type: string
+                        best_available_price:
+                          type: integer
+                        channelName:
+                          type: string
+                        subHotelId:
+                          type: integer
+                        imageName:
+                          type: string
+            additional_products:
+              type: array
+              items:
+                type: string
+            showDates:
+              type: integer
+            showInterstitial:
+              type: integer
+        status:
+          type: string
+        message:
+          type: string
+    GetHotelRooms:
+      type: object
+      properties:
+        status:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              room_type_id:
+                type: string
+              hotel_id:
+                type: string
+              sub_hotel_id:
+                type: string
+              boat_length:
+                type: string
+              boat_width:
+                type: string
+              bedroom_room_type:
+                type: string
+              room_type_name:
+                type: string
+              occupancy:
+                type: string
+              description:
+                type: string
+              bundleRoom:
+                type: string
+              room_type_code:
+                type: string
+              bed:
+                type: string
+              view:
+                type: string
+                nullable: true
+              room_display_name:
+                type: string
+              img:
+                type: string
+              tab_img:
+                type: string
+              thumbnailImage:
+                type: string
+              img_name:
+                type: string
+              room_type:
+                type: string
+              additional_products:
+                type: string
+              images:
+                type: array
+                items:
+                  type: string
+              amenities:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    room_amenity_type_name:
+                      type: string
+                    parent:
+                      type: string
+                    parent_icon:
+                      type: string
+                    room_amenity_type_icon:
+                      type: string
+                    hotel_amenity_id:
+                      type: string
+                    selected:
+                      type: string
+              show_dimension:
+                type: boolean
+        imgThumb:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        message:
           type: string

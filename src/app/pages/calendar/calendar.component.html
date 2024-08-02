@@ -17,6 +17,7 @@
 
       <ng-template #t let-date let-focused="focused">
         <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)" [class.disabled]="isDisabled(date)"
+          [class.stopsell]="isStopsell(date)"
           [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
           (mouseleave)="hoveredDate = null">
           {{ date.day }}
@@ -33,24 +34,35 @@
     <div class="book-direct-head">
       <h3>Book Direct & Save!</h3>
     </div>
-    <div class="book-direct-content">
-      <div class="best-price-text">
-        <span>Best Price Available</span>
+    @if (bestPriceLoading) {
+      <section class="dots-container">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </section>
+    }
+    @else {
+      <div class="book-direct-content">
+        <div class="best-price-text">
+          <span>Best Price Available</span>
+        </div>
+        <div class="best-price-value">
+          <span>{{bestPriceData?.data?.price_data?.direct?.amount | currency}} </span>
+        </div>
       </div>
-      <div class="best-price-value">
-        <span>$105.00</span>
-      </div>
-    </div>
-    @for (item of items; track $index) {
-    <div class="channels-price-list">
-      <div class="channel-name">
-        <span>{{item.name}}</span>
-      </div>
-      <div class="channel-price">
-        <span>${{item.price}}</span>
-      </div>
-    </div>
-    <hr>
+      @for (item of bestPriceData?.data?.price_data?.other|keyvalue; track $index) {
+        <div class="channels-price-list">
+          <div class="channel-name">
+            <span>{{item.value?.channelName}}</span>
+          </div>
+          <div class="channel-price">
+            <span>{{item.value?.amount | currency}}</span>
+          </div>
+        </div>
+        <hr>
+      }
     }
 
     <div class="adult-child-info">
