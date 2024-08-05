@@ -11,4 +11,7 @@ export class HotelService {
   getRooms(data:any) {
     return this.http.post('https://www.plazabeachresorts.com/ls-api/frontend/Searchresults/get_search_results_sj', data);
   }
+  addTocart(data:any){
+    return this.http.post('https://www.plazabeachresorts.com/ls-api/frontend/cart/add_to_cart',data);
+  }
 }

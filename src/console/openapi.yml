@@ -117,6 +117,70 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetHotelRooms"
+  /frontend/cart/add_to_cart:
+    post:
+      tags:
+        - AddToCart
+      summary: Add items to the cart
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddToCartRequest"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AddToCartResponse"
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+  /frontend/Cart/load_cart_data:
+    post:
+      tags:
+        - LoadCartData
+      summary: Load cart data
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoadCartDataRequest"
+      responses:
+        '200':
+          description: Successful response with cart data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoadCartDataResponse"
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
+  /frontend/Searchresults/get_pos_available_on_fe:
+    get:
+      tags:
+        - GetPosAvailable
+      summary: Get available POS products
+      responses:
+        '200':
+          description: Successful response with available POS products
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetPosAvailable"
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
+        '500':
+          description: Internal server error
 components:
   schemas:
     GetSearchResultRequest:
@@ -959,4 +1023,1092 @@ components:
             items:
               type: string
         message:
+          type: string
+    AddToCartRequest:
+      type: object
+      properties:
+        adults:
+          type: string
+          example: "2"
+        child:
+          type: string
+          example: "0"
+        quantity:
+          type: integer
+          example: 1
+        room_stay_from:
+          type: string
+          format: date
+          example: "08-05-2024"
+        room_stay_to:
+          type: string
+          format: date
+          example: "08-06-2024"
+        addCharges:
+          type: integer
+          example: 0
+        cart_type:
+          type: string
+          example: "reservation"
+        roomTypeName:
+          type: string
+          example: "PB Roadside Efficiency Suite 1Q 123"
+        dates:
+          type: array
+          items:
+            type: string
+            format: date
+        nightlydiscount:
+          type: array
+          items:
+            type: string
+        ratePlan:
+          type: array
+          items:
+            type: string
+        nightlySum:
+          type: string
+        rates:
+          type: array
+          items:
+            type: string
+        room_display_name:
+          type: string
+        typeId:
+          type: string
+        roomMove:
+          type: boolean
+        product_name:
+          type: string
+        selectedPolicyId:
+          type: integer
+        uniqueIndex:
+          type: string
+        product_discount:
+          type: integer
+        productId:
+          type: string
+        mupog:
+          type: string
+    AddToCartResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "success"
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            resortFeePos:
+              type: object
+              properties:
+                cart_id:
+                  type: string
+                cart_items_count:
+                  type: string
+                cart_type:
+                  type: string
+                tab_note:
+                  type: string
+                tab_editing_indicator:
+                  type: string
+                tab_order_opened_by_user:
+                  type: string
+                created_date:
+                  type: string
+                modified_date:
+                  type: string
+                cart_item_id:
+                  type: string
+                room_cart_item_id:
+                  type: string
+                pos_cart_item_id:
+                  type: string
+                cart_room_type_id:
+                  type: string
+                product_id:
+                  type: string
+                cart_product_name:
+                  type: string
+                fe_display_product_name:
+                  type: string
+                products_to_be_blocked:
+                  type: string
+                hotel_id:
+                  type: string
+                sub_hotel_id:
+                  type: string
+                room_stay_guest_count:
+                  type: string
+                room_stay_child_count:
+                  type: string
+                room_stay_from:
+                  type: string
+                room_stay_to:
+                  type: string
+                product_is_timebound:
+                  type: string
+                is_timebound_with_availability:
+                  type: string
+                policy_id:
+                  type: string
+                customer_id:
+                  type: string
+                gc_recipient_name:
+                  type: string
+                gc_recipient_email:
+                  type: string
+                gc_sender_name:
+                  type: string
+                gc_sender_email:
+                  type: string
+                gc_message:
+                  type: string
+                gc_same_as_first:
+                  type: string
+                gc_for_indicator:
+                  type: string
+                promotion_applied:
+                  type: string
+                promotion_id:
+                  type: string
+                promotion_code:
+                  type: string
+                arrival_time:
+                  type: string
+                departure_time:
+                  type: string
+                room_stay_special_req:
+                  type: string
+                service_quantity:
+                  type: string
+                subtotal:
+                  type: string
+                product_discount:
+                  type: string
+                additional_guest_amounts:
+                  type: string
+                discount_percentage:
+                  type: string
+                discount_amount:
+                  type: string
+                nightly_price:
+                  type: string
+                nightly_discount:
+                  type: string
+                rate_plan_ids:
+                  type: string
+                grand_total:
+                  type: string
+                total_deposit_amount:
+                  type: string
+                total_remaining_amount:
+                  type: string
+                room_deposit_percentage:
+                  type: string
+                room_deposit_amount:
+                  type: string
+                room_deposit_type_indicator:
+                  type: string
+                room_move_fe:
+                  type: string
+                auto_added:
+                  type: string
+                pos_auto_sync_dates:
+                  type: string
+                is_active:
+                  type: string
+                created_by_user:
+                  type: string
+                dynamic_attribute:
+                  type: string
+                product_attribute_fields:
+                  type: string
+                product_attribute_values:
+                  type: string
+                send_external_email:
+                  type: string
+                external_email_receiver:
+                  type: string
+                external_email_template_id:
+                  type: string
+                boat_data:
+                  type: string
+                no_traveller:
+                  type: string
+                product_pos_type:
+                  type: string
+                restaurant_attributes:
+                  type: string
+                ingredients:
+                  type: string
+                selectedOptions:
+                  type: string
+                selectedValue:
+                  type: string
+                selectedIngredientName:
+                  type: string
+                notSelectedIngredientName:
+                  type: string
+                restaurantNote:
+                  type: string
+                dropDownSelect:
+                  type: string
+                cooking_preference:
+                  type: string
+                orderTakeOrEat:
+                  type: string
+                restaurant_product_price:
+                  type: string
+                pos_type_name:
+                  type: string
+                taxes:
+                  type: string
+                uniqueIndex:
+                  type: string
+                promo_code_info:
+                  type: string
+            resortFeeTotal:
+              type: string
+            cart_data:
+              type: array
+              items:
+                type: object
+                properties:
+                  cart_items_count:
+                    type: string
+                  cart_type:
+                    type: string
+                  tab_note:
+                    type: string
+                  tab_editing_indicator:
+                    type: string
+                  tab_order_opened_by_user:
+                    type: string
+                  created_date:
+                    type: string
+                  modified_date:
+                    type: string
+                  cart_item_id:
+                    type: string
+                  room_cart_item_id:
+                    type: string
+                  pos_cart_item_id:
+                    type: string
+                  cart_room_type_id:
+                    type: string
+                  product_id:
+                    type: string
+                  cart_product_name:
+                    type: string
+                  fe_display_product_name:
+                    type: string
+                  products_to_be_blocked:
+                    type: string
+                  hotel_id:
+                    type: string
+                  sub_hotel_id:
+                    type: string
+                  room_stay_guest_count:
+                    type: string
+                  room_stay_child_count:
+                    type: string
+                  room_stay_from:
+                    type: string
+                  room_stay_to:
+                    type: string
+                  product_is_timebound:
+                    type: string
+                  is_timebound_with_availability:
+                    type: string
+                  policy_id:
+                    type: string
+                  customer_id:
+                    type: string
+                  gc_recipient_name:
+                    type: string
+                  gc_recipient_email:
+                    type: string
+                  gc_sender_name:
+                    type: string
+                  gc_sender_email:
+                    type: string
+                  gc_message:
+                    type: string
+                  gc_same_as_first:
+                    type: string
+                  gc_for_indicator:
+                    type: string
+                  promotion_applied:
+                    type: string
+                  promotion_id:
+                    type: string
+                  promotion_code:
+                    type: string
+                  arrival_time:
+                    type: string
+                  departure_time:
+                    type: string
+                  room_stay_special_req:
+                    type: string
+                  service_quantity:
+                    type: string
+                  subtotal:
+                    type: string
+                  product_discount:
+                    type: string
+                  additional_guest_amounts:
+                    type: string
+                  discount_percentage:
+                    type: string
+                  discount_amount:
+                    type: string
+                  nightly_price:
+                    type: string
+                  nightly_discount:
+                    type: string
+                  rate_plan_ids:
+                    type: string
+                  grand_total:
+                    type: string
+                  total_deposit_amount:
+                    type: string
+                  total_remaining_amount:
+                    type: string
+                  room_deposit_percentage:
+                    type: string
+                  room_deposit_amount:
+                    type: string
+                  room_deposit_type_indicator:
+                    type: string
+                  room_move_fe:
+                    type: string
+                  auto_added:
+                    type: string
+                  pos_auto_sync_dates:
+                    type: string
+                  is_active:
+                    type: string
+                  created_by_user:
+                    type: string
+                  dynamic_attribute:
+                    type: string
+                  product_attribute_fields:
+                    type: string
+                  product_attribute_values:
+                    type: string
+                  send_external_email:
+                    type: string
+                  external_email_receiver:
+                    type: string
+                  external_email_template_id:
+                    type: string
+                  boat_data:
+                    type: string
+                  no_traveller:
+                    type: string
+                  product_pos_type:
+                    type: string
+                  restaurant_attributes:
+                    type: string
+                  ingredients:
+                    type: string
+                  selectedOptions:
+                    type: string
+                  selectedValue:
+                    type: string
+                  selectedIngredientName:
+                    type: string
+                  notSelectedIngredientName:
+                    type: string
+                  restaurantNote:
+                    type: string
+                  dropDownSelect:
+                    type: string
+                  cooking_preference:
+                    type: string
+                  orderTakeOrEat:
+                    type: string
+                  restaurant_product_price:
+                    type: string
+                  pos_type_name:
+                    type: string
+                  taxes:
+                    type: string
+                  uniqueIndex:
+                    type: string
+                  promo_code_info:
+                    type: string
+                  mupog:
+                    type: string
+                  image:
+                    type: string
+                  avgPerNight:
+                    type: string
+                  max_occupancy:
+                    type: integer
+                  normal_occupancy:
+                    type: integer
+                  boat_length:
+                    type: integer
+                  boat_width:
+                    type: integer
+                  room_type_name:
+                    type: string
+                  cart_room_hotel_name:
+                    type: string
+                  cart_room_hotel_address:
+                    type: string
+                  cart_room_hotel_logo:
+                    type: string
+                  tax_info:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        cart_tax_id:
+                          type: string
+                        cart_item_id:
+                          type: string
+                        tax_id:
+                          type: string
+                        tax_name:
+                          type: string
+                        tax_value:
+                          type: string
+                        tax_amount:
+                          type: string
+                        created_date:
+                          type: string
+                        tax:
+                          type: string
+                        sort_order:
+                          type: string
+                  customer:
+                    type: object
+                    properties:
+                      cart_item_id:
+                        type: string
+                      customer_id:
+                        type: string
+                      customer_email:
+                        type: string
+                      first_name:
+                        type: string
+                      last_name:
+                        type: string
+                      city:
+                        type: string
+                      zip_code:
+                        type: string
+                      state:
+                        type: string
+                      country:
+                        type: string
+                      address:
+                        type: string
+                      phone_number:
+                        type: string
+                      secondary_phone_number:
+                        type: string
+                      customer_emails:
+                        type: string
+            cart_total:
+              type: object
+              properties:
+                subtotal:
+                  type: string
+                tax_amount:
+                  type: string
+                tax_amount_a:
+                  type: object
+                  properties:
+                    Sales Tax:
+                      type: string
+                    Tourist Development Tax:
+                      type: string
+                discount_amount:
+                  type: string
+                grand_total:
+                  type: string
+                total_deposit_amount:
+                  type: string
+                promotion_code:
+                  type: string
+                promotion_applied:
+                  type: integer
+        promo_min_error_count:
+          type: string
+        promotion_min_stay:
+          type: string
+        room_list:
+          type: string
+    LoadCartDataRequest:
+      type: object
+      properties:
+        mupog:
+          type: string
+          description: The encoded data for cart retrieval.
+    LoadCartDataResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            resortFeePos:
+              type: object
+              properties:
+                cart_id:
+                  type: string
+                cart_items_count:
+                  type: string
+                cart_type:
+                  type: string
+                tab_note:
+                  type: string
+                tab_editing_indicator:
+                  type: string
+                tab_order_opened_by_user:
+                  type: string
+                created_date:
+                  type: string
+                modified_date:
+                  type: string
+                cart_item_id:
+                  type: string
+                room_cart_item_id:
+                  type: string
+                pos_cart_item_id:
+                  type: string
+                cart_room_type_id:
+                  type: string
+                product_id:
+                  type: string
+                cart_product_name:
+                  type: string
+                fe_display_product_name:
+                  type: string
+                products_to_be_blocked:
+                  type: string
+                hotel_id:
+                  type: string
+                sub_hotel_id:
+                  type: string
+                room_stay_guest_count:
+                  type: string
+                room_stay_child_count:
+                  type: string
+                room_stay_from:
+                  type: string
+                room_stay_to:
+                  type: string
+                product_is_timebound:
+                  type: string
+                is_timebound_with_availability:
+                  type: string
+                policy_id:
+                  type: string
+                customer_id:
+                  type: string
+                gc_recipient_name:
+                  type: string
+                gc_recipient_email:
+                  type: string
+                gc_sender_name:
+                  type: string
+                gc_sender_email:
+                  type: string
+                gc_message:
+                  type: string
+                gc_same_as_first:
+                  type: string
+                gc_for_indicator:
+                  type: string
+                promotion_applied:
+                  type: string
+                promotion_id:
+                  type: string
+                promotion_code:
+                  type: string
+                arrival_time:
+                  type: string
+                departure_time:
+                  type: string
+                room_stay_special_req:
+                  type: string
+                service_quantity:
+                  type: string
+                subtotal:
+                  type: string
+                product_discount:
+                  type: string
+                additional_guest_amounts:
+                  type: string
+                discount_percentage:
+                  type: string
+                discount_amount:
+                  type: string
+                nightly_price:
+                  type: string
+                nightly_discount:
+                  type: string
+                rate_plan_ids:
+                  type: string
+                grand_total:
+                  type: string
+                total_deposit_amount:
+                  type: string
+                total_remaining_amount:
+                  type: string
+                room_deposit_percentage:
+                  type: string
+                room_deposit_amount:
+                  type: string
+                room_deposit_type_indicator:
+                  type: string
+                room_move_fe:
+                  type: string
+                auto_added:
+                  type: string
+                pos_auto_sync_dates:
+                  type: string
+                is_active:
+                  type: string
+                created_by_user:
+                  type: string
+                dynamic_attribute:
+                  type: string
+                product_attribute_fields:
+                  type: string
+                product_attribute_values:
+                  type: string
+                send_external_email:
+                  type: string
+                external_email_receiver:
+                  type: string
+                external_email_template_id:
+                  type: string
+                boat_data:
+                  type: string
+                no_traveller:
+                  type: string
+                product_pos_type:
+                  type: string
+                restaurant_attributes:
+                  type: string
+                ingredients:
+                  type: string
+                selectedOptions:
+                  type: string
+                selectedValue:
+                  type: string
+                selectedIngredientName:
+                  type: string
+                notSelectedIngredientName:
+                  type: string
+                restaurantNote:
+                  type: string
+                dropDownSelect:
+                  type: string
+                cooking_preference:
+                  type: string
+                orderTakeOrEat:
+                  type: string
+                restaurant_product_price:
+                  type: string
+                pos_type_name:
+                  type: string
+                taxes:
+                  type: string
+                uniqueIndex:
+                  type: string
+                promo_code_info:
+                  type: string
+                mupog:
+                  type: string
+                image:
+                  type: string
+                avgPerNight:
+                  type: string
+                max_occupancy:
+                  type: integer
+                normal_occupancy:
+                  type: integer
+                boat_length:
+                  type: integer
+                boat_width:
+                  type: integer
+                room_type_name:
+                  type: string
+                cart_room_hotel_name:
+                  type: string
+                cart_room_hotel_address:
+                  type: string
+                cart_room_hotel_logo:
+                  type: string
+                tax_info:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      cart_tax_id:
+                        type: string
+                      cart_item_id:
+                        type: string
+                      tax_id:
+                        type: string
+                      tax_name:
+                        type: string
+                      tax_value:
+                        type: string
+                      tax_amount:
+                        type: string
+                      created_date:
+                        type: string
+                      tax:
+                        type: string
+                      sort_order:
+                        type: string
+                customer:
+                  type: object
+                  properties:
+                    cart_item_id:
+                      type: string
+                    customer_id:
+                      type: string
+                    customer_email:
+                      type: string
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
+                    city:
+                      type: string
+                    zip_code:
+                      type: string
+                    state:
+                      type: string
+                    country:
+                      type: string
+                    address:
+                      type: string
+                    phone_number:
+                      type: string
+                    secondary_phone_number:
+                      type: string
+                    customer_emails:
+                      type: string
+            resortFeeTotal:
+              type: number
+            cart_data:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    cart_items_count:
+                      type: string
+                    cart_type:
+                      type: string
+                    tab_note:
+                      type: string
+                    tab_editing_indicator:
+                      type: string
+                    tab_order_opened_by_user:
+                      type: string
+                    created_date:
+                      type: string
+                    modified_date:
+                      type: string
+                    cart_item_id:
+                      type: string
+                    room_cart_item_id:
+                      type: string
+                    pos_cart_item_id:
+                      type: string
+                    cart_room_type_id:
+                      type: string
+                    product_id:
+                      type: string
+                    cart_product_name:
+                      type: string
+                    fe_display_product_name:
+                      type: string
+                    products_to_be_blocked:
+                      type: string
+                    hotel_id:
+                      type: string
+                    sub_hotel_id:
+                      type: string
+                    room_stay_guest_count:
+                      type: string
+                    room_stay_child_count:
+                      type: string
+                    room_stay_from:
+                      type: string
+                    room_stay_to:
+                      type: string
+                    product_is_timebound:
+                      type: string
+                    is_timebound_with_availability:
+                      type: string
+                    policy_id:
+                      type: string
+                    customer_id:
+                      type: string
+                    gc_recipient_name:
+                      type: string
+                    gc_recipient_email:
+                      type: string
+                    gc_sender_name:
+                      type: string
+                    gc_sender_email:
+                      type: string
+                    gc_message:
+                      type: string
+                    gc_same_as_first:
+                      type: string
+                    gc_for_indicator:
+                      type: string
+                    promotion_applied:
+                      type: string
+                    promotion_id:
+                      type: string
+                    promotion_code:
+                      type: string
+                    arrival_time:
+                      type: string
+                    departure_time:
+                      type: string
+                    room_stay_special_req:
+                      type: string
+                    service_quantity:
+                      type: string
+                    subtotal:
+                      type: string
+                    product_discount:
+                      type: string
+                    additional_guest_amounts:
+                      type: string
+                    discount_percentage:
+                      type: string
+                    discount_amount:
+                      type: string
+                    nightly_price:
+                      type: string
+                    nightly_discount:
+                      type: string
+                    rate_plan_ids:
+                      type: string
+                    grand_total:
+                      type: string
+                    total_deposit_amount:
+                      type: string
+                    total_remaining_amount:
+                      type: string
+                    room_deposit_percentage:
+                      type: string
+                    room_deposit_amount:
+                      type: string
+                    room_deposit_type_indicator:
+                      type: string
+                    room_move_fe:
+                      type: string
+                    auto_added:
+                      type: string
+                    pos_auto_sync_dates:
+                      type: string
+                    is_active:
+                      type: string
+                    created_by_user:
+                      type: string
+                    dynamic_attribute:
+                      type: string
+                    product_attribute_fields:
+                      type: string
+                    product_attribute_values:
+                      type: string
+                    send_external_email:
+                      type: string
+                    external_email_receiver:
+                      type: string
+                    external_email_template_id:
+                      type: string
+                    boat_data:
+                      type: string
+                    no_traveller:
+                      type: string
+                    product_pos_type:
+                      type: string
+                    restaurant_attributes:
+                      type: string
+                    ingredients:
+                      type: string
+                    selectedOptions:
+                      type: string
+                    selectedValue:
+                      type: string
+                    selectedIngredientName:
+                      type: string
+                    notSelectedIngredientName:
+                      type: string
+                    restaurantNote:
+                      type: string
+                    dropDownSelect:
+                      type: string
+                    cooking_preference:
+                      type: string
+                    orderTakeOrEat:
+                      type: string
+                    restaurant_product_price:
+                      type: string
+                    pos_type_name:
+                      type: string
+                    taxes:
+                      type: string
+                    uniqueIndex:
+                      type: string
+                    promo_code_info:
+                      type: string
+                    mupog:
+                      type: string
+                    image:
+                      type: string
+                    avgPerNight:
+                      type: string
+                    max_occupancy:
+                      type: integer
+                    normal_occupancy:
+                      type: integer
+                    boat_length:
+                      type: integer
+                    boat_width:
+                      type: integer
+                    room_type_name:
+                      type: string
+                    cart_room_hotel_name:
+                      type: string
+                    cart_room_hotel_address:
+                      type: string
+                    cart_room_hotel_logo:
+                      type: string
+                    tax_info:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          cart_tax_id:
+                            type: string
+                          cart_item_id:
+                            type: string
+                          tax_id:
+                            type: string
+                          tax_name:
+                            type: string
+                          tax_value:
+                            type: string
+                          tax_amount:
+                            type: string
+                          created_date:
+                            type: string
+                          tax:
+                            type: string
+                          sort_order:
+                            type: string
+                    customer:
+                      type: object
+                      properties:
+                        cart_item_id:
+                          type: string
+                        customer_id:
+                          type: string
+                        customer_email:
+                          type: string
+                        first_name:
+                          type: string
+                        last_name:
+                          type: string
+                        city:
+                          type: string
+                        zip_code:
+                          type: string
+                        state:
+                          type: string
+                        country:
+                          type: string
+                        address:
+                          type: string
+                        phone_number:
+                          type: string
+                        secondary_phone_number:
+                          type: string
+                        customer_emails:
+                          type: string
+    GetPosAvailable:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              product_id:
+                type: string
+              product_name:
+                type: string
+              product_description:
+                type: string
+              product_tax:
+                type: string
+              product_price:
+                type: string
+              dynamic_attribute:
+                type: string
+              product_is_timebound:
+                type: string
+              tax_name:
+                type: string
+              tax_value:
+                type: string
+              media:
+                type: string
+              product_type:
+                type: string
+              available_on_fe:
+                type: string
+              allowed_for_all_rooms:
+                type: string
+              pos_auto_sync_dates:
+                type: string
+              associate_with_rooms:
+                type: string
+              image:
+                type: string
+              images:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    catalog_product_media_id:
+                      type: string
+                    type_id:
+                      type: string
+                    product_type:
+                      type: string
+                    media:
+                      type: string
+                    cover_photo:
+                      type: string
+                    is_featured:
+                      type: string
+                    sort_order:
+                      type: string
+                    filename:
+                      type: string
+                    url:
+                      type: string
+        status:
           type: string

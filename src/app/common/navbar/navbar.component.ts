@@ -16,6 +16,9 @@ export class NavbarComponent {
   routeSubscription? : Subscription;
   routeStack:Array<string> = [];
 
+  cartItems:any ;
+  cartSubscription? : Subscription;
+
   pageTitle : string = "";
   constructor(private commonService : CommonService, private router: Router){
     this.titleSubscription = commonService.pageTitle$.subscribe((title)=>{
@@ -23,6 +26,9 @@ export class NavbarComponent {
     })
     this.routeSubscription = this.commonService.routeStack$.subscribe((routes)=>{
       this.routeStack=routes;
+    })
+    this.cartSubscription = this.commonService.totalCartCount.subscribe((resp)=>{
+      this.cartItems = resp.cartCount;
     })
   }
 

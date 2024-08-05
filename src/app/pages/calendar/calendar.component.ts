@@ -39,7 +39,7 @@ export class CalendarComponent {
   bestPriceData: GetPriceModuleSelectedDatesResponse | null = null;
   priceModuleData: any = {};
 
-  minDate: NgbDate = this.calendar.getToday();
+  minDate: NgbDate = this.calendar.getPrev(this.fromDate, 'd', 1);
 
   constructor(
     private commonService: CommonService,
@@ -84,7 +84,7 @@ export class CalendarComponent {
 
   isDisabled(date: NgbDate) {
 
-    return ((this.minDate.day - 1) > date.day && this.minDate.month >= date.month && this.minDate.year >= date.year);
+    return ((this.minDate.day) > date.day && this.minDate.month >= date.month && this.minDate.year >= date.year);
   }
 
   isStopsell(date: NgbDate) {

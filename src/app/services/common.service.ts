@@ -12,21 +12,40 @@ export class CommonService {
   private hotelIdSubject = new BehaviorSubject<number>(0);
   hotelId$ = this.hotelIdSubject.asObservable();
 
-  private showInterface = new  BehaviorSubject<boolean>(false);
+  private showInterface = new BehaviorSubject<boolean>(false);
   showInterface$ = this.showInterface.asObservable();
 
-  private pageTitle = new  BehaviorSubject<string>("");
+  private pageTitle = new BehaviorSubject<string>("");
   pageTitle$ = this.pageTitle.asObservable();
 
   private routeStackSubject = new BehaviorSubject<string[]>([]);
   routeStack$ = this.routeStackSubject.asObservable();
+
+  public cartItems = new BehaviorSubject({});
+  private CartItemsTotal = new BehaviorSubject({});
+  private cartCount = new BehaviorSubject({cartCount:0});
+  checkcartItems = this.cartItems.asObservable();
+  totalCartCount = this.cartCount.asObservable();
+  checkcartItemsTotal = this.CartItemsTotal.asObservable();
+
+  updateCartData(cartCount: any) {
+    this.cartCount.next({ cartCount: cartCount });
+  }
+
+  updateCartItems(cartItems: any) {
+    this.cartItems.next(cartItems);
+  }
+
+  updateCartItemsTotal(CartItemsTotal: any) {
+    this.CartItemsTotal.next(CartItemsTotal);
+  }
 
   addRoute(route: string): void {
     const currentStack = this.routeStackSubject.getValue();
     this.routeStackSubject.next([...currentStack, route]);
   }
 
-  getLastRoute(){
+  getLastRoute() {
     const currentStack = this.routeStackSubject.getValue();
     const lastRoute = currentStack.pop();
     this.routeStackSubject.next([...currentStack]);
@@ -42,11 +61,11 @@ export class CommonService {
     this.hotelIdSubject.next(id);
   }
 
-  setPagetitle(title: string){
+  setPagetitle(title: string) {
     this.pageTitle.next(title);
   }
 
-  setInterfaceStatus(state: boolean){
+  setInterfaceStatus(state: boolean) {
     this.showInterface.next(state);
   }
 
@@ -58,6 +77,13 @@ export class CommonService {
     }
     return '';
   }
+
+  convertStringToNgbDate(dateString: string): NgbDate {
+    const [month, day, year] = dateString.split('-').map(Number);
+    return new NgbDate(year, month, day);
+  }
+
+
   getNextMonth(date: NgbDate): NgbDate {
     let year = date.year;
     let month = date.month + 1;
