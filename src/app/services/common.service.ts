@@ -10,13 +10,33 @@ export class CommonService {
   constructor() { }
 
   private hotelIdSubject = new BehaviorSubject<number>(0);
-  private showInterface = new  BehaviorSubject<boolean>(false);
-  private pageTitle = new  BehaviorSubject<string>("");
-
-
   hotelId$ = this.hotelIdSubject.asObservable();
+
+  private showInterface = new  BehaviorSubject<boolean>(false);
   showInterface$ = this.showInterface.asObservable();
+
+  private pageTitle = new  BehaviorSubject<string>("");
   pageTitle$ = this.pageTitle.asObservable();
+
+  private routeStackSubject = new BehaviorSubject<string[]>([]);
+  routeStack$ = this.routeStackSubject.asObservable();
+
+  addRoute(route: string): void {
+    const currentStack = this.routeStackSubject.getValue();
+    this.routeStackSubject.next([...currentStack, route]);
+  }
+
+  getLastRoute(){
+    const currentStack = this.routeStackSubject.getValue();
+    const lastRoute = currentStack.pop();
+    this.routeStackSubject.next([...currentStack]);
+    return lastRoute;
+  }
+
+  clearRoutes(): void {
+    this.routeStackSubject.next([]);
+  }
+
 
   setHotelId(id: number): void {
     this.hotelIdSubject.next(id);

@@ -1,5 +1,5 @@
-
 <div class="nav-body">
+  <button (click)="getLastRoute()" [disabled]="routeStack.length<=0">back</button>
   <div class="left">
     <h3>{{pageTitle}}</h3>
   </div>

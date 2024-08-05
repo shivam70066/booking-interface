@@ -26,7 +26,7 @@ export class SearchRoomsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private commonService: CommonService,
-    private searchresult: GetSearchResultSjService
+    private searchresult: GetSearchResultSjService,
   ) {
     this.commonService.setPagetitle("Results");
   }
@@ -61,12 +61,20 @@ export class SearchRoomsComponent implements OnInit {
     this.searchresult.frontendSearchresultsGetSearchResultsSjPost({ body: data }).subscribe({
       next: (resp: GetSearchResultResponse) => {
         this.subHotelsMinimumPrice = resp.data?.subHotelMinimumPrice;
-        this.results = resp.data?.rooms_avail?.[0].available_rooms || [];
+        this.results = resp.data?.rooms_avail?.[0].available_rooms;
         this.loading=false;
       },
       error: (error) => {
         console.log(error);
       }
     })
+  }
+
+  changeSelectedPlanPolicy(one:any, two:any, three:any){
+console.log(one)
+console.log(two)
+
+console.log(three)
+
   }
 }

@@ -20,4 +20,5 @@ export class GlobalButtonComponent {
       skipLocationChange: true
     });
   }
+
 }

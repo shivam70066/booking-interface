@@ -164,6 +164,7 @@ export class CalendarComponent {
       "child": this.childCount.toString()
     }
     let path = `/search-room/${data.sub_hotel_id}/${data.room_stay_from}/${data.room_stay_to}/${data.adults}/${data.child}/${data.child}`;
+    this.commonService.addRoute('calendar');
     this.router.navigate([path], {
       skipLocationChange: true,
     });
