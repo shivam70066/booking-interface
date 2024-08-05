@@ -21,6 +21,7 @@ export class SearchRoomsComponent implements OnInit {
   subHotelsMinimumPrice:any = [];
   responseStatus:string = "success";
   loading:boolean = true;
+  results: any = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -60,9 +61,8 @@ export class SearchRoomsComponent implements OnInit {
     this.searchresult.frontendSearchresultsGetSearchResultsSjPost({ body: data }).subscribe({
       next: (resp: GetSearchResultResponse) => {
         this.subHotelsMinimumPrice = resp.data?.subHotelMinimumPrice;
-        console.log(this.subHotelsMinimumPrice)
+        this.results = resp.data?.rooms_avail?.[0].available_rooms || [];
         this.loading=false;
-        console.log(resp);
       },
       error: (error) => {
         console.log(error);

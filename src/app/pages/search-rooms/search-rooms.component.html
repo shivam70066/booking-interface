@@ -74,6 +74,166 @@
               </li>
             </ul>
           </div>
+          <div class="search-result-right">
+            <div class="room-result-blocks">
+              <div class="room-result-row">
+                @if (results) {
+                <div class="room-result-insideblock">
+                  @for (result of results; track $index) {
+                  <div class="room-result-repeat-block">
+                    <div class="room-img-block" >
+                      <div class="room-hotel-logo">
+                        <img src="assets/img/{{result.sub_hotel_id}}.png" alt="{{result.sub_hotel_id}}" />
+                      </div>
+                      <div class="room-img-hover"> <img src="{{result.image}}" alt=""></div>
+                      <div class="room-img-bar">
+                        <div class="bar-content">
+                          {{result.room_display_name}} {{result.product_type != 'boat' ? '(Accommodates '+result.max_occupancy+')':'' }}
+                          <p *ngIf="result.product_type == 'boat'" style="display:inline;">{{'(Length '+result.boat_length+' ft, Width '+result.boat_width+' ft)'}}</p>
+                        </div>
+                        <!-- <span *ngIf="result.rooms_available > 1">{{result.rooms_available}} {{marinaSelected ? 'Slips' : 'Rooms'}} Left</span>
+                        <span *ngIf="result.rooms_available == 1">{{result.rooms_available}} {{marinaSelected ? 'Slip' : 'Room'}} Left</span> -->
+                      </div>
+                    </div>
+                     <div class="room-content-row">
+                      <div class="room-content-text-block">
+                        <div class="room-txt-row-block">
+                            <div class="room-txt-col">
+                              <div class="room-content-desc">
+                                {{result.room_type_description|slice:0:120}}{{((result.room_type_description).length)>250?'....':''}}
+
+                              </div>
+                              <!-- <div class="viewAmenitiesdataBlock">
+                                <div class="viewAmenitiesdataColBlock" *ngIf="result.amenitiesdata != undefined && ((!sliceData[i])?(result.amenitiesdata| keyvalue |slice:0:(showExtraAmenities?3:3)):(result.amenitiesdata| keyvalue)).length > 0">
+                                  <div class="room-amenitiesBlock" >
+                                    <div class="room-amenities-col" *ngFor="let amenity of ( (!sliceData[i])?(result.amenitiesdata| keyvalue |slice:0:(showExtraAmenities?3:3)):(result.amenitiesdata| keyvalue)) ">
+                                      <img  src="assets/img/{{amenity.value.parent_icon}}.png" alt="amenity-icon">
+                                      <h2>{{amenity.key}}</h2>
+                                      <ul  *ngIf="amenity.value != null && amenity.value != undefined && amenity.value != ''">
+                                        <li *ngFor="let amen of ((amenity.value | keyvalue)|slice:0:2)">{{amen.value.name}}</li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                <div class="view-more-info1">
+                                  <h2 (click)="showSelectedRoom(result);showRoomDetails= true;showHideBodyScroll();" >View More Information</h2>
+                                </div>
+                                </div>
+                              </div> -->
+                            </div>
+                            <div class="room-txt-col">
+                              <div class="min-stay-outer">
+                                <div class="stay-booking-row" *ngFor="let mVal of result.rate_plan_description_sorted , let a = index">
+                                    <div class="stay-col col1">
+                                      <h3>{{result.rateNameDesc[mVal.policy_id][mVal.rate_plan_name]['ratePlanName']}}  </h3>
+                                      <div class="policy-text-block">
+                                        <p *ngIf="mVal.policy_id == 2">
+                                          <span class="green">
+                                            Free Cancelation
+                                          </span>
+                                            <small>{{(result.cancelBefore[mVal.policy_id][mVal.rate_plan_name] != '')? 'before '+result.cancelBefore[mVal.policy_id][mVal.rate_plan_name]:''}} </small>
+                                            <!-- <img src="assets/img/info.svg" (click)="showHideBodyScroll();ShowPolicy = true;PolicyContent =result.policyText[mVal.policy_id][mVal.rate_plan_name];$event.stopPropagation()" alt="info-img"> -->
+                                        </p>
+
+                                        <p *ngIf="result.cancelBefore[mVal.policy_id][mVal.rate_plan_name] == '' && mVal.policy_id == 3 ">
+                                          <span class="pink">
+                                            Non-Refundale
+                                          </span>
+                                          <!-- <img src="assets/img/info.svg" (click)="showHideBodyScroll();ShowPolicy = true;PolicyContent =result.policyText[mVal.policy_id][mVal.rate_plan_name];$event.stopPropagation()" alt="info-img"> -->
+                                        </p>
+                                      </div>
+
+
+                                    </div>
+                                    <div class="stay-col col2">
+                                      <div class="price-block-row">
+                                        <div class="was-price col-block"  *ngIf="result.highestAvgRate[mVal.policy_id] != undefined && result.highestAvgRate[mVal.policy_id] && (result.highestAvgRate[mVal.policy_id] > result.totalRate[mVal.policy_id][mVal.rate_plan_name]) && result.discountedRate == undefined">
+                                          Was <span>{{result.highestAvgRate[mVal.policy_id]|currency:'$'}}</span>
+                                        </div>
+
+                                        <div class="was-price col-block"  *ngIf="(result.discountedRate != undefined && result.discountedRate[mVal.policy_id][mVal.rate_plan_name] != undefined)">
+                                          Was <span>{{result.nightlyRate[mVal.policy_id][mVal.rate_plan_name]|currency:'$'}}</span>
+                                        </div>
+                                        <div class="act-price col-block">
+                                          {{(result.discountedRate != undefined && result.discountedRate[mVal.policy_id][mVal.rate_plan_name] != undefined)? result.discountedRate[mVal.policy_id][mVal.rate_plan_name]: result.totalRate[mVal.policy_id][mVal.rate_plan_name]|currency:'$'}}  {{result.tootTipData}}
+                                          <div class="price-block-row-pd">
+                                            <span  class="inner-popup-block">Price Details <img src="assets/img/arrow-down-pink.png" alt="arrow">
+                                              <div class="inner-popup">
+                                                <div class="inner-popup-row" *ngIf="result.toolTipData[mVal.policy_id][mVal.rate_plan_name] != undefined && result.toolTipData[mVal.policy_id][mVal.rate_plan_name].nightlyAvg != undefined && result.toolTipData[mVal.policy_id][mVal.rate_plan_name].nightlyAvg > 0">
+                                                  <span>Nightly Rate(Avg.)</span>
+                                                  <span>{{result.toolTipData[mVal.policy_id][mVal.rate_plan_name].nightlyAvg | currency:'$'}}</span>
+                                                </div>
+                                                <div class="inner-popup-row" *ngIf="result.toolTipData[mVal.policy_id][mVal.rate_plan_name] != undefined && result.toolTipData[mVal.policy_id][mVal.rate_plan_name].nights != undefined && result.toolTipData[mVal.policy_id][mVal.rate_plan_name].nights > 0">
+                                                  <span>Nights</span>
+                                                  <span>{{result.toolTipData[mVal.policy_id][mVal.rate_plan_name].nights}}</span>
+                                                </div>
+                                                <div class="inner-popup-row" *ngIf="result.toolTipData[mVal.policy_id][mVal.rate_plan_name] != undefined && result.toolTipData[mVal.policy_id][mVal.rate_plan_name].subTotal != undefined && result.toolTipData[mVal.policy_id][mVal.rate_plan_name].subTotal > 0">
+                                                  <span>SubTotal</span>
+                                                  <span>{{result.toolTipData[mVal.policy_id][mVal.rate_plan_name].subTotal | currency:'$'}}</span>
+                                                </div>
+                                                <div class="inner-popup-row" *ngIf="result.toolTipData[mVal.policy_id][mVal.rate_plan_name] != undefined && result.toolTipData[mVal.policy_id][mVal.rate_plan_name].discount != undefined && result.toolTipData[mVal.policy_id][mVal.rate_plan_name].discount > 0">
+                                                  <span>Discount</span>
+                                                  <span>{{result.toolTipData[mVal.policy_id][mVal.rate_plan_name].discount | currency:'$'}}</span>
+                                                </div>
+                                                <div class="inner-popup-row" *ngIf="result.toolTipData[mVal.policy_id][mVal.rate_plan_name] != undefined &&  result.toolTipData[mVal.policy_id][mVal.rate_plan_name].surcharge != undefined && result.toolTipData[mVal.policy_id][mVal.rate_plan_name].surcharge > 0">
+                                                  <span>Surcharge</span>
+                                                  <span>{{result.toolTipData[mVal.policy_id][mVal.rate_plan_name].surcharge | currency:'$'}}</span>
+                                                </div>
+                                                <div class="inner-popup-row" *ngIf="result.toolTipData[mVal.policy_id][mVal.rate_plan_name] != undefined && result.toolTipData[mVal.policy_id][mVal.rate_plan_name].resortFee != undefined && result.toolTipData[mVal.policy_id][mVal.rate_plan_name].resortFee > 0">
+                                                  <span>Resort Fee</span>
+                                                  <span>{{result.toolTipData[mVal.policy_id][mVal.rate_plan_name].resortFee | currency:'$'}}</span>
+                                                </div>
+                                                <div class="inner-popup-row" *ngIf="result.toolTipData[mVal.policy_id][mVal.rate_plan_name] != undefined && result.toolTipData[mVal.policy_id][mVal.rate_plan_name].extraPerson != undefined && result.toolTipData[mVal.policy_id][mVal.rate_plan_name].extraPerson > 0">
+                                                  <span>Extra Person</span>
+                                                  <span>{{result.toolTipData[mVal.policy_id][mVal.rate_plan_name].extraPerson | currency:'$'}}</span>
+                                                </div>
+                                                <div class="inner-popup-row" *ngIf="result.toolTipData[mVal.policy_id][mVal.rate_plan_name] != undefined && result.toolTipData[mVal.policy_id][mVal.rate_plan_name].taxes != undefined && result.toolTipData[mVal.policy_id][mVal.rate_plan_name].taxes > 0">
+                                                  <span>Taxes</span>
+                                                  <span>{{result.toolTipData[mVal.policy_id][mVal.rate_plan_name].taxes | currency:'$'}}</span>
+                                                </div>
+                                                <div class="inner-popup-row" *ngIf="result.toolTipData[mVal.policy_id][mVal.rate_plan_name] != undefined && result.toolTipData[mVal.policy_id][mVal.rate_plan_name].grandTotal != undefined && result.toolTipData[mVal.policy_id][mVal.rate_plan_name].grandTotal > 0">
+                                                  <span>Grand Total</span>
+                                                  <span>{{result.toolTipData[mVal.policy_id][mVal.rate_plan_name].grandTotal | currency:'$'}}</span>
+                                                </div>
+                                              </div>
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <div class="night-price col-block">
+                                          Ave/Night
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <!-- <div class="stay-col col3" (click)="changeSelectedPlanPolicy(results.indexOf(result),mVal.policy_id,mVal.rate_plan_name); addToCart(result, 'old');">
+                                      <button>BOOK NOW</button>
+                                    </div> -->
+                                </div>
+                              </div>
+                            </div>
+                            <div class="view-more-information">
+                              <div class="booknow-btn-block1">
+                                <div class="booknow-left">
+                                  <span *ngFor="let addProduct of result.additional_products">
+                                    <img src="assets/img/shapes/{{addProduct.icon+'.png'}}" alt="{{addProduct.icon}}"/>
+                                    {{addProduct.product}}
+                                  </span>
+                                  <span>
+                                    <img src="assets/img/ev_logoo.svg" alt="EV_Logo" height="32px"/>
+                                    Free EV Charger
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                }
+                </div>
+                }
+
+              </div>
+            </div>
+          </div>
 
         </div>
       </div>

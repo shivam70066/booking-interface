@@ -108,7 +108,6 @@ export class CalendarComponent {
 
     var fromDate = `${event.next.year}-${event.next.month}-01`;
     const nextMonthDate = new Date(event.next.year, event.next.month+1, 0);
-    console.log(nextMonthDate);
 
     const lastDate = nextMonthDate.getDate();
     const toDate = `${nextMonthDate.getFullYear()}-${nextMonthDate.getMonth()+1}-${lastDate}`;
@@ -117,7 +116,6 @@ export class CalendarComponent {
   }
 
   getPriceMlsStopSells(fromDate: string, toDate: string) {
-    console.log(fromDate, toDate)
     this.priceModuleData = {};
     this.priceMLSStopSellService.frontendSearchresultsGetPriceMlsStopSellPost({
       body: {
