@@ -36,6 +36,7 @@ export class SearchRoomsComponent implements OnInit {
   bestPriceLoading : boolean = true;
   bestPriceData: GetPriceModuleSelectedDatesResponse | null = null;
   hotelId: number | undefined = 123;
+  marinaSelected:boolean = false;
   private hotelIDSubscription?: Subscription;
 
 

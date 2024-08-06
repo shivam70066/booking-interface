@@ -70,7 +70,7 @@
         </div>
         <div class="search-main-content">
           <div class="search-result-left">
-            <h3>{{results.length}} {{(results.length>1 ? "rooms" : "room")}} are found.</h3>
+            <h3>{{results.length}} {{(results.length>1 ? "Results" : "Result")}} are found.</h3>
             <div class="book-direct-container">
               <div class="book-direct-head">
                 <h3>Book Direct & Save!</h3>
@@ -95,16 +95,21 @@
             </div>
             <hr>
             }
+            <div class="verify-by">
+              verified by &nbsp;<span> LODGINGSYSTEM</span>
+            </div>
+
             <div class="sort-outer">
               <div class="sort-heading">
                 Sort Result By
               </div>
-
-              <span class="top-lbl">Sort By</span>
-              <select [(ngModel)]="sortDirection" (ngModelChange)="sortByValue($event)" aria-label="sortBy">
-                <option value="asc" [disabled]="sortDirection==='asc'">Low to High</option>
-                <option value="desc" [disabled]="sortDirection==='desc'">High to Low</option>
-              </select>
+              <div class="select-lbl-block">
+                <span class="top-lbl">Sort By</span>
+                <select [(ngModel)]="sortDirection" (ngModelChange)="sortByValue($event)" aria-label="sortBy">
+                  <option class="options" value="asc" [disabled]="sortDirection==='asc'">Low to High</option>
+                  <option class="options" value="desc" [disabled]="sortDirection==='desc'">High to Low</option>
+                </select>
+              </div>
             </div>
 
 
@@ -128,8 +133,10 @@
                           <p *ngIf="result.product_type == 'boat'" style="display:inline;">{{'(Length
                             '+result.boat_length+' ft, Width '+result.boat_width+' ft)'}}</p>
                         </div>
-                        <!-- <span *ngIf="result.rooms_available > 1">{{result.rooms_available}} {{marinaSelected ? 'Slips' : 'Rooms'}} Left</span>
-                        <span *ngIf="result.rooms_available == 1">{{result.rooms_available}} {{marinaSelected ? 'Slip' : 'Room'}} Left</span> -->
+                        <span *ngIf="result.rooms_available > 1">{{result.rooms_available}} {{marinaSelected ? 'Slips' :
+                          'Rooms'}} Left</span>
+                        <span *ngIf="result.rooms_available == 1">{{result.rooms_available}} {{marinaSelected ? 'Slip' :
+                          'Room'}} Left</span>
                       </div>
                     </div>
                     <div class="room-content-row">
@@ -157,7 +164,7 @@
                                 </div>
                               </div> -->
                           </div>
-                          <div class="room-txt-col">
+                          <div class="room-txt-col1">
                             <div class="min-stay-outer">
                               <div class="stay-booking-row"
                                 *ngFor="let mVal of result.rate_plan_description_sorted , let a = index">
@@ -171,6 +178,7 @@
                                       <small>{{(result.cancelBefore[mVal.policy_id][mVal.rate_plan_name] != '')? 'before
                                         '+result.cancelBefore[mVal.policy_id][mVal.rate_plan_name]:''}} </small>
                                       <!-- <img src="assets/img/info.svg" (click)="showHideBodyScroll();ShowPolicy = true;PolicyContent =result.policyText[mVal.policy_id][mVal.rate_plan_name];$event.stopPropagation()" alt="info-img"> -->
+                                      <img src="assets/img/info.svg" alt="info-img">
                                     </p>
 
                                     <p
