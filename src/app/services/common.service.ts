@@ -23,16 +23,17 @@ export class CommonService {
 
   public cartItems = new BehaviorSubject({});
   private CartItemsTotal = new BehaviorSubject({});
-  private cartCount = new BehaviorSubject({cartCount:0});
+  private cartCount = new BehaviorSubject(0);
   checkcartItems = this.cartItems.asObservable();
   totalCartCount = this.cartCount.asObservable();
   checkcartItemsTotal = this.CartItemsTotal.asObservable();
 
-  updateCartData(cartCount: any) {
-    this.cartCount.next({ cartCount: cartCount });
+  updateCartData(cartCount: number) {
+    this.cartCount.next(cartCount);
   }
 
   updateCartItems(cartItems: any) {
+    console.log(cartItems)
     this.cartItems.next(cartItems);
   }
 

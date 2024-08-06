@@ -1,17 +1,43 @@
-.nav-body{
-  padding: 20px 40px ;
+.nav-body {
+  padding: 20px 40px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  .right{
+
+  .right {
+    display: flex;
+    align-items: center;
+
     .global-close-btn {
+      margin-left: 18px;
       cursor: pointer;
       border-radius: 100%;
       padding: 5px 10px;
       font-size: 26px;
-      &:hover{
+
+      &:hover {
         background-color: rgb(170, 170, 170);
+      }
+    }
+
+    .cart {
+      position: relative;
+      cursor: pointer;
+
+      svg {
+        position: relative;
+      }
+
+      small {
+        position: absolute;
+        top: -11px;
+        left: 23px;
+        background-color: black;
+        padding: 2px 5px;
+        border-radius: 100%;
+        color: white;
+        cursor: pointer;
       }
     }
   }
