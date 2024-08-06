@@ -1,0 +1,183 @@
+body {
+  background-color: #f8f9fa;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1400px;
+  margin: auto;
+  padding: 20px;
+}
+
+.heading {
+  font-family: 'Caveat', cursive;
+  color: #2ecc71;
+  font-size: 2.5rem;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -10px;
+}
+
+.col-main, .col-sidebar {
+  padding: 10px;
+}
+
+.col-main {
+  flex: 2;
+}
+
+.col-sidebar {
+  flex: 1;
+  max-width: 300px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  display: flex;
+  overflow: hidden;
+}
+
+.card-img {
+  flex: 1;
+}
+
+.card-img img {
+  width: 100%;
+  height: auto;
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  flex: 2;
+  padding: 20px 30px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-content h5 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.card-content p {
+  margin: 5px 0;
+  font-size: 1rem;
+}
+
+.card-content .text-muted {
+  color: #7f8c8d;
+}
+
+.card-content .price {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.btn-edit {
+  background-color: #ffcc00;
+  margin-right: 10px;
+}
+
+.btn-remove {
+  background-color: #ff4c4c;
+}
+
+.btn-primary {
+  background-color: #ff7f50;
+}
+
+.btn-secondary {
+  background-color: #7f8c8d;
+  color: #fff;
+  margin-top: 10px;
+}
+
+.btn-success {
+  background-color: #2ecc71;
+}
+
+.btn-outline-secondary {
+  background-color: transparent;
+  border: 1px solid #7f8c8d;
+  color: #7f8c8d;
+}
+
+.list-group {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-group-item {
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list-group-item:last-child {
+  border-bottom: none;
+}
+
+.text-success {
+  color: #2ecc71 !important;
+}
+
+.text-info {
+  color: #1abc9c !important;
+}
+
+.text-danger {
+  color: #e74c3c !important;
+}
+
+.text-muted {
+  color: #7f8c8d !important;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.my-3 {
+  margin: 1.5rem 0;
+}
+
+
+.policy-text{
+  color: grey;
+
+}
+.policy-text-desc{
+  margin-bottom: 1px;
+}
+
+.prodtotalTooltip{
+  margin-top: 10px;
+  .prodtotalRow{
+    display: flex;
+    justify-content: space-between;
+  }
+}

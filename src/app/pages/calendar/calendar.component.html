@@ -21,8 +21,7 @@
           [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
           (mouseleave)="hoveredDate = null">
           <div style="margin-bottom:15px;">{{ date.day }}</div>
-          <div *ngIf="date?.year && date?.month && date?.day && !isDisabled(date)"
-            style="background-color: rgb(72, 72, 255);">
+          <div *ngIf="date?.year && date?.month && date?.day && !isDisabled(date)" >
             <span >{{ (priceModuleData[date.year + '-' + ('0' + date.month).slice(-2) + '-' + ('0' +
               date.day).slice(-2)]) | currency:'$' }}</span>
           </div>

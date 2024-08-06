@@ -24,4 +24,12 @@ color: (
 .ngb-dp-day, .ngb-dp-weekday, .ngb-dp-week-number{
   width: 5rem !important;
   height: 4rem !important;
+  margin: 2px;
+}
+
+.ngb-dp-day{
+  box-shadow: rgba(0, 0, 0, 0.10) 0px 2px 8px;
+  &.disabled, &.hidden{
+    box-shadow: none;
+  }
 }

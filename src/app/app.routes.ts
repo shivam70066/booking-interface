@@ -1,3 +1,4 @@
+import { CartComponent } from './common/cart/cart.component';
 import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
@@ -11,5 +12,9 @@ export const routes: Routes = [
   {
     path: 'search-room/:hotel/:room_stay_from/:room_stay_to/:adults/:child/:promo',
     loadComponent: () => import('./pages/search-rooms/search-rooms.component').then(m => m.SearchRoomsComponent)
-  }
+  },
+  {
+    path: 'cart',
+    loadComponent: () => import('./common/cart/cart.component').then(m => m.CartComponent)
+  },
 ];

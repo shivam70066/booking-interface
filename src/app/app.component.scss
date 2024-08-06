@@ -1,6 +1,7 @@
 @import '../styles.scss';
 
 .booking-interface-main {
+  z-index: 9999;
   position: absolute;
   overflow-x: hidden;
   top: 0;

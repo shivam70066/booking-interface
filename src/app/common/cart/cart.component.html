@@ -1,1 +1,159 @@
-<p>cart works!</p>
+<div class="container">
+
+  <div class="row">
+    <div class="col-main">
+      <h2 class="heading">Reservation Summary</h2>
+      @if ( (cartData|keyvalue).length>0) {
+      <!-- Reservation Item 1 -->
+      @for ( prod of cartData|keyvalue; track $index) {
+      @for (product of prod.value; track $index) {
+      <div class="card">
+        <div class="card-img">
+          <img [src]='product.image' alt="Room Image">
+        </div>
+        <div class="card-content">
+          <div class="left">
+            <h5>{{product.fe_display_product_name}}</h5>
+            @if (product.cart_type=='pos') {
+            <p>({{product.attached_room_name}})</p>
+            <div class="policy-text" [innerHTML]="product.description"></div>
+            }
+            <p>Check In: <strong>{{product.room_stay_from}}</strong></p>
+            <p>Check Out: <strong>{{product.room_stay_to}}</strong></p>
+            @if (product.cart_type == 'reservation' || product.cart_type == 'boat') {
+            <p>Accommodates {{product.max_occupancy}}</p>
+            <p>Nights: {{product.nightly_price.split(',').length}}</p>
+            <div class="policy-text" [innerHTML]="product.policy_data"></div>
+            }
+          </div>
+          <div class="right">
+            <p class="price">{{getProductSubtotal(product.subtotal,product.product_discount) | currency:'$'}}</p>
+            <strong>Price Details</strong>
+          <div class="prodtotalTooltip">
+            <div class="prodtotalInner">
+              <div class="prodtotalRow" *ngIf="product.cart_type != 'reservation' && product.cart_type != 'boat'">
+                <div class="prodtotalCol">
+                  Rate:
+                </div>
+                <div class="prodtotalCol">
+                  <b>{{product.nightly_price.split(',')[0]|currency:'$'}}</b>
+                </div>
+              </div>
+              <div class="prodtotalRow" *ngIf="product.cart_type == 'reservation' || product.cart_type == 'boat'">
+                <div class="prodtotalCol">
+                  Ave/Night:
+                </div>
+                <div class="prodtotalCol">
+                  <b>{{product.avgPerNight|currency:'$'}}</b>
+                </div>
+              </div>
+              <div class="prodtotalRow"
+                *ngIf="product.cart_type != 'pos' || (product.cart_type =='pos' && product.product_is_timebound == '1')">
+                <div class="prodtotalCol">
+                  Nights:
+                </div>
+                <div class="prodtotalCol">
+                  <b>{{product.nightly_price.split(',').length}}</b>
+                </div>
+              </div>
+              <div class="prodtotalRow"
+                *ngIf="product.cart_type =='pos' && product.cart_product_name != 'Resort Fee' && product.fe_display_product_name != 'Extra Person'">
+                <div class="prodtotalCol">
+                  Quantity:
+                </div>
+                <div class="prodtotalCol">
+                  <b>{{product.service_quantity}}</b>
+                </div>
+              </div>
+              <div class="prodtotalRow">
+                <div class="prodtotalCol">
+                  Tax:
+                </div>
+                <div class="prodtotalCol">
+                  <b [innerHTML]="getGrandTax(product.tax_info)"></b>
+                </div>
+              </div>
+              <div class="prodtotalRow">
+                <div class="prodtotalCol">
+                  Subtotal:
+                </div>
+                <div class="prodtotalCol">
+                  <b>{{product.subtotal|currency:'$'}}</b>
+                </div>
+              </div>
+              <div class="prodtotalRow" *ngIf="checkDiscountApplied(product.product_discount)">
+                <div class="prodtotalCol">
+                  Discount:
+                </div>
+                <div class="prodtotalCol">
+                  <b>{{product.product_discount|currency:'$'}}</b>
+                </div>
+              </div>
+              <div class="prodtotalRow">
+                <div class="prodtotalCol">
+                  Grand Total:
+                </div>
+                <div class="prodtotalCol">
+                  <b>{{product.grand_total|currency:'$'}}</b>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+
+        </div>
+      </div>
+      }
+      }
+      }
+    </div>
+    <div class="col-sidebar">
+      <h4 class="heading">Additional Items</h4>
+      <div class="card">
+        <div class="card-body">
+          <h6>Are you traveling with a pet?</h6>
+          <div class="d-flex align-items-center">
+            <img src="path/to/pet-image.jpg" class="img-fluid rounded me-3" alt="Pet Image" style="width: 50px;">
+            <button class="btn btn-primary">Add a pet for $45.00</button>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <input type="text" class="form-control" placeholder="Enter Promo or Gift Card">
+        <button class="btn btn-secondary mt-2">Apply</button>
+      </div>
+      <ul class="list-group mb-3">
+        <li class="list-group-item">Free Wifi</li>
+        <li class="list-group-item">Free Parking</li>
+        <li class="list-group-item">Free EV Charger</li>
+      </ul>
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Subtotal
+          <span>{{cartTotal.subtotal | currency : '$'}}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Discount
+          <span>{{cartTotal.discount_amount | currency : '$'}}</span>
+        </li>
+        @for (item of cartTotal.tax_amount_a | keyvalue; track $index) {
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{item.key}}
+          <span>{{ item.value}}</span>
+        </li>
+
+        }
+        <li class="list-group-item d-flex justify-content-between align-items-center fw-bold">
+          Grand Total
+          <span>{{cartTotal.grand_total | currency : '$'}}</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          Deposit due now
+          <span class="text-danger fw-bold">{{cartTotal.total_deposit_amount | currency : '$'}}</span>
+        </li>
+      </ul>
+      <button class="btn btn-success w-100 my-3">CHECKOUT</button>
+      <button class="btn btn-outline-secondary w-100">CONTINUE SHOPPING</button>
+    </div>
+  </div>
+</div>

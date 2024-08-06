@@ -15,54 +15,75 @@ import { LoadCartDataRequest, LoadCartDataResponse } from '../../../swagger/api/
 })
 export class NavbarComponent {
 
-  titleSubscription? : Subscription;
-  routeSubscription? : Subscription;
-  routeStack:Array<string> = [];
+  titleSubscription?: Subscription;
+  routeSubscription?: Subscription;
+  routeStack: Array<string> = [];
 
-  cartItemsCount: any = 0 ;
-  cartSubscription? : Subscription;
+  cartItemsCount: any = 0;
+  cartSubscription?: Subscription;
 
-  pageTitle : string = "";
-  constructor(private commonService : CommonService,
+  pageTitle: string = "";
+  constructor(private commonService: CommonService,
     private router: Router,
     private loadCartData: LoadCartDataService
-  ){
-    if(localStorage.getItem('mupog')){
+  ) {
+    if (localStorage.getItem('mupog')) {
       var mupog = localStorage.getItem('mupog') || "";
-      this.loadCartData.frontendCartLoadCartDataPost({body:{mupog: mupog}}).subscribe((resp:LoadCartDataResponse)=>{
-        if(resp?.data?.cart_data){
+      this.loadCartData.frontendCartLoadCartDataPost({ body: { mupog: mupog } }).subscribe((resp: LoadCartDataResponse) => {
+        if (resp?.data?.cart_data) {
           const keys = Object.keys(resp.data.cart_data);
-          var itemsCount= parseInt(resp.data.cart_data?.[keys[0]][0]?.cart_items_count || "0") ;
+          var itemsCount = parseInt(resp.data.cart_data?.[keys[0]][0]?.cart_items_count || "0");
           this.commonService.updateCartData(itemsCount);
         }
+        else{
+          this.commonService.updateCartData(0);
+        }
       })
-
     }
-    this.cartSubscription = this.commonService.totalCartCount.subscribe((resp)=>{
+    else{
+      this.commonService.updateCartData(0);
+    }
+    this.cartSubscription = this.commonService.totalCartCount.subscribe((resp) => {
       this.cartItemsCount = resp;
     })
-    this.titleSubscription = commonService.pageTitle$.subscribe((title)=>{
+    this.titleSubscription = commonService.pageTitle$.subscribe((title) => {
       this.pageTitle = title;
     })
-    this.routeSubscription = this.commonService.routeStack$.subscribe((routes)=>{
-      this.routeStack=routes;
+    this.routeSubscription = this.commonService.routeStack$.subscribe((routes) => {
+      this.routeStack = routes;
     })
   }
 
 
-  toggleInterface(state: boolean){
+  toggleInterface(state: boolean) {
     this.commonService.setInterfaceStatus(state);
   }
 
-  getLastRoute(){
+  getLastRoute() {
     const lastRoute = this.commonService.getLastRoute();
-    this.router.navigate([lastRoute],{
+    this.router.navigate([lastRoute], {
       skipLocationChange: true
     });
   }
 
+  goToCart() {
+    if (this.cartItemsCount) {
+      this.router.navigate(['cart'], {
+        skipLocationChange: true
+      });
+    }
+    else {
+      this.router.navigate(['calendar'], {
+        skipLocationChange: true
+      })
+    }
+  }
+
   ngOnDestroy(): void {
+    this.titleSubscription?.unsubscribe();
     this.commonService.clearRoutes();
     this.routeSubscription?.unsubscribe();
+    this.cartSubscription?.unsubscribe();
+
   }
 }
