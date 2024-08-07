@@ -29,76 +29,76 @@
           <div class="right">
             <p class="price">{{getProductSubtotal(product.subtotal,product.product_discount) | currency:'$'}}</p>
             <strong>Price Details</strong>
-          <div class="prodtotalTooltip">
-            <div class="prodtotalInner">
-              <div class="prodtotalRow" *ngIf="product.cart_type != 'reservation' && product.cart_type != 'boat'">
-                <div class="prodtotalCol">
-                  Rate:
+            <div class="prodtotalTooltip">
+              <div class="prodtotalInner">
+                <div class="prodtotalRow" *ngIf="product.cart_type != 'reservation' && product.cart_type != 'boat'">
+                  <div class="prodtotalCol">
+                    Rate:
+                  </div>
+                  <div class="prodtotalCol">
+                    <b>{{product.nightly_price.split(',')[0]|currency:'$'}}</b>
+                  </div>
                 </div>
-                <div class="prodtotalCol">
-                  <b>{{product.nightly_price.split(',')[0]|currency:'$'}}</b>
+                <div class="prodtotalRow" *ngIf="product.cart_type == 'reservation' || product.cart_type == 'boat'">
+                  <div class="prodtotalCol">
+                    Ave/Night:
+                  </div>
+                  <div class="prodtotalCol">
+                    <b>{{product.avgPerNight|currency:'$'}}</b>
+                  </div>
                 </div>
-              </div>
-              <div class="prodtotalRow" *ngIf="product.cart_type == 'reservation' || product.cart_type == 'boat'">
-                <div class="prodtotalCol">
-                  Ave/Night:
+                <div class="prodtotalRow"
+                  *ngIf="product.cart_type != 'pos' || (product.cart_type =='pos' && product.product_is_timebound == '1')">
+                  <div class="prodtotalCol">
+                    Nights:
+                  </div>
+                  <div class="prodtotalCol">
+                    <b>{{product.nightly_price.split(',').length}}</b>
+                  </div>
                 </div>
-                <div class="prodtotalCol">
-                  <b>{{product.avgPerNight|currency:'$'}}</b>
+                <div class="prodtotalRow"
+                  *ngIf="product.cart_type =='pos' && product.cart_product_name != 'Resort Fee' && product.fe_display_product_name != 'Extra Person'">
+                  <div class="prodtotalCol">
+                    Quantity:
+                  </div>
+                  <div class="prodtotalCol">
+                    <b>{{product.service_quantity}}</b>
+                  </div>
                 </div>
-              </div>
-              <div class="prodtotalRow"
-                *ngIf="product.cart_type != 'pos' || (product.cart_type =='pos' && product.product_is_timebound == '1')">
-                <div class="prodtotalCol">
-                  Nights:
+                <div class="prodtotalRow">
+                  <div class="prodtotalCol">
+                    Tax:
+                  </div>
+                  <div class="prodtotalCol">
+                    <b [innerHTML]="getGrandTax(product.tax_info)"></b>
+                  </div>
                 </div>
-                <div class="prodtotalCol">
-                  <b>{{product.nightly_price.split(',').length}}</b>
+                <div class="prodtotalRow">
+                  <div class="prodtotalCol">
+                    Subtotal:
+                  </div>
+                  <div class="prodtotalCol">
+                    <b>{{product.subtotal|currency:'$'}}</b>
+                  </div>
                 </div>
-              </div>
-              <div class="prodtotalRow"
-                *ngIf="product.cart_type =='pos' && product.cart_product_name != 'Resort Fee' && product.fe_display_product_name != 'Extra Person'">
-                <div class="prodtotalCol">
-                  Quantity:
+                <div class="prodtotalRow" *ngIf="checkDiscountApplied(product.product_discount)">
+                  <div class="prodtotalCol">
+                    Discount:
+                  </div>
+                  <div class="prodtotalCol">
+                    <b>{{product.product_discount|currency:'$'}}</b>
+                  </div>
                 </div>
-                <div class="prodtotalCol">
-                  <b>{{product.service_quantity}}</b>
-                </div>
-              </div>
-              <div class="prodtotalRow">
-                <div class="prodtotalCol">
-                  Tax:
-                </div>
-                <div class="prodtotalCol">
-                  <b [innerHTML]="getGrandTax(product.tax_info)"></b>
-                </div>
-              </div>
-              <div class="prodtotalRow">
-                <div class="prodtotalCol">
-                  Subtotal:
-                </div>
-                <div class="prodtotalCol">
-                  <b>{{product.subtotal|currency:'$'}}</b>
-                </div>
-              </div>
-              <div class="prodtotalRow" *ngIf="checkDiscountApplied(product.product_discount)">
-                <div class="prodtotalCol">
-                  Discount:
-                </div>
-                <div class="prodtotalCol">
-                  <b>{{product.product_discount|currency:'$'}}</b>
-                </div>
-              </div>
-              <div class="prodtotalRow">
-                <div class="prodtotalCol">
-                  Grand Total:
-                </div>
-                <div class="prodtotalCol">
-                  <b>{{product.grand_total|currency:'$'}}</b>
+                <div class="prodtotalRow">
+                  <div class="prodtotalCol">
+                    Grand Total:
+                  </div>
+                  <div class="prodtotalCol">
+                    <b>{{product.grand_total|currency:'$'}}</b>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           </div>
 
         </div>
@@ -108,13 +108,23 @@
       }
     </div>
     <div class="col-sidebar">
+      @if(posProducts.length > 0){
       <h4 class="heading">Additional Items</h4>
+      @for (pos of posProducts; track $index) {
       <div class="card">
         <div class="card-body">
-          <h6>Are you traveling with a pet?</h6>
+          <h6 *ngIf="pos.product_name == 'Traveling with Pet' || pos.product_name == 'Pet Cleaning Fee'">Are you
+            traveling with a pet?</h6>
+          <span *ngIf="pos.product_name == 'Traveling with Pet' || pos.product_name == 'Pet Cleaning Fee'">Add a pet for
+            {{pos.product_price |currency: '$'}}.</span>
+          <span *ngIf="pos.product_name == 'All Pro Limousines'">All Pro Limousines</span>
+          <h6 *ngIf="pos.product_name == 'All Pro Limousines'">Visit St Pete Beach is EASY!</h6>
+          <h6
+            *ngIf="pos.product_name != 'Traveling with Pet' && pos.product_name != 'Pet Cleaning Fee' && pos.product_name == 'All Pro Limousines'">
+            {{pos.product_name}}</h6>
           <div class="d-flex align-items-center">
-            <img src="path/to/pet-image.jpg" class="img-fluid rounded me-3" alt="Pet Image" style="width: 50px;">
-            <button class="btn btn-primary">Add a pet for $45.00</button>
+            <img src="{{pos.image}}" class="img-fluid rounded me-3" alt="Pet Image" style="width: 50px;">
+            <button class="btn btn-primary" (click)="addToCart(pos)">Add</button>
           </div>
         </div>
       </div>
@@ -122,6 +132,9 @@
         <input type="text" class="form-control" placeholder="Enter Promo or Gift Card">
         <button class="btn btn-secondary mt-2">Apply</button>
       </div>
+
+      }
+      }
       <ul class="list-group mb-3">
         <li class="list-group-item">Free Wifi</li>
         <li class="list-group-item">Free Parking</li>
@@ -157,3 +170,18 @@
     </div>
   </div>
 </div>
+
+@if (showModal) {
+  <div class="custom-modal" >
+    <div style="display: block; ">
+      @for (room of roomsAllowedForPos; track $index) {
+      <label>
+        <input type="radio" name="options" [(ngModel)]="roomSelectedForPos" [value]="room">
+        {{room.cart_product_name}}
+      </label>
+    }
+    <button (click)="addPos()">ADD</button>
+    <button (click)="showModal = !showModal; roomSelectedForPos=null;"> Cancel</button>
+    </div>
+  </div>
+}
