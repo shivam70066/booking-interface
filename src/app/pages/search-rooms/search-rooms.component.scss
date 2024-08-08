@@ -476,11 +476,13 @@
             border-width: 1px;
             border-color: var(--inputgrayborder);
             border-radius: 4px;
-            margin-bottom: 5px;
+            margin: 0 10px 10px 0;
+            cursor: pointer
           }
           label {
-            font-size: var(--size14);
+            font-size: 14px;
             white-space: normal;
+            cursor: pointer;
           }
         }
       }

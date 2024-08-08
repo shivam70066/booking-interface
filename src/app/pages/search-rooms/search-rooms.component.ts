@@ -1,9 +1,18 @@
-import { filter } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from '../../services/common.service';
-import { AddToCartService, GetPriceModuleSelectedDatesV2Service, GetSearchResultSjService } from '../../../swagger/api/services';
-import { AddToCartRequest, GetPriceModuleSelectedDatesResponse, GetSearchResultRequest, GetSearchResultResponse } from '../../../swagger/api/models';
+import { AmenitiesFilterPipe } from '../../shared/amenities-filter.pipe';
+import {
+  AddToCartService,
+  GetPriceModuleSelectedDatesV2Service,
+  GetSearchResultSjService,
+} from '../../../swagger/api/services';
+import {
+  AddToCartRequest,
+  GetPriceModuleSelectedDatesResponse,
+  GetSearchResultRequest,
+  GetSearchResultResponse,
+} from '../../../swagger/api/models';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -23,7 +32,7 @@ import { HotelService } from '../../services/hotel-services.service';
 @Component({
   selector: 'app-search-rooms',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgbDatepickerModule, NgxSliderModule],
+  imports: [CommonModule, FormsModule, NgbDatepickerModule, NgxSliderModule, AmenitiesFilterPipe],
   templateUrl: './search-rooms.component.html',
   styleUrl: './search-rooms.component.scss',
 })
@@ -60,18 +69,16 @@ export class SearchRoomsComponent implements OnInit {
     step: 20,
   };
   oldResult: any;
-  roomTypes: any=[];
+  roomTypes: any = [];
   product_type: string = 'room';
   bed_code_name: string = '';
-  viewType: string = '';
-  amentiesTypes: any= [];
+  amentiesTypes: any = [];
   filterationData: any = [];
   amenitiesCheck: any = [];
   priceFilterData: any = { low: this.value, high: this.highValue };
   filterDataCombined: any = {
     product_type: this.product_type,
-    bed_code_name: this.bed_code_name,
-    viewType: this.viewType,
+    bed_code_name: this.bed_code_name
   };
   private hotelIDSubscription?: Subscription;
   // marinaSelected:boolean = false;
@@ -102,7 +109,6 @@ export class SearchRoomsComponent implements OnInit {
       this.childCount = parseInt(params.get('child') || '0');
     });
     this.searchRooms();
-    console.log(this.room_stay_from);
     if (localStorage.getItem('mupog')) {
       this.mupog = localStorage.getItem('mupog') || '';
     }
@@ -125,7 +131,7 @@ export class SearchRoomsComponent implements OnInit {
   }
   changeFilters() {
     if (this.bed_code_name === 'All' || this.bed_code_name === '') {
-      this.results = this.oldResult; // Show all results if 'All' is selected
+      this.results = this.oldResult;
     } else {
       this.results = this.oldResult.filter(
         (room: any) => room.bed_code_name === this.bed_code_name
@@ -148,7 +154,7 @@ export class SearchRoomsComponent implements OnInit {
       this.value = context.value;
       this.changePriceFilter();
       this.results = this.results.filter((room: any) => {
-        if (room.minimum_price_value >= this.value) {
+        if (+room.minimum_price_value >= this.value) {
           return room;
         }
       });
@@ -160,25 +166,21 @@ export class SearchRoomsComponent implements OnInit {
   }
   changeAmenitiesFilter() {
     this.filterationData = [];
-    this.amenitiesCheck.forEach((value: any, key: any) => {
+    this.amenitiesCheck.forEach((value: boolean, key: string) => {
       if (value) {
-        this.filterationData.push(this.amentiesTypes[key]);
+        this.filterationData.push(this.amentiesTypes[key]['value']);
       }
     });
   }
-  filterData(filterData: any) {
-    this.results = this.oldResult;
-    const index = this.filterationData.indexOf(filterData);
-    if (index === -1) {
-      this.filterationData.push(filterData);
+  filterData(filterData: string) {
+    var data = JSON.parse(JSON.stringify(this.filterationData));
+    if (data.indexOf(filterData) == -1) {
+      data.push(filterData);
     } else {
-      this.filterationData.splice(index, 1);
+      let index = data.indexOf(filterData);
+      data.splice(index, 1);
     }
-    this.results = this.results.filter((room:any) => {
-      return this.filterationData.every((amenity:any) =>
-        room.amenities?.includes(amenity)
-      );
-    });
+    this.filterationData = JSON.parse(JSON.stringify(data));
   }
   searchRooms() {
     this.loading = true;
@@ -239,8 +241,6 @@ export class SearchRoomsComponent implements OnInit {
     var roomIndex = this.results.indexOf(room);
     selectedPolicy = this.selectedPolicy[roomIndex];
     selectedPlan = this.selectedPlan[roomIndex];
-    console.log(selectedPlan);
-    console.log(selectedPolicy);
     this.reservationInfo.room_stay_from = this.room_stay_from;
     this.reservationInfo.room_stay_to = this.room_stay_to;
     this.reservationInfo.addCharges =
@@ -311,27 +311,31 @@ export class SearchRoomsComponent implements OnInit {
     } else {
       this.mupog = this.reservationInfo.mupog = '';
     }
-    this.addToCartService.frontendCartAddToCartPost({body:this.reservationInfo}).subscribe((data:any) => {
-      if(data.status == 'error'){
-        console.log(data.message);
-      } else {
-        var cartData = data.data.cart_data;
-        var cartTotal = data.data.cart_total;
-        var totalCartItems = parseInt(data.data.cart_data[0].cart_items_count);
-        this.mupog = cartData[0].mupog;
-        localStorage.setItem('mupog', this.mupog);
-        setTimeout(() => {
-          this.commonService.updateCartData(totalCartItems);
-          this.commonService.updateCartItems(cartData);
-          this.commonService.updateCartItemsTotal(cartTotal);
-        },100);
-        this.router.navigate(['cart'],{
-          skipLocationChange:true
-        });
-        this.loading= false;
-      }
-      window.scroll({ top: 0, left: 0, behavior: 'smooth' });
-    });
+    this.addToCartService
+      .frontendCartAddToCartPost({ body: this.reservationInfo })
+      .subscribe((data: any) => {
+        if (data.status == 'error') {
+          console.log(data.message);
+        } else {
+          var cartData = data.data.cart_data;
+          var cartTotal = data.data.cart_total;
+          var totalCartItems = parseInt(
+            data.data.cart_data[0].cart_items_count
+          );
+          this.mupog = cartData[0].mupog;
+          localStorage.setItem('mupog', this.mupog);
+          setTimeout(() => {
+            this.commonService.updateCartData(totalCartItems);
+            this.commonService.updateCartItems(cartData);
+            this.commonService.updateCartItemsTotal(cartTotal);
+          }, 100);
+          this.router.navigate(['cart'], {
+            skipLocationChange: true,
+          });
+          this.loading = false;
+        }
+        window.scroll({ top: 0, left: 0, behavior: 'smooth' });
+      });
   }
 
   changeSelectedPlanPolicy(index: number, policy: number, plan: string) {
@@ -374,7 +378,6 @@ export class SearchRoomsComponent implements OnInit {
   }
   toggleIcon() {
     this.isMinusIcon = !this.isMinusIcon;
-    this.isAmentiesIcon = !this.isAmentiesIcon;
   }
   toggleAmentiesIcon() {
     this.isAmentiesIcon = !this.isAmentiesIcon;

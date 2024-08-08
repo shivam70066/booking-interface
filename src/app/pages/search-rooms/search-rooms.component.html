@@ -70,7 +70,7 @@
         </div>
         <div class="search-main-content">
           <div class="search-result-left">
-            <h3>{{results.length}} {{(results.length>1 ? "Results" : "Result")}} are found.</h3>
+            <h3>{{((results) | amenitiesFilter:filterationData).length}} {{(((results) | amenitiesFilter:filterationData).length>1 ? "Results" : "Result")}} are found.</h3>
             <div class="book-direct-container">
               <div class="book-direct-head">
                 <h3>Book Direct & Save!</h3>
@@ -99,8 +99,8 @@
               <div class="sort-heading">
                 Modify Search
                 <div class="sort-icon" (click)="toggleIcon()">
-                  <img *ngIf="!isMinusIcon" src="assets/img/minusicon.png" alt="minus-icon" />
-                  <img *ngIf="isMinusIcon" src="assets/img/plus-sm-icon.png" alt="plus-icon" />
+                  <img [src]="isMinusIcon?'assets/img/plus-sm-icon.png':'assets/img/minusicon.png'"
+                    [alt]="isAmentiesIcon?'plus-icon':'minus-icon'" />
                 </div>
               </div>
               <form *ngIf="!isMinusIcon" (ngSubmit)="searchRooms()">
@@ -172,36 +172,43 @@
               <div class="select-lbl-block">
                 <select [(ngModel)]="bed_code_name" (ngModelChange)="changeFilters()" [attr.role]="'listbox'">
                   <option value="" [attr.role]="'option'" selected>All</option>
-                  <option *ngFor="let roomtype of roomTypes" [attr.role]="'option'" [value]="roomtype">{{roomtype}}
-                  </option>
+                  @for (roomtype of roomTypes; track $index) {
+                  <option [attr.role]="'option'" [value]="roomtype">{{roomtype}}</option>
+                  }
                 </select>
               </div>
             </div>
-            <div class="sort-outer" *ngIf="amentiesTypes && amentiesTypes.length > 0">
+            @if (amentiesTypes && amentiesTypes.length > 0) {
+            <div class="sort-outer">
               <div class="sort-heading">
                 Amenities
                 <div class="sort-icon" (click)="toggleAmentiesIcon()">
-                  <img *ngIf="!isAmentiesIcon" src="assets/img/minusicon.png" alt="minus-icon" />
-                  <img *ngIf="isAmentiesIcon" src="assets/img/plus-sm-icon.png" alt="plus-icon" />
+                  <img [src]="isAmentiesIcon?'assets/img/plus-sm-icon.png':'assets/img/minusicon.png'"
+                    [alt]="isAmentiesIcon?'plus-icon':'minus-icon'" />
                 </div>
               </div>
-              <div *ngIf="!isAmentiesIcon" class="amenities-outer" #amenityId id="amenityId">
-                <div class="Amenities-row" *ngFor="let amenityFilter of amentiesTypes;let i = index">
+              @if (!isAmentiesIcon) {
+              <div class="amenities-outer amenityId" #amenityId id="amenityId">
+                <div class="Amenities-row">
+                  @for (amenityFilter of amentiesTypes; track $index) {
                   <div class="Amenities-col">
-                    <input type="checkbox" [(ngModel)]="amenitiesCheck[i]" (click)="filterData(amentiesTypes[i])">
-                    <label>{{amenityFilter}}</label>
+                    <input type="checkbox" id="{{amenityFilter}}" (click)="filterData(amenityFilter)" [value]="amentiesTypes[$index]">
+                    <label for="{{amenityFilter}}">{{amenityFilter}}</label>
                   </div>
+                  }
                 </div>
               </div>
+              }
             </div>
+            }
 
           </div>
           <div class="search-result-right">
             <div class="room-result-blocks">
               <div class="room-result-row">
-                @if (results) {
+                @if ((results) | amenitiesFilter:filterationData ) {
                 <div class="room-result-insideblock">
-                  @for (result of results; track $index) {
+                  @for (result of ((results) | amenitiesFilter:filterationData); track $index) {
                   <div class="room-result-repeat-block">
                     <div class="room-img-block">
                       <div class="room-hotel-logo">
