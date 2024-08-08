@@ -41,6 +41,7 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCartData();
+    this.commonService.setPagetitle('Cart');
   }
 
   loadCartData() {

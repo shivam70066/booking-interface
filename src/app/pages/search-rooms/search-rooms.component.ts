@@ -311,31 +311,29 @@ export class SearchRoomsComponent implements OnInit {
     } else {
       this.mupog = this.reservationInfo.mupog = '';
     }
-    this.addToCartService
-      .frontendCartAddToCartPost({ body: this.reservationInfo })
-      .subscribe((data: any) => {
-        if (data.status == 'error') {
-          console.log(data.message);
-        } else {
-          var cartData = data.data.cart_data;
-          var cartTotal = data.data.cart_total;
-          var totalCartItems = parseInt(
-            data.data.cart_data[0].cart_items_count
-          );
-          this.mupog = cartData[0].mupog;
-          localStorage.setItem('mupog', this.mupog);
-          setTimeout(() => {
-            this.commonService.updateCartData(totalCartItems);
-            this.commonService.updateCartItems(cartData);
-            this.commonService.updateCartItemsTotal(cartTotal);
-          }, 100);
-          this.router.navigate(['cart'], {
-            skipLocationChange: true,
-          });
-          this.loading = false;
-        }
-        window.scroll({ top: 0, left: 0, behavior: 'smooth' });
-      });
+    this.addToCartService.frontendCartAddToCartPost({body:this.reservationInfo}).subscribe((data:any) => {
+      if(data.status == 'error'){
+        console.log(data.message);
+        alert(data.message);
+      } else {
+        var cartData = data.data.cart_data;
+        var cartTotal = data.data.cart_total;
+        var totalCartItems =  parseInt(data.data.cart_data[0].cart_items_count);
+        this.mupog = cartData[0].mupog;
+        localStorage.setItem('mupog',this.mupog);
+        setTimeout (() => {
+          this.commonService.updateCartData(totalCartItems);
+          this.commonService.updateCartItems(cartData);
+          this.commonService.updateCartItemsTotal(cartTotal);
+        },100);
+        this.router.navigate(['cart'],{
+          skipLocationChange:true
+        });
+      }
+      this.loading= false;
+      window.scroll({top: 0,left: 0,behavior: 'smooth'});
+
+    });
   }
 
   changeSelectedPlanPolicy(index: number, policy: number, plan: string) {
