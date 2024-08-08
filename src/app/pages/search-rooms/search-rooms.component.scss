@@ -333,6 +333,96 @@
         font-weight: 600;
         margin-bottom: 25px;
         align-items: center;
+        .sort-icon {
+          height: 20px;
+          width: 20px;
+          border-radius: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          background: rgb(180, 180, 180);
+        }
+      }
+      form {
+        .input-lbl-block {
+          border-radius: 4px;
+          width: 100%;
+          height: 55px;
+          float: left;
+          border: 1px solid #b7b7b7;
+          color: #000;
+          font-size: 15px;
+          padding: 0 15px;
+          height: 38px;
+          background-color: white;
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 14px;
+          .top-lbl {
+            position: absolute;
+            left: 15px;
+            top: -12px;
+            padding: 0 5px;
+            background: white;
+            font-size: 15px;
+            color: #636363;
+          }
+          input {
+            word-wrap: normal;
+            height: 100%;
+            border: none;
+            background-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            outline: none;
+          }
+        }
+        .select-adult {
+          display: flex;
+          width: 100%;
+          margin-bottom: 14px;
+          .adult-child-info {
+            border-radius: 10px;
+            padding: 0px 15px;
+            display: flex;
+            .info {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+
+              .info-right {
+                button {
+                  margin: 5px;
+                  background-color: transparent;
+                  /* font-size: 44px; */
+                  font-weight: 900;
+                  border-radius: 100%;
+                  border: 1px solid rgb(128, 128, 128);
+                  padding: 4px 10px;
+                }
+              }
+            }
+          }
+        }
+        .button-block {
+          width: 100%;
+          float: left;
+          button {
+            width: 100%;
+            height: 38px;
+            font-weight: 700;
+            border-radius: 6px;
+            border-style: none;
+            background-color: #5fc3b5;
+            color: #ffff;
+            font-size: 20px;
+          }
+        }
       }
       .select-lbl-block {
         border-radius: 4px;
@@ -368,6 +458,30 @@
           justify-content: space-between;
           width: 100%;
           outline: none;
+        }
+      }
+      .amenities-outer {
+        position:relative;
+        width: 100%;
+        float: left;
+        padding: 10px 12px;
+        overflow-y: hidden;
+        transition: all 1s;
+        max-height: 400px;
+        overflow: auto;
+        .Amenities-row {
+          width: 100%;
+          float: left;
+          input[type='checkbox'] {
+            border-width: 1px;
+            border-color: var(--inputgrayborder);
+            border-radius: 4px;
+            margin-bottom: 5px;
+          }
+          label {
+            font-size: var(--size14);
+            white-space: normal;
+          }
         }
       }
     }
@@ -494,7 +608,7 @@
               span {
                 background: #f39984;
                 height: 46px;
-                font-size: var(--size14);
+                font-size: 14px;
                 padding: 0 15px;
                 display: flex;
                 align-items: center;
@@ -745,8 +859,8 @@
                                     background: #f0f0f0;
                                   }
                                 }
-                                &:hover{
-                                  .inner-popup{
+                                &:hover {
+                                  .inner-popup {
                                     visibility: visible !important;
                                   }
                                 }

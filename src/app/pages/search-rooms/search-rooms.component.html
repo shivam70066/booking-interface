@@ -95,10 +95,57 @@
             </div>
             <hr>
             }
-            <div class="verify-by">
-              verified by &nbsp;<span> LODGINGSYSTEM</span>
+            <div class="sort-outer">
+              <div class="sort-heading">
+                Modify Search
+                <div class="sort-icon" (click)="toggleIcon()">
+                  <img *ngIf="!isMinusIcon" src="assets/img/minusicon.png" alt="minus-icon" />
+                  <img *ngIf="isMinusIcon" src="assets/img/plus-sm-icon.png" alt="plus-icon" />
+                </div>
+              </div>
+              <form *ngIf="!isMinusIcon" (ngSubmit)="searchRooms()">
+                <div class="input-lbl-block">
+                  <span class="top-lbl">Arrival Date</span>
+                  <input type="date" [min]="formatDate(fromDate)" (change)="onArrivalDateChange($event)"
+                    [value]="formatDate(convertStringToNgbDate(room_stay_from))" />
+                </div>
+                <div class="input-lbl-block">
+                  <span class="top-lbl">Departure Date</span>
+                  <input type="date" [min]="formatDate(nextDate)"
+                    [value]="formatDate(convertStringToNgbDate(room_stay_to))">
+                </div>
+                <div class="select-adult">
+                  <div class="adult-child-info">
+                    <div class="info">
+                      <div class="info-left">
+                        <span class="heading">Adults</span>
+                        <br>
+                      </div>
+                      <div class="info-right">
+                        <button [disabled]="adultCount<=1" (click)="adultCount = adultCount-1;">-</button>
+                        <span>{{adultCount}}</span>
+                        <button [disabled]="adultCount>=6" (click)="adultCount = adultCount+1;">+</button>
+                      </div>
+                    </div>
+                    <div class="info">
+                      <div class="info-left">
+                        <span class="heading">Kids</span>
+                        <br>
+                      </div>
+                      <div class="info-right">
+                        <button [disabled]="childCount<=0" (click)="childCount = childCount-1;">-</button>
+                        <span>{{childCount}}</span>
+                        <button [disabled]="childCount>=4" (click)="childCount = childCount+1;">+</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="button-block">
+                  <button class="btnstyle big full" type="submit">Book Now
+                  </button>
+                </div>
+              </form>
             </div>
-
             <div class="sort-outer">
               <div class="sort-heading">
                 Sort Result By
@@ -111,7 +158,42 @@
                 </select>
               </div>
             </div>
-
+            <div class="sort-outer" *ngIf="roomTypes != undefined && roomTypes.length>0">
+              <div class="sort-heading">
+                Price
+              </div>
+              <ngx-slider (userChangeEnd)="onUserChange($event)" [(highValue)]="highValue" [(value)]="value"
+                [options]="options"></ngx-slider>
+            </div>
+            <div class="sort-outer">
+              <div class="sort-heading">
+                Bed Type
+              </div>
+              <div class="select-lbl-block">
+                <select [(ngModel)]="bed_code_name" (ngModelChange)="changeFilters()" [attr.role]="'listbox'">
+                  <option value="" [attr.role]="'option'" selected>All</option>
+                  <option *ngFor="let roomtype of roomTypes" [attr.role]="'option'" [value]="roomtype">{{roomtype}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="sort-outer" *ngIf="amentiesTypes && amentiesTypes.length > 0">
+              <div class="sort-heading">
+                Amenities
+                <div class="sort-icon" (click)="toggleAmentiesIcon()">
+                  <img *ngIf="!isAmentiesIcon" src="assets/img/minusicon.png" alt="minus-icon" />
+                  <img *ngIf="isAmentiesIcon" src="assets/img/plus-sm-icon.png" alt="plus-icon" />
+                </div>
+              </div>
+              <div *ngIf="!isAmentiesIcon" class="amenities-outer" #amenityId id="amenityId">
+                <div class="Amenities-row" *ngFor="let amenityFilter of amentiesTypes;let i = index">
+                  <div class="Amenities-col">
+                    <input type="checkbox" [(ngModel)]="amenitiesCheck[i]" (click)="filterData(amentiesTypes[i])">
+                    <label>{{amenityFilter}}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
 
           </div>
           <div class="search-result-right">
