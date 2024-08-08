@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from '../../services/common.service';
-import { AmenitiesFilterPipe } from '../../shared/amenities-filter.pipe';
+import { AmenitiesFilterPipe } from '../../shared/pipes/amenities-filter.pipe';
 import {
   AddToCartService,
   GetPriceModuleSelectedDatesV2Service,
