@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AddToCartResponse, GetPriceModuleSelectedDatesResponse } from '../../../swagger/api/models';
 import { CommonService } from '../../services/common.service';
+import { Router } from '@angular/router';
+import { HotelService } from '../../services/hotel-services.service';
 
 @Component({
   selector: 'app-cart',
@@ -31,7 +33,9 @@ export class CartComponent implements OnInit {
   constructor(private loadCartDataService: LoadCartDataService,
     private loadPosDataService: GetPosAvailableService,
     private addToCartService: AddToCartService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private router : Router,
+    private hotelService : HotelService
   ) {
   }
 
@@ -265,5 +269,128 @@ export class CartComponent implements OnInit {
     this.addToCartfn(this.posItem, this.roomSelectedForPos.cart_item_id);
     this.posItem = null;
     this.roomSelectedForPos = null;
+  }
+
+  emptyCart(){
+    var mupog = localStorage.getItem('mupog') || '';
+    var cartData:{mupog:string,cartItemIds:Array<string>} = {mupog:mupog,cartItemIds:[]};
+    // this.showLoader = true;
+    var cartKeys = Object.keys(this.cartData);
+    cartKeys.forEach((item,index) => {
+      this.cartData[item].forEach((val:any)=>{
+        cartData.cartItemIds.push(val.cart_item_id);
+      })
+    });
+    this.deleteMultipleCartItems(cartData,'cancel');
+  }
+
+  deleteMultipleCartItems(cartData:any, type:any){
+    this.hotelService.deleteCart(cartData).subscribe((data:any) => {
+      if(data.status === 'success'){
+        localStorage.removeItem('splitImages');
+        localStorage.removeItem('splitUniqueIndex');
+        localStorage.removeItem('currentSelectedSplitIndex');
+        localStorage.removeItem('onGoingRequest');
+        localStorage.removeItem('splitDates');
+        setTimeout(()=>{
+          if(data.data.length === 0){
+            setTimeout(()=>{
+              this.cartTotal = [];
+              this.totalCartItems = 0;
+              // this.promotionGiftCard = '';
+              // this.promotionStatus = '';
+              // this.promotionTxt = '';
+              // this.gcc = {
+              //         code:'',
+              //         applyGiftCard: false
+              //       };
+              localStorage.removeItem('mupog');
+
+              this.commonService.updateCartData(this.totalCartItems);
+              this.commonService.updateCartItems([]);
+              this.commonService.updateCartItemsTotal(this.cartTotal);
+              this.router.navigate(['hotels-properties'],{
+                skipLocationChange: true
+              });
+            },100);
+          } else {
+            // this.loadCartData(this.cartClass);
+          }
+
+          // this.showLoader = false;
+        },500);
+      } else {
+          // this.showLoader = false;
+          // this.openDialog({'message':data.message,'title':data.status.toUpperCase()});
+      }
+      // this.updateIcons();
+      // this.showLoader = false;
+    });
+  }
+
+  deleteCartItem(cartItemId:any,mupog:any){
+    // this.showLoader =true;
+    this.hotelService.deleteCartItem({'cart_item_id':cartItemId,'mupog':mupog}).subscribe((data:any) => {
+      if(data.status === 'success'){
+          if(data.data.cart_data != undefined && data.data.cart_data != '' ){
+              if(Object.keys(data.data.cart_data).length>0){
+                setTimeout(()=>{
+                  this.loadCartData();
+                },100);
+              } else{
+                setTimeout(()=>{
+                  // this.cartData = [];
+                  this.cartTotal = [];
+                  this.totalCartItems = 0;
+                  // this.promotionGiftCard = '';
+                  // this.promotionStatus = '';
+                  // this.promotionTxt = '';
+                  // this.gcc = {
+                  //         code:'',
+                  //         applyGiftCard: false
+                  //       };
+                  localStorage.removeItem('mupog');
+                  this.commonService.updateCartData(this.totalCartItems);
+                  this.commonService.updateCartItems([]);
+                  this.commonService.updateCartItemsTotal(this.cartTotal);
+                  if(this.router.url == '/checkout' || this.router.url == '/cart'){
+                      this.router.navigate(['']);
+                  }
+                },100);
+              }
+
+          } else{
+            setTimeout(()=>{
+              // this.cartData = [];
+              this.cartTotal = [];
+              this.totalCartItems = 0;
+              // this.promotionGiftCard = '';
+              // this.promotionStatus = '';
+              // this.promotionTxt = '';
+              // this.gcc = {
+              //         code:'',
+              //         applyGiftCard: false
+              //       };
+              localStorage.removeItem('mupog');
+              this.commonService.updateCartData(this.totalCartItems);
+              this.commonService.updateCartItems([]);
+              this.commonService.updateCartItemsTotal(this.cartTotal);
+              if(this.router.url == '/checkout' || this.router.url == '/cart'){
+                this.router.navigate(['hotels-properties']);
+              }
+            },100);
+          }
+          // this.commonService.updateCartStatus({'status':'single'+this.totalCartItems});
+          // this.showLoader = false;
+
+      } else {
+          // this.showLoader = false;
+          // this.openDialog({'message':data.message,'title':data.status.toUpperCase()});
+      }
+      // this.updateIcons();
+      if(this.totalCartItems==0){
+        this.router.navigate(['hotels-properties']);
+      }
+    });
   }
 }

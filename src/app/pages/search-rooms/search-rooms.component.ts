@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from '../../services/common.service';
-import { GetPriceModuleSelectedDatesV2Service, GetSearchResultSjService } from '../../../swagger/api/services';
-import { GetPriceModuleSelectedDatesResponse, GetSearchResultRequest, GetSearchResultResponse } from '../../../swagger/api/models';
+import { AddToCartService, GetPriceModuleSelectedDatesV2Service, GetSearchResultSjService } from '../../../swagger/api/services';
+import { AddToCartRequest, GetPriceModuleSelectedDatesResponse, GetSearchResultRequest, GetSearchResultResponse } from '../../../swagger/api/models';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { HotelService } from '../../services/hotel-services.service';
 import { FormsModule } from '@angular/forms';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
@@ -37,15 +35,16 @@ export class SearchRoomsComponent implements OnInit {
   bestPriceData: GetPriceModuleSelectedDatesResponse | null = null;
   hotelId: number | undefined = 123;
   marinaSelected:boolean = false;
-  private hotelIDSubscription?: Subscription;
+  hotelIDSubscription?: Subscription;
 
 
   constructor(
     private route: ActivatedRoute,
     private commonService: CommonService,
     private searchresult: GetSearchResultSjService,
-    private hotelServie : HotelService,
-    private priceModule: GetPriceModuleSelectedDatesV2Service
+    private addToCartService: AddToCartService,
+    private priceModule: GetPriceModuleSelectedDatesV2Service,
+    private router: Router
   ) {
     this.commonService.setPagetitle("Results");
   }
@@ -100,6 +99,7 @@ export class SearchRoomsComponent implements OnInit {
 
 
   addToCart(room: any, calledfrom: string) {
+    this.loading = true;
     if (parseInt(room.mls_days) > 1) {
       let mlsDates = '';
       if (room.mls_dates_start_end) {
@@ -171,11 +171,9 @@ export class SearchRoomsComponent implements OnInit {
     } else {
       this.mupog = this.reservationInfo.mupog = '';
     }
-
-    this.hotelServie.addTocart(this.reservationInfo).subscribe((data:any) => {
+    this.addToCartService.frontendCartAddToCartPost({body:this.reservationInfo}).subscribe((data:any) => {
       if(data.status == 'error'){
         console.log(data.message);
-
       } else {
         var cartData = data.data.cart_data;
         var cartTotal = data.data.cart_total;
@@ -187,6 +185,10 @@ export class SearchRoomsComponent implements OnInit {
           this.commonService.updateCartItems(cartData);
           this.commonService.updateCartItemsTotal(cartTotal);
         },100);
+        this.router.navigate(['cart'],{
+          skipLocationChange:true
+        });
+        this.loading= false;
       }
       window.scroll({top: 0,left: 0,behavior: 'smooth'});
 
