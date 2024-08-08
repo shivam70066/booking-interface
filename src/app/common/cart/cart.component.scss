@@ -33,7 +33,7 @@ body {
 
 .col-sidebar {
   flex: 1;
-  max-width: 300px;
+  max-width: 330px;
 }
 
 .card {
@@ -179,5 +179,18 @@ body {
   .prodtotalRow{
     display: flex;
     justify-content: space-between;
+    .prodtotalCol{
+      margin-right: 10px;
+    }
   }
+}
+
+.custom-modal{
+  position: absolute;
+  top:0px;
+  bottom: 0px;
+  background-color: rgba(0, 0, 0, 0.308);
+  height: 100vh;
+  width: 100vw;
+  z-index: 1000000;
 }
