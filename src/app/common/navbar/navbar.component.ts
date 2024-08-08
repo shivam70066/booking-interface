@@ -67,16 +67,27 @@ export class NavbarComponent {
   }
 
   goToCart() {
+    var currentLocation = this.router.url?.slice(1) || "";
     if (this.cartItemsCount) {
+      if(currentLocation === "cart"){
+        return;
+      }
+      this.commonService.addRoute(currentLocation);
       this.router.navigate(['cart'], {
         skipLocationChange: true
       });
     }
-    else {
+
+    if(this.cartItemsCount ==0){
+      if(currentLocation === "calendar"){
+        return;
+      }
+      this.commonService.addRoute(currentLocation);
       this.router.navigate(['calendar'], {
-        skipLocationChange: true
-      })
+          skipLocationChange: true
+      });
     }
+
   }
 
   ngOnDestroy(): void {

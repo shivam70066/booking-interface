@@ -174,6 +174,7 @@ export class SearchRoomsComponent implements OnInit {
     this.addToCartService.frontendCartAddToCartPost({body:this.reservationInfo}).subscribe((data:any) => {
       if(data.status == 'error'){
         console.log(data.message);
+        alert(data.message);
       } else {
         var cartData = data.data.cart_data;
         var cartTotal = data.data.cart_total;
@@ -188,8 +189,8 @@ export class SearchRoomsComponent implements OnInit {
         this.router.navigate(['cart'],{
           skipLocationChange:true
         });
-        this.loading= false;
       }
+      this.loading= false;
       window.scroll({top: 0,left: 0,behavior: 'smooth'});
 
     });

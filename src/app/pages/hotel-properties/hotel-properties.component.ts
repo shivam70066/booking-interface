@@ -45,7 +45,7 @@ export class HotelPropertiesComponent {
 
   goToCalendar(id:number){
     this.commonService.setHotelId(id);
-    this.commonService.addRoute('hotels-properties')
+    this.commonService.addRoute('hotels-properties');
     this.router.navigate(['calendar'],{
       skipLocationChange: true,
     });
