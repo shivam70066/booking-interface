@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from '../../services/common.service';
 import { AddToCartService, GetPriceModuleSelectedDatesV2Service, GetSearchResultSjService } from '../../../swagger/api/services';
@@ -80,7 +80,7 @@ export class SearchRoomsComponent implements OnInit {
       promo: "",
       room_stay_from: this.room_stay_from,
       room_stay_to: this.room_stay_to,
-      sub_hotel_id: this.sub_hotel_id.toString(),
+      sub_hotel_id: this.sub_hotel_id?.toString(),
       type: "room",
       adults: this.adultCount,
       child: this.childCount
@@ -186,11 +186,12 @@ export class SearchRoomsComponent implements OnInit {
           this.commonService.updateCartItems(cartData);
           this.commonService.updateCartItemsTotal(cartTotal);
         },100);
+        this.commonService.addRoute(this.router.url.slice(1));
         this.router.navigate(['cart'],{
           skipLocationChange:true
         });
       }
-      this.loading= false;
+      // this.loading= false;
       window.scroll({top: 0,left: 0,behavior: 'smooth'});
 
     });

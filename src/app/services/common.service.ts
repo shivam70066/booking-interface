@@ -22,18 +22,20 @@ export class CommonService {
   routeStack$ = this.routeStackSubject.asObservable();
 
   public cartItems = new BehaviorSubject({});
-  private CartItemsTotal = new BehaviorSubject({});
-  private cartCount = new BehaviorSubject(0);
   checkcartItems = this.cartItems.asObservable();
-  totalCartCount = this.cartCount.asObservable();
+
+  private CartItemsTotal = new BehaviorSubject({});
   checkcartItemsTotal = this.CartItemsTotal.asObservable();
+
+  private cartCount = new BehaviorSubject(0);
+  totalCartCount = this.cartCount.asObservable();
+
 
   updateCartData(cartCount: number) {
     this.cartCount.next(cartCount);
   }
 
   updateCartItems(cartItems: any) {
-    console.log(cartItems)
     this.cartItems.next(cartItems);
   }
 

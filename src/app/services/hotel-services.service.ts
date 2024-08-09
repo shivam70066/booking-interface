@@ -20,5 +20,16 @@ export class HotelService {
   deleteCartItem(data:any){
     return this.http.post('http://localhost/ls/ls-api/frontend/cart/delete_cart_item', data)
   }
+  getAllCartData(data:any){
+    return this.http.post('http://localhost/ls/ls-api/frontend/cart/cart_giftcard_with_rooms',data)
+  }
+
+  saveCartCustomer(data:any){
+    return this.http.post('http://localhost/ls/ls-api/frontend/cart/save_cart_customer_info', data)
+  }
+
+  createReservation(data:any){
+    return this.http.post("http://localhost/ls/ls-api/frontend/cart/create_reservation",data)
+  }
 
 }
