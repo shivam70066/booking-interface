@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from '../../services/common.service';
 import { AmenitiesFilterPipe } from '../../shared/pipes/amenities-filter.pipe';
@@ -326,11 +326,12 @@ export class SearchRoomsComponent implements OnInit {
           this.commonService.updateCartItems(cartData);
           this.commonService.updateCartItemsTotal(cartTotal);
         },100);
+        this.commonService.addRoute(this.router.url.slice(1));
         this.router.navigate(['cart'],{
           skipLocationChange:true
         });
       }
-      this.loading= false;
+      // this.loading= false;
       window.scroll({top: 0,left: 0,behavior: 'smooth'});
 
     });

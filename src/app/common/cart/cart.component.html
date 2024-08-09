@@ -1,5 +1,8 @@
 <div class="container">
-
+  @if (loader) {
+    <app-loader></app-loader>
+  }
+  @else {
   <div class="row">
     <div class="col-main">
       <h2 class="heading">Reservation Summary</h2>
@@ -22,12 +25,24 @@
             <p>Check Out: <strong>{{product.room_stay_to}}</strong></p>
             @if (product.cart_type == 'reservation' || product.cart_type == 'boat') {
             <p>Accommodates {{product.max_occupancy}}</p>
+            <!-- adult and child count section  -->
+            @if(product.cart_type !='pos' && product.cart_type !='gift_card'&& product.cart_type =='reservation'){
+              <span>Adults:
+                <strong>{{product.room_stay_guest_count}}</strong>
+              </span>
+              <span style="margin-left: 20px;">Kids:
+                <strong>{{product.room_stay_child_count}}</strong>
+              </span>
+            }
             <p>Nights: {{product.nightly_price.split(',').length}}</p>
             <div class="policy-text" [innerHTML]="product.policy_data"></div>
             }
+            @if(product.fe_display_product_name !== 'Extra Person' && product.fe_display_product_name !== 'Resort Fee' && product.cart_type !== 'gift_card'&& product.cart_type !== 'pos'){
+              <!-- <button class="btn btn-secondary w-40 my-3 mx-3" (click)="deleteCartItem(product.cart_item_id,product.mupog)">Edit</button> -->
+            }
             @if (product.fe_display_product_name !== 'Extra Person' && product.fe_display_product_name !== 'Resort Fee')
             {
-            <button class="btn btn-danger w-50 my-3" (click)="deleteCartItem(product.cart_item_id,product.mupog)">Remove</button>
+            <button class="btn btn-danger w-40 my-3" (click)="deleteCartItem(product.cart_item_id,product.mupog)">Remove</button>
             }
           </div>
           <div class="right">
@@ -132,10 +147,10 @@
           </div>
         </div>
       </div>
-      <div class="mb-3">
+      <!-- <div class="mb-3">
         <input type="text" class="form-control" placeholder="Enter Promo or Gift Card">
         <button class="btn btn-secondary mt-2">Apply</button>
-      </div>
+      </div> -->
 
       }
       }
@@ -169,11 +184,12 @@
           <span class="text-danger fw-bold">{{cartTotal.total_deposit_amount | currency : '$'}}</span>
         </li>
       </ul>
-      <button class="btn btn-success w-100 my-3">CHECKOUT</button>
-      <button class="btn btn-outline-secondary w-100">CONTINUE SHOPPING</button>
+      <button class="btn btn-success w-100 my-3" (click)="navigateTo('checkout')">CHECKOUT</button>
+      <button class="btn btn-outline-secondary w-100" (click)="continueShopping()">CONTINUE SHOPPING</button>
       <button class="btn btn-danger w-100 my-3" (click)="emptyCart()">Remove All Items </button>
     </div>
   </div>
+}
 </div>
 
 @if (showModal) {

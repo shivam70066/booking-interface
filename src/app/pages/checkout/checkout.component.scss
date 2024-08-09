@@ -1,0 +1,29 @@
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+.checkout-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .checkout-form-container{
+    width: 40%;
+    .form-row{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 5px 10px;
+      .form-left-side{
+        .mat-mdc-form-field{
+          width: 300px !important;
+        }
+        margin: 0px 10px;
+        // width: 40%;
+      }
+      .form-right-side{
+        .mat-mdc-form-field{
+          width: 300px !important;
+        }
+        margin: 0px 10px;
+      }
+    }
+  }
+}

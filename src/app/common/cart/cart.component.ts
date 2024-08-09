@@ -6,11 +6,12 @@ import { AddToCartResponse, GetPriceModuleSelectedDatesResponse } from '../../..
 import { CommonService } from '../../services/common.service';
 import { Router } from '@angular/router';
 import { HotelService } from '../../services/hotel-services.service';
+import { LoaderComponent } from "../loader/loader.component";
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, LoaderComponent],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -28,6 +29,8 @@ export class CartComponent implements OnInit {
   roomSelectedForPos: any;
   roomsAllowedForPos: any;
   posItem: any;
+  loader: boolean = true;
+  public showEditFields: any = {};
 
 
   constructor(private loadCartDataService: LoadCartDataService,
@@ -45,6 +48,7 @@ export class CartComponent implements OnInit {
   }
 
   loadCartData() {
+    this.loader = true;
     var mupog = localStorage.getItem('mupog');
     if (mupog) {
       this.loadCartDataService.frontendCartLoadCartDataPost({ body: { 'mupog': mupog } }).subscribe((data: any) => {
@@ -52,7 +56,6 @@ export class CartComponent implements OnInit {
           if (data.data.cart_data != undefined && data.data.cart_data != '' && Object.keys(data.data.cart_data).length > 0) {
             setTimeout(() => {
               this.cartData = data.data.cart_data;
-              console.log(this.cartData)
               this.cartTotal = data.data.cart_total;
               this.additionalProducts = data.data.additionalProducts;
               if (this.cartTotal.promotion_applied !== undefined && this.cartTotal.promotion_applied !== '' && this.cartTotal.promotion_applied !== 'undefined' && this.cartTotal.promotion_applied !== null) {
@@ -61,7 +64,7 @@ export class CartComponent implements OnInit {
                 this.cartTotal.promotion_applied = 0;
               }
               this.totalCartItems = data.data.cart_data[Object.keys(data.data.cart_data)[0]][0].cart_items_count;
-              var width = window.innerWidth;
+              // var width = window.innerWidth;
               // this.showCartTooltip = {rateplan: [], rate: []};
               var j = 0;
               var i = '';
@@ -132,6 +135,7 @@ export class CartComponent implements OnInit {
         // this.showMobileSpinner =false;
         // this.onGoingCartRequest =false;
         this.loadPosData();
+        this.loader = false;
       });
     }
   }
@@ -142,7 +146,6 @@ export class CartComponent implements OnInit {
       if (this.cartData[value][0].cart_type == 'reservation' && (Number(room.allowed_for_all_rooms) == 1 || room.associate_with_rooms.split(',').indexOf('' + this.cartData[value][0].cart_room_type_id) != -1))
         reservationItems.push(this.cartData[value][0]);
     });
-    console.log(Object.keys(reservationItems).length > 1);
 
     if (Object.keys(reservationItems).length > 1) {
       this.roomsAllowedForPos = reservationItems;
@@ -169,6 +172,7 @@ export class CartComponent implements OnInit {
   }
 
   addToCartfn(room: any, cart_item_id: number) {
+    this.loader = true;
     console.log(room, cart_item_id)
     var mupog = localStorage.getItem('mupog');
     // this.showLoader = true;
@@ -208,7 +212,7 @@ export class CartComponent implements OnInit {
         this.loadCartData();
       }
     });
-
+    this.loader = false;
   }
 
   /* Function to calculate subtotal on basis of discount*/
@@ -267,12 +271,14 @@ export class CartComponent implements OnInit {
   }
 
   addPos() {
+    this.showModal = false;
     this.addToCartfn(this.posItem, this.roomSelectedForPos.cart_item_id);
     this.posItem = null;
     this.roomSelectedForPos = null;
   }
 
   emptyCart(){
+    this.loader = true;
     var mupog = localStorage.getItem('mupog') || '';
     var cartData:{mupog:string,cartItemIds:Array<string>} = {mupog:mupog,cartItemIds:[]};
     // this.showLoader = true;
@@ -286,6 +292,7 @@ export class CartComponent implements OnInit {
   }
 
   deleteMultipleCartItems(cartData:any, type:any){
+    this.loader = true;
     this.hotelService.deleteCart(cartData).subscribe((data:any) => {
       if(data.status === 'success'){
         localStorage.removeItem('splitImages');
@@ -327,11 +334,13 @@ export class CartComponent implements OnInit {
       // this.updateIcons();
       // this.showLoader = false;
     });
+    this.loader = false;
   }
 
   deleteCartItem(cartItemId:any,mupog:any){
-    // this.showLoader =true;
+    this.loader = true;
     this.hotelService.deleteCartItem({'cart_item_id':cartItemId,'mupog':mupog}).subscribe((data:any) => {
+      this.loader = true;
       if(data.status === 'success'){
           if(data.data.cart_data != undefined && data.data.cart_data != '' ){
               if(Object.keys(data.data.cart_data).length>0){
@@ -355,7 +364,10 @@ export class CartComponent implements OnInit {
                   this.commonService.updateCartItems([]);
                   this.commonService.updateCartItemsTotal(this.cartTotal);
                   if(this.router.url == '/checkout' || this.router.url == '/cart'){
-                      this.router.navigate(['']);
+                      this.router.navigate([''],{
+                        skipLocationChange:true
+                      }
+                      );
                   }
                 },100);
               }
@@ -377,7 +389,9 @@ export class CartComponent implements OnInit {
               this.commonService.updateCartItems([]);
               this.commonService.updateCartItemsTotal(this.cartTotal);
               if(this.router.url == '/checkout' || this.router.url == '/cart'){
-                this.router.navigate(['hotels-properties']);
+                this.router.navigate(['hotels-properties'],{
+                  skipLocationChange:true
+                });
               }
             },100);
           }
@@ -389,9 +403,28 @@ export class CartComponent implements OnInit {
           // this.openDialog({'message':data.message,'title':data.status.toUpperCase()});
       }
       // this.updateIcons();
+      // this.loader = false;
       if(this.totalCartItems==0){
-        this.router.navigate(['hotels-properties']);
+        this.router.navigate(['hotels-properties'],
+          {
+            skipLocationChange: true
+          }
+        );
       }
     });
+  }
+
+  continueShopping(){
+    this.router.navigate([this.commonService.getLastRoute()],{
+      skipLocationChange: true
+    });
+  }
+
+  navigateTo(url:string){
+    this.commonService.addRoute('cart');
+    this.router.navigate([url],{
+      skipLocationChange:true
+    }
+    )
   }
 }
