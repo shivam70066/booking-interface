@@ -313,7 +313,6 @@ export class SearchRoomsComponent implements OnInit {
     }
     this.addToCartService.frontendCartAddToCartPost({body:this.reservationInfo}).subscribe((data:any) => {
       if(data.status == 'error'){
-        console.log(data.message);
         alert(data.message);
       } else {
         var cartData = data.data.cart_data;
@@ -388,7 +387,6 @@ export class SearchRoomsComponent implements OnInit {
     return `${year}-${month}-${day}`;
   }
   onArrivalDateChange(event: any): void {
-    console.log(event.target.value);
     const dateParts = event.target.value.split('-');
     this.minDate = new NgbDate(
       parseInt(dateParts[0], 10),

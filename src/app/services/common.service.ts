@@ -30,6 +30,13 @@ export class CommonService {
   private cartCount = new BehaviorSubject(0);
   totalCartCount = this.cartCount.asObservable();
 
+  // Reservation success page
+  reservationSuccess = new BehaviorSubject<any>(false);
+  reservationID = this.reservationSuccess.asObservable();
+
+  setReservationSuccessID(reservationID:any) {
+		this.reservationSuccess.next(reservationID);
+	}
 
   updateCartData(cartCount: number) {
     this.cartCount.next(cartCount);

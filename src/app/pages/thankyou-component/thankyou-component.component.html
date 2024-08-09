@@ -1,0 +1,315 @@
+@if(showLoader){
+<app-loader></app-loader>
+}
+@else {
+  <div class="tabkyou-main-container">
+    <div class="wrapper">
+      <div class="thankyouInnerPage" *ngIf="show">
+        <div class="thankyouHeading">
+          <h2>Thank you for your purchase!</h2>
+          <button class="print" (click)="printInvoice()">print</button>
+        </div>
+        <div *ngIf="reservationDetail.length == 1">
+          <div *ngFor="let reservation of reservationDetail">
+            <div class="order-number-block">
+              <h3>Your Itinerary is: <span>{{reservation.itinerary_number}}</span></h3>
+              <p>You will receive reservation confirmation email with details of your reservaiton and a link to track its progress.</p>
+            </div>
+            <div class="billing-info-row">
+              <div class="billing-info-col">
+                <div class="billing-info-content">
+                  <div class="billingHeading">
+                    Billing Address
+                  </div>
+                  <div class="billingContent">
+                    <p>Name: {{commonDetail.billing.name}}</p>
+                    <p>Email: {{commonDetail.billing.email}}</p>
+                    <p>Phone: {{commonDetail.billing.phone}}</p>
+                    <p>Address: {{commonDetail.billing.address}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="billing-info-col">
+                <div class="billing-info-content">
+                  <div class="billingHeading">
+                    Payment Method
+                  </div>
+                  <div class="billingContent">
+                    <div *ngFor="let payment of commonDetail.payment" >
+                      <p *ngIf="payment.payment_method ==='Credit Card'"><b>Card Type:</b> {{payment.cc_type}}</p>
+                      <p *ngIf="payment.payment_method ==='Credit Card'"><b>Card Number</b> xxxx-{{payment.cc_number}}</p>
+                      <p *ngIf="payment.payment_method ==='Credit Card'"><b>Processed Amount:</b> {{payment.installment_amount | currency : '$'}}</p>
+                      <p *ngIf="payment.payment_method !=='Credit Card'"><b>{{payment.payment_method}}</b></p>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngFor="let cart of reservation.reservations">
+              <div class="room-summary"
+                *ngFor="let res of cart.reservation"
+                [hidden]="!((res.type_of_reservation == 'reservation' || res.type_of_reservation == 'boat' || res.type_of_reservation == 'service') && res.product_id != 0 && res.is_gift_card == '0') &&
+                !(res.type_of_reservation != 'reservation' && res.type_of_reservation != 'boat' && res.is_gift_card == '1')"
+              >
+                <!-- RESERVATION DETAILS START -->
+                <div class="room-summary-left" *ngIf="(res.type_of_reservation == 'reservation' || res.type_of_reservation == 'boat' || res.type_of_reservation == 'service') && res.product_id != '0' && res.is_gift_card == 0">
+                  <div class="block1txt">
+                    <h2>{{res.fe_display_product_name}}</h2>
+                    <p *ngIf="res.product_type != 'pos'">Check In: {{res.arrival_time}}</p>
+                    <p *ngIf="res.product_type != 'pos'">Check Out: {{res.departure_time}}</p>
+                  </div>
+                  <div class="block1txt">
+                    <div class="confirmation-purchase">
+                      <span><b>Confirmation:</b> {{res.confirmation_number}}</span>
+                      <span *ngIf="res.product_type != 'pos'"><b>Purchased on:</b>  {{res.reservation_date}}</span>
+                    </div>
+
+                    <div class="confirmation-purchase" *ngIf="res.product_type != 'pos' && res.product_type != 'boat'">
+                      <span>Traveller Name: {{res.first_name}} {{res.last_name}}</span>
+                      <span>Traveller Email: {{res.customer_email}}</span>
+                    </div>
+                    <div class="confirmation-purchase" *ngIf="res.product_type != 'pos' && res.product_type != 'boat'">
+                      <span><b>Adult:</b> {{res.room_stay_guest_count}}</span>
+                      <span><b>Child:</b> {{res.room_stay_child_count}}</span>
+                    </div>
+
+                    <div class="confirmation-purchase" *ngIf="res.product_type == 'boat'">
+                      <span>Vessel Type: {{res.boat_type}}</span>
+                      <span>Vessel Name: {{res.boat_name}}</span>
+                    </div>
+                    <div class="confirmation-purchase" *ngIf="res.product_type == 'boat'">
+                      <span><b>Vessel Length:</b> {{res.boat_length}}</span>
+                      <span><b>Vessel Width:</b> {{res.boat_width}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="room-summary-right" *ngIf="(res.type_of_reservation == 'reservation' || res.type_of_reservation == 'boat' || res.type_of_reservation == 'service') && res.product_id != '0' && res.is_gift_card == 0">
+                  <div class="room-summary-row haeding">
+                    {{res.type_of_reservation == 'boat' ? 'Slip' : 'Room'}} Summary
+                  </div>
+                  <div class="room-summary-row">
+                    <span>Paid</span>
+                    <span>{{res.single_paid_amount | currency : '$'}}</span>
+                  </div>
+                  <div class="room-summary-row">
+                    <span>Due at Check-in</span>
+                    <!-- <span>{{res.remaining_amount | currency : '$'}}</span> -->
+                    <span *ngIf="res.type_of_reservation != 'service'">{{res.remaining_amount | currency : '$'}}</span>
+                    <span *ngIf="res.type_of_reservation == 'service'">{{res.single_remaining_amount | currency : '$'}}</span>
+                  </div>
+                </div>
+                <!-- RESERVATION DETAILS END-->
+                <!-- GIFT CARD DETAILS START -->
+                <div class="room-summary-left" *ngIf="res.type_of_reservation != 'reservation' && res.type_of_reservation != 'boat' && res.is_gift_card == '1'">
+                  <div class="block1txt">
+                    <h2>{{res.fe_display_product_name}}</h2>
+                    <p><strong>Code:</strong> {{res.gc_code}}</p>
+                    <p><strong>Customer:</strong> {{ res.gc_sender_name+' ('+res.gc_sender_email+')' }}</p>
+                    <p><strong>Recipient:</strong> {{ res.gc_recipient_name+' ('+res.gc_recipient_email+')' }}</p>
+                    <p><strong>Message:</strong> {{ res.gc_message }}</p>
+                  </div>
+                </div>
+                <div class="room-summary-right" *ngIf="res.type_of_reservation != 'reservation' && res.type_of_reservation != 'boat' && res.is_gift_card == '1'">
+                  <div class="room-summary-row haeding">
+                    Item Summary
+                  </div>
+                  <div class="room-summary-row">
+                    <span>QUANTITY</span>
+                    <span>{{res.quantity}}</span>
+                  </div>
+                  <div class="room-summary-row">
+                    <span>PRICE</span>
+                    <span>{{res.subtotal | currency : '$'}}</span>
+                  </div>
+                  <div class="room-summary-row">
+                    <span>TAX</span>
+                    <span>{{res.tax_amount | currency : '$'}}</span>
+                  </div>
+                  <div class="room-summary-row">
+                    <span>TOTAL (USD)</span>
+                    <span>{{res.grand_total | currency : '$'}}</span>
+                  </div>
+                </div>
+                <!-- GIFT CARD DETAILS END -->
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="reservationDetail.length > 1">
+          <div class="order-number-block" style="margin-bottom: 5px;">
+            <p>You will receive reservation confirmation email with details of your reservaiton and a link to track its progress.</p>
+          </div>
+          <div class="billing-info-row">
+            <div class="billing-info-col">
+              <div class="billing-info-content">
+                <div class="billingHeading">
+                  Billing Address
+                </div>
+                <div class="billingContent">
+                  <p>Name: {{commonDetail.billing.name}}</p>
+                  <p>Email: {{commonDetail.billing.email}}</p>
+                  <p>Phone: {{commonDetail.billing.phone}}</p>
+                  <p>Address: {{commonDetail.billing.address}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="billing-info-col">
+              <div class="billing-info-content">
+                <div class="billingHeading">
+                  Payment Method
+                </div>
+                <div class="billingContent">
+                  <div *ngFor="let payment of commonDetail.payment" >
+                    <p *ngIf="payment.payment_method ==='Credit Card'"><b>Card Type:</b> {{payment.cc_type}}</p>
+                    <p *ngIf="payment.payment_method ==='Credit Card'"><b>Card Number</b> xxxx-{{payment.cc_number}}</p>
+                    <p *ngIf="payment.payment_method ==='Credit Card'"><b>Processed Amount:</b> {{payment.installment_amount | currency : '$'}}</p>
+                    <p *ngIf="payment.payment_method !=='Credit Card'"><b>{{payment.payment_method}}</b></p>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngFor="let reservation of reservationDetail;let i = index" >
+            <div class="order-number-block">
+              <h3>Your Itinerary is: <span>{{reservation.itinerary_number}}</span></h3>
+            </div>
+            <div *ngFor="let cart of reservation.reservations">
+              <div class="room-summary"
+                *ngFor="let res of cart.reservation"
+                [hidden]="!((res.type_of_reservation == 'reservation' || res.type_of_reservation == 'boat' || res.type_of_reservation == 'service') && res.product_id != 0 && res.is_gift_card == '0') &&
+                !(res.type_of_reservation != 'reservation' && res.type_of_reservation != 'boat' && res.is_gift_card == '1')"
+              >
+                <!-- RESERVATION DETAILS START -->
+                <div class="room-summary-left" *ngIf="(res.type_of_reservation == 'reservation' || res.type_of_reservation == 'boat' || res.type_of_reservation == 'service') && res.product_id != '0' && res.is_gift_card == 0" style="width:100%;">
+                  <div class="block1txt">
+                    <h2>{{res.fe_display_product_name}}</h2>
+                    <p *ngIf="res.product_type != 'pos'">Check In: {{res.arrival_time}}</p>
+                    <p *ngIf="res.product_type != 'pos'">Check Out: {{res.departure_time}}</p>
+                  </div>
+                  <div class="block1txt">
+                    <div class="confirmation-purchase">
+                      <span><b>Confirmation:</b> {{res.confirmation_number}}</span>
+                      <span *ngIf="res.product_type != 'pos'"><b>Purchased on:</b>  {{res.reservation_date}}</span>
+                    </div>
+
+                    <div class="confirmation-purchase" *ngIf="res.product_type != 'pos' && res.product_type != 'boat'">
+                      <span>Traveller Name: {{res.first_name}} {{res.last_name}}</span>
+                      <span>Traveller Email: {{res.customer_email}}</span>
+                    </div>
+                    <div class="confirmation-purchase" *ngIf="res.product_type != 'pos' && res.product_type != 'boat'">
+                      <span><b>Adult:</b> {{res.room_stay_guest_count}}</span>
+                      <span><b>Child:</b> {{res.room_stay_child_count}}</span>
+                    </div>
+
+                    <div class="confirmation-purchase" *ngIf="res.product_type == 'boat'">
+                      <span>Vessel Type: {{res.boat_type}}</span>
+                      <span>Vessel Name: {{res.boat_name}}</span>
+                    </div>
+                    <div class="confirmation-purchase" *ngIf="res.product_type == 'boat'">
+                      <span><b>Vessel Length:</b> {{res.boat_length}}</span>
+                      <span><b>Vessel Width:</b> {{res.boat_width}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="room-summary-right" *ngIf="(res.type_of_reservation == 'reservation' || res.type_of_reservation == 'boat' || res.type_of_reservation == 'service') && res.product_id != '0' && res.is_gift_card == 0" style="width:100%;margin-top:20px;">
+                  <div class="room-summary-row haeding">
+                    {{res.type_of_reservation == 'boat' ? 'Slip' : 'Room'}} Summary
+                  </div>
+                  <div class="room-summary-row">
+                    <span>Paid</span>
+                    <span>{{res.single_paid_amount | currency : '$'}}</span>
+                  </div>
+                  <div class="room-summary-row">
+                    <span>Due at Check-in</span>
+                    <span *ngIf="res.type_of_reservation != 'service'">{{res.remaining_amount | currency : '$'}}</span>
+                    <span *ngIf="res.type_of_reservation == 'service'">{{res.single_remaining_amount | currency : '$'}}</span>
+                  </div>
+                </div>
+                <!-- RESERVATION DETAILS END-->
+                <!-- GIFT CARD DETAILS START -->
+                <div class="room-summary-left" *ngIf="res.type_of_reservation != 'reservation' && res.type_of_reservation != 'boat' && res.is_gift_card == '1'">
+                  <div class="block1txt">
+                    <h2>{{res.fe_display_product_name}}</h2>
+                    <p><strong>Code:</strong> {{res.gc_code}}</p>
+                    <p><strong>Customer:</strong> {{ res.gc_sender_name+' ('+res.gc_sender_email+')' }}</p>
+                    <p><strong>Recipient:</strong> {{ res.gc_recipient_name+' ('+res.gc_recipient_email+')' }}</p>
+                    <p><strong>Message:</strong> {{ res.gc_message }}</p>
+                  </div>
+                </div>
+                <div class="room-summary-right" *ngIf="res.type_of_reservation != 'reservation' && res.type_of_reservation != 'boat' && res.is_gift_card == '1'">
+                  <div class="room-summary-row haeding">
+                    Item Summary
+                  </div>
+                  <div class="room-summary-row">
+                    <span>QUANTITY</span>
+                    <span>{{res.quantity}}</span>
+                  </div>
+                  <div class="room-summary-row">
+                    <span>PRICE</span>
+                    <span>{{res.subtotal | currency : '$'}}</span>
+                  </div>
+                  <div class="room-summary-row">
+                    <span>TAX</span>
+                    <span>{{res.tax_amount | currency : '$'}}</span>
+                  </div>
+                  <div class="room-summary-row">
+                    <span>TOTAL (USD)</span>
+                    <span>{{res.grand_total | currency : '$'}}</span>
+                  </div>
+                </div>
+                <!-- GIFT CARD DETAILS END -->
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="total-price-block">
+          <div class="total-price-row">
+            <div class="col-block heading">
+              SubTotal
+            </div>
+            <div class="col-block">
+              {{commonDetail.amount.subtotal | currency : '$'}}
+            </div>
+          </div>
+          <div class="total-price-row" *ngFor="let item of commonDetail.amount.tax_amount_a | keyvalue">
+            <div class="col-block heading">
+              {{item.key}}
+            </div>
+            <div class="col-block">
+              ${{ item.value }}
+            </div>
+          </div>
+          <div class="total-price-row">
+            <div class="col-block heading">
+              Grand Total
+            </div>
+            <div class="col-block">
+              {{commonDetail.amount.grand_total | currency : '$'}}
+            </div>
+          </div>
+          <div class="total-price-row">
+            <div class="col-block heading">
+              Paid
+            </div>
+            <div class="col-block">
+              {{commonDetail.amount.paid_amount | currency : '$'}}
+            </div>
+          </div>
+          <div class="total-price-row">
+            <div class="col-block heading">
+              Amount Due at check in
+            </div>
+            <div class="col-block">
+              {{commonDetail.amount.remaining_amount | currency : '$'}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

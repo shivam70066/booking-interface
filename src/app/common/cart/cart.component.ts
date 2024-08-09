@@ -50,6 +50,12 @@ export class CartComponent implements OnInit {
   loadCartData() {
     this.loader = true;
     var mupog = localStorage.getItem('mupog');
+    if(!mupog){
+      this.router.navigate(['hotels-properties'],{
+        skipLocationChange: true
+      }
+      )
+    }
     if (mupog) {
       this.loadCartDataService.frontendCartLoadCartDataPost({ body: { 'mupog': mupog } }).subscribe((data: any) => {
         if (data.status === 'success') {
@@ -173,7 +179,6 @@ export class CartComponent implements OnInit {
 
   addToCartfn(room: any, cart_item_id: number) {
     this.loader = true;
-    console.log(room, cart_item_id)
     var mupog = localStorage.getItem('mupog');
     // this.showLoader = true;
     var selectedPolicy = 2;
@@ -201,11 +206,8 @@ export class CartComponent implements OnInit {
     if (mupog != undefined && mupog != '') {
       reservationInfo.mupog = mupog;
     }
-    console.log(room);
-    console.log(reservationInfo)
     this.addToCartService.frontendCartAddToCartPost({ body: reservationInfo }).subscribe((data: any) => {
       if (data.status == 'error') {
-        console.log(data.message);
         // this.openDialog({'message':data.message,'title':data.status.toUpperCase(), 'confirm' : false});
         // this.showLoader =false;
       } else {
@@ -242,7 +244,6 @@ export class CartComponent implements OnInit {
     this.loadPosDataService.frontendSearchresultsGetPosAvailableOnFeGet().subscribe({
       next: (response) => {
         this.changePOSData(response.data);
-        console.log(this.posProducts)
       },
       error: (error) => {
         console.log(error)

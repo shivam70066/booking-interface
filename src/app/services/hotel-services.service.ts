@@ -32,4 +32,12 @@ export class HotelService {
     return this.http.post("http://localhost/ls/ls-api/frontend/cart/create_reservation",data)
   }
 
+  getReservationInfo(data:any) {
+    return this.http.post("http://localhost/ls/ls-api/frontend/cart/get_reservation_info",data);
+	}
+
+  printOrder(data : any) {
+		return this.http.post("http://localhost/ls/ls-api/frontend/cart/print_invoice",data);
+	}
+
 }

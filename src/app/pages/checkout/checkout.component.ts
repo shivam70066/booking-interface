@@ -15,8 +15,8 @@ import {
   CardDefinition,
 } from 'angular-cc-library';
 import { CreditCardFormatDirective } from 'angular-cc-library';
-import { clippingParents } from '@popperjs/core';
 import { LoaderComponent } from "../../common/loader/loader.component";
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-checkout',
@@ -30,19 +30,22 @@ import { LoaderComponent } from "../../common/loader/loader.component";
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    LoaderComponent
+    LoaderComponent,
+    NgxMaskDirective
 ],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.scss',
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  providers:[provideNgxMask()]
 })
 export class CheckoutComponent implements OnInit {
 
-  public billingDetails: any;
+  billingDetails: any;
   cartDataSubscription!: Subscription;
   cartData: any;
   cartTotalSubscription!: Subscription;
   cartTotal: any;
+  showLoader: boolean = true;
 
   public regex_email: any = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{1,}$/i;
 
@@ -76,12 +79,10 @@ export class CheckoutComponent implements OnInit {
 
     this.cartTotalSubscription = this.commonService.checkcartItemsTotal.subscribe((cartTotal) => {
       this.cartTotal = cartTotal;
-      console.log(cartTotal);
     })
 
     this.cartDataSubscription = this.commonService.checkcartItems.subscribe((cartData) => {
       this.cartData = cartData;
-      console.log(cartData);
     })
 
     if (localStorage.getItem('mupog')) {
@@ -100,6 +101,7 @@ export class CheckoutComponent implements OnInit {
             country: [this.billingDetails.country, [Validators.required]],
             state: [this.billingDetails.state, [Validators.required]]
           });
+
         },
         error: (error) => {
           console.log(error);
@@ -107,10 +109,7 @@ export class CheckoutComponent implements OnInit {
       });
     }
 
-  }
-
-  getData() {
-    console.log(this.billingForm.value);
+    this.showLoader = false;
 
   }
 
@@ -135,7 +134,7 @@ export class CheckoutComponent implements OnInit {
         customer_email: this.billingForm.value.email,
         country: this.billingForm.value.country,
         state: this.billingForm.value.state,
-        // customer_id: this.billingDetails.customer_id
+        customer_id: this.billingDetails.customer_id
       };
       let data = {
         mupog: localStorage.getItem('mupog'),
@@ -172,7 +171,7 @@ export class CheckoutComponent implements OnInit {
           //         this.makesameAsBilling(i);
           //       }
           //    }
-          console.log(response);
+          // console.log(response);
 
 
         } else if (response.status === 'error') {
@@ -185,7 +184,7 @@ export class CheckoutComponent implements OnInit {
   placeOrder() {
 
     if (this.paymentForm.valid) {
-      // this.showPlaceOrderLoader = true;
+      this.showLoader = true;
       const whitespaceRemovedCardNo = this.paymentForm?.value?.cc_number?.replace(/\s/g, '');
       this.paymentForm.value.cc_number = whitespaceRemovedCardNo;
       let cardType = CreditCard.cardFromNumber(this.paymentForm.value!.cc_number!);
@@ -258,10 +257,13 @@ export class CheckoutComponent implements OnInit {
           localStorage.removeItem('onGoingRequest');
           localStorage.removeItem('splitDates');
           this.commonService.updateCartData(0);
-          // this.commonService.setReservationSuccessID(reservationID);
-          this.router.navigate(['checkout/success']);
+          this.commonService.setReservationSuccessID(reservationID);
+          this.router.navigate(['success'],{
+            skipLocationChange:true
+          }
+          );
         } else {
-
+          alert(response.message);
           // this.openDialog({'message':response.message,'title':"ERROR",'type':'error','for':'reservation_creation'});
           // setTimeout(() => {
           //     this.checkoutScroll.scrollIntoView({
@@ -269,7 +271,7 @@ export class CheckoutComponent implements OnInit {
           //     });
           // }, 200);
         }
-        // this.showPlaceOrderLoader = false;
+        this.showLoader = false;
       });
     } else {
       // this.showTCError = true;
@@ -279,7 +281,6 @@ export class CheckoutComponent implements OnInit {
   moveCursorToEnd(inputElement: HTMLInputElement): void {
     const length = inputElement.value.length;
     inputElement.setSelectionRange(length, length);
-    console.log("here");
 
   }
 

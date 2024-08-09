@@ -1,0 +1,467 @@
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+.tabkyou-main-container {
+    width: 100%;
+    float: left;
+    .thankyouInnerPage {
+	    width: 100%;
+	    padding: 20px;
+	    border: 1px solid #dedede;
+	    float: left;
+	    border-radius: var(--radiusbig);
+	    .thankyouHeading {
+		    width: 100%;
+		    float: left;
+		    padding-bottom: 15px;
+		    margin-bottom: 20px;
+		    border-bottom: 1px solid #dedede;
+		    display: flex;
+		    justify-content: space-between;
+		    font-family: var(--urwB);
+		    h2 {
+			    font-size: var(--size22);
+			    margin: 0px;
+			    width: 100%;
+			    float:left;
+			}
+			.print {
+			    width: 76px;
+			    background: var(--pink-sh1);
+			    border-radius: var(--radiusField);
+			    color: var(--white);
+			    text-transform: capitalize;
+			    font-size: var(--size14);
+			    height: 30px;
+			}
+		}
+	}
+	.order-number-block {
+	    width: 100%;
+	    float: left;
+	    margin-bottom: 30px;
+	     h3 {
+		    width: 100%;
+		    float: left;
+		    text-align: center;
+		    font-size: var(--size20);
+		    margin-bottom: 5px;
+		    span {
+			    color: var(--blue-sh1);
+			    font-family: var(--urwSB);
+			}
+		}
+		p {
+		    width: 100%;
+		    text-align: center;
+		    float: left;
+		}
+	}
+	.billing-info-row {
+	    width: 100%;
+	    display: flex;
+	    justify-content: space-between;
+	    margin-bottom: 20px;
+	    flex-wrap: wrap;
+	    .billing-info-col {
+		    width: 49%;
+		    display: flex;
+		    border: 1px solid #dedede;
+		    border-radius: var(--radiusField);
+		    overflow: hidden;
+		    .billing-info-content {
+			    width: 100%;
+			    float: left;
+
+			    .billingHeading {
+				    height: 45px;
+				    align-items: center;
+				    display: flex;
+				    width: 100%;
+				    color: var(--white);
+				    padding: 0px 20px;
+				    background: var(--blue-sh1);
+				    font-size: var(--size18);
+				    float: left;
+				}
+				.billingContent {
+				    width: 100%;
+				    float: left;
+				    padding: 15px;
+				     p {
+					    font-size: var(--size15);
+					    width: 100%;
+					    margin-bottom: 5px;
+					    opacity: 0.9;
+					    &:last-child{
+					    	margin-bottom: 0px;
+					    }
+					}
+				}
+			}
+		}
+	}
+	.room-summary {
+	    width: 100%;
+	    float: left;
+	    justify-content: space-between;
+	    border: 1px solid #dedede;
+	    border-radius: var(--radiusField);
+	    padding: 20px;
+	    background: var(--grayf1);
+	    margin-bottom: 20px;
+	    display: flex;
+	    flex-wrap: wrap;
+	    .room-summary-left {
+		    width: 70%;
+		    float: left;
+		    .block1txt {
+			    width: 100%;
+			    float: left;
+			    margin-bottom: 15px;
+			    padding-bottom: 15px;
+			    border-bottom: 1px solid #dedede;
+			    &:last-child{
+			    	margin-bottom: 0px;
+			    	padding-bottom: 0px;
+			    	border-bottom: none;
+			    }
+			    h2 {
+				    width: 100%;
+				    float: left;
+				    font-size: var(--size16);
+				    font-weight: 600;
+				    margin-bottom: 10px;
+				}
+				p {
+				    width: 100%;
+				    float: left;
+				    font-size: var(--size14);
+				    margin: 2px;
+				    opacity: 0.9;
+				    &:last-child{
+				    	margin-bottom: 0px;
+				    }
+				}
+				.confirmation-purchase {
+				    width: 100%;
+				    float: left;
+				    font-size: var(--size15);
+				    margin-bottom: 10px;
+				    &:last-child{
+				    	margin-bottom: 0px;
+				    }
+				    span{
+				    	margin-right: 20px;
+				    	&:last-child{
+				    		margin-right: 0px;
+				    	}
+				    }
+				}
+			}
+		}
+		.room-summary-right {
+		    width: 25%;
+		    float: right;
+		    background: var(--white);
+		    border-radius: var(--radiusField);
+		    overflow: hidden;
+		    height: fit-content;
+		    .room-summary-row {
+			    display: flex;
+			    padding: 8px 14px;
+			    flex-direction: row;
+			    justify-content: space-between;
+			    border-bottom: 1px solid #dedede;
+			    flex-wrap: wrap;
+			    &.haeding{
+			    	background: var(--blue-sh1);
+			    	color:var(--white);
+			    }
+			    span{
+			    	opacity: 0.8;
+			    	font-size: var(--size14);
+
+			    }
+			}
+		}
+	}
+	.total-price-block {
+	    width: 100%;
+	    float: left;
+	    border: 1px solid #dedede;
+	    border-radius: var(--radiusField);
+	    .total-price-row {
+		    width: 100%;
+		    display: flex;
+		    flex-wrap: wrap;
+		    justify-content: space-between;
+		    flex-direction: row;
+		    border-bottom: 1px solid #dedede;
+		    min-height: 45px;
+		    align-content: stretch;
+		    &:last-child{
+		    	border-bottom: none;
+		    }
+		    .col-block {
+			    display: flex;
+			    justify-content: center;
+			    text-align: right;
+			    flex-direction: column;
+			    font-size: var(--size16);
+			    padding: 5px 20px;
+			    &.heading{
+			    	width:75%;
+			    	border-right: 1px solid #dedede;
+			    	opacity: 0.8;
+			    }
+			    &:last-child{
+			    	width:25%;
+			    	color: var(--blue-sh1);
+			    	font-family: var(--urwSB);
+			    }
+			}
+		}
+	}
+}
+
+/********thank you**********/
+.thank-you-page {
+    width: 100%;
+    float: left;
+	padding: 20px 10px;
+	padding-bottom:50px;
+    *{
+    	font-family: var(--sf);
+    }
+    .thank-you-img {
+	    display: flex;
+	    justify-content: center;
+	    margin-bottom: 20px;
+	    width: 100%;
+	    img {
+		    max-width: 100%;
+		}
+	}
+	.thank-you-block {
+	    width: 100%;
+	    float: left;
+	    padding: 0px 5%;
+	    text-align: center;
+	    margin-bottom: 20px;
+
+	    h2 {
+		    font-size: var(--size18);
+		    color: #2b2b2b;
+		    font-weight: bold;
+		    width: 100%;
+		    float: left;
+		    margin: 0px 0 5px;
+		}
+		p {
+		    font-size: var(--size14);
+		    color: #2b2b2b;
+		    width: 100%;
+		    float: left;
+		    margin: 0px;
+		    span {
+			    color: var(--mob-blue);
+			    margin: 0px;
+			    padding: 0px;
+			}
+		}
+	}
+	.thank-you-para {
+	    width: 100%;
+	    float: left;
+	    margin-bottom: 30px;
+	    padding: 0px 10px;
+	    font-size: var(--size12);
+	    line-height: 22px;
+	    color: #6c6c6c;
+	    text-align: center;
+	}
+    .thank-you-cards {
+	    width: 100%;
+	    float: left;
+	    h3{
+			font-size: 12px;
+			letter-spacing: 1px;
+			color: var(--mob-pink);
+			font-weight: bold;
+			width: 100%;
+			float: left;
+			text-transform: uppercase;
+			margin-bottom: 15px;
+		}
+		p.title {
+		    font-size: var(--size14);
+		    color: #2b2b2b;
+		    width: 100%;
+		    float: left;
+		    margin: 0px;
+		    display: inline-flex;
+		    justify-content: center;
+		    padding-bottom: 10px;
+		    span {
+			    color: var(--mob-blue);
+			    margin: 0px;
+			    padding: 0px;
+			    margin-left: 5px;
+			}
+		}
+		// .thank-card{
+		// 	// width: 100%;
+		//     // float: left;
+		//     // background: var(--white);
+		//     // border-radius: 10px;
+		//     // filter: drop-shadow(0px -2px 8px rgba(0,0,0,0.06));
+		//     // margin-bottom: 25px;
+		//     // overflow: hidden;
+		// }
+		.thank-card-inner {
+			width: 100%;
+			float: left;
+			padding: 20px;
+			p{
+				margin: 0px;
+				font-size: var(--size12);
+				letter-spacing: 1px;
+				color: #8b8b8b;
+				margin-bottom: 5px;
+				&:last-child{
+					margin-bottom:0px;
+				}
+			}
+		}
+		h4{
+			font-size: var(--size12);
+			letter-spacing: 1px;
+			color: #484848;
+			width: 100%;
+			float: left;
+			margin-bottom: 10px;
+			&.m-b-0{
+				margin-bottom: 0px;
+			}
+		}
+		.checkin-checkout-row {
+		    width: 100%;
+		    float: left;
+		    span{
+		    	margin-right: 15px;
+		    	&:last-child{
+		    		margin-right:0px;
+		    	}
+		    }
+		}
+		.reservation-para-detail {
+		    width: 100%;
+		    float: left;
+		    padding: 15px 0px;
+		    margin: 15px 0px;
+		    border-top: 1px solid #eaeaea;
+		    border-bottom: 1px solid #eaeaea;
+		}
+		.room-summary {
+		    width: 100%;
+		    float: left;
+		    h5 {
+			    font-size: var(--size12);
+			    letter-spacing: 1px;
+			    color: #484848;
+			    width: 100%;
+			    float: left;
+			    margin-bottom: 15px;
+			}
+			.room-summary-detail{
+				width: 100%;
+				float: left;
+				.room-deatil-row{
+					width: 100%;
+					float: left;
+					display: flex;
+					justify-content: space-between;
+					margin-bottom: 10px;
+					&:last-child{
+						margin-bottom:0px;
+					}
+					span{
+						font-size: var(--size12);
+						letter-spacing: 1px;
+						color: #8b8b8b;
+						&:last-child{
+							color:#252525;
+						}
+					}
+				}
+			}
+		}
+		.thank-card-outer {
+			background: var(--white);
+			filter: drop-shadow(0px -2px 8px rgba(0,0,0,0.06));
+			border-radius: 10px;
+			margin-bottom: 25px;
+			overflow: hidden;
+			float: left;
+			width: 100%;
+			.title {
+				justify-content: flex-start !important;
+				padding: 20px 20px 0;
+			}
+			.thank-card-header {
+				font-size: 14px !important;
+				font-weight: 600;
+				line-height: 1.5;
+			}
+			.card-inner-wrapper {
+				background-color: #fbfbfb;
+				margin: 0 auto;
+				margin-bottom:20px;
+				float: none !important;
+				display: inline-block;
+				width: 95% !important;
+				border-radius: 10px;
+				padding: 20px !important;
+				display: flex;
+				flex-direction: column;
+			}
+			.thank-card-inner {
+				padding: 12px 20px 20px;
+			}
+		}
+		}
+		.total-top-block {
+		    width: 100%;
+		    float: left;
+		    padding: 20px;
+		    box-shadow: 0px 0px 10px rgba(0,0,0,0.07);
+		    .total-top-row{
+		    	display: flex;
+				justify-content: space-between;
+				margin-bottom: 20px;
+				&:last-child{
+					margin-bottom:0px;
+				}
+				span{
+					font-size: var(--size12);
+					letter-spacing: 1px;
+					color:#252525;
+					text-transform: uppercase;
+				}
+		    }
+		}
+	    .total-bottom-block{
+	    	width: 100%;
+	    	float: left;
+	    	display: flex;
+			justify-content: space-between;
+			padding: 15px 20px;
+			span{
+				font-size: var(--size14);
+				letter-spacing: 1px;
+				color: #1f1f1f;
+				font-weight: bold;
+				text-transform: uppercase;
+			}
+	    }
+}
+/********thank you end**********/
